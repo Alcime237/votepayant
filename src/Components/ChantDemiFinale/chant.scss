@@ -41,7 +41,7 @@ $shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   .back-button {
     display: inline-block;
     padding: 0.5rem 1.5rem;
-    background: linear-gradient(135deg, $primary-color, color.adjust($primary-color, $lightness: -10%));
+    background: linear-gradient(135deg, $primary-color, darken($primary-color, 10%));
     color: $white;
     border: none;
     border-radius: 50px;
@@ -54,7 +54,7 @@ $shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-      background: linear-gradient(135deg, color.adjust($primary-color, $lightness: -10%), $primary-color);
+      background: linear-gradient(135deg, darken($primary-color, 10%), $primary-color);
     }
   }
 
@@ -272,7 +272,7 @@ $shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 
     &:hover {
-      background: color.adjust($primary-color, $lightness: -10%);
+      background: darken($primary-color, 10%);
     }
   }
 }

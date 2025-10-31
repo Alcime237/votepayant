@@ -1,0 +1,44 @@
+.image-divider-section {
+  width: 100%;
+  margin: 4rem 0;
+  display: flex;          // Active Flexbox
+  justify-content: center; // Centre horizontalement
+  align-items: center;    // Centre verticalement
+  position: relative;
+  top: 80px;
+
+  .divider-image {
+    width: auto;          // Largeur automatique selon l'image
+    max-width: 50%;       // Maximum 50% de la largeur parente
+    height: auto;
+    max-height: 400px;    // Hauteur maximale
+    object-fit: contain;  // Conserve les proportions
+    display: block;
+    margin: 0 auto;       // Centrage supplémentaire
+    border-radius: 8px;   // Optionnel - coins arrondis
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); // Ombre portée légère
+  }
+}
+
+/* Version responsive */
+@media (max-width: 768px) {
+  .image-divider-section {
+    margin: 3rem 0;
+
+    .divider-image {
+      max-width: 80%;    // Plus large sur mobile
+      max-height: 200px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .image-divider-section {
+    margin: 2rem 0;
+
+    .divider-image {
+      max-width: 90%;
+      max-height: 150px;
+    }
+  }
+}

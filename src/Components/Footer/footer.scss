@@ -1,0 +1,223 @@
+:root {
+    /* Couleurs principales inspirées du logo */
+    --PrimaryColor: hsl(350, 80%, 42%); /* Rouge micro */
+    --SecondaryColor: hsl(43, 90%, 55%); /* Doré plus lumineux pour meilleure lisibilité */
+
+    /* Dégradé rouge → doré */
+    --gradientColor: linear-gradient(to right, hsl(350, 80%, 42%), hsl(43, 90%, 55%));
+
+    /* Couleurs globales */
+    --whiteColor: hsl(0, 0%, 100%);
+    --blackColor: hsl(0, 0%, 0%);
+    --textColor: hsl(0, 0%, 40%);
+    --whiteColorDeam: hsl(0, 0%, 93%);
+    --greyText: rgb(190, 190, 190);
+    --inputColor: rgb(239, 239, 239);
+    --bodyColor: rgb(245, 245, 245);
+    --cardBG: rgb(225, 225, 225);
+
+    /* Spécifiques pour le footer */
+    --footerBG: var(--blackColor);
+    --footerText: var(--whiteColorDeam);
+    --footerAccent: var(--SecondaryColor);
+    --footerHover: var(--PrimaryColor);
+
+    /* Nouvelle variable pour icônes bien visibles */
+    --footerIconColor: hsl(43, 100%, 70%); /* Doré clair qui pète bien */
+}
+
+
+
+.footer {
+    background: var(--footerBG);
+    color: var(--footerText);
+    padding: 4rem 0 0;
+    position: relative;
+    font-size: 0.95rem;
+    line-height: 1.6;
+
+    &-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    &-section {
+        margin-bottom: 2rem;
+
+        h3 {
+            color: var(--footerAccent);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 0.5rem;
+
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 50px;
+                height: 2px;
+                background: var(--gradientColor);
+            }
+        }
+    }
+
+    .contact {
+        &-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.2rem;
+            gap: 0.8rem;
+
+            svg {
+                color: var(--footerAccent);
+                margin-top: 0.2rem;
+                flex-shrink: 0;
+                font-size: 1.1rem;
+            }
+
+            a {
+                color: var(--footerText);
+                text-decoration: none;
+                transition: color 0.3s ease;
+
+                &:hover {
+                    color: var(--footerHover);
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .social {
+        &-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        &-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--footerText);
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: var(--footerHover);
+                transform: translateX(5px);
+            }
+
+            svg {
+                font-size: 1.2rem;
+                color: var(--footerAccent);
+            }
+        }
+    }
+
+    &-bottom {
+        background: rgba(0, 0, 0, 0.2);
+        padding: 1.5rem;
+        text-align: center;
+        margin-top: 3rem;
+        font-size: 0.9rem;
+
+        p {
+            margin: 0;
+            color: var(--greyText);
+        }
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .footer {
+        padding: 3rem 0 0;
+
+        &-container {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+
+        .social-links {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        &-section {
+            h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        .contact-item {
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+    }
+}
+
+
+/* Ajoutez ces règles à votre fichier footer.scss */
+
+.footer-section {
+  h3 {
+    color: var(--whiteColor) !important; /* Texte en blanc */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.social-link {
+  /* Couleurs officielles des réseaux sociaux */
+  &.facebook {
+    .social-icon { color: #1877f2; } /* Bleu Facebook */
+    &:hover { background: rgba(#1877f2, 0.1); }
+  }
+  &.instagram {
+    .social-icon {
+      color: transparent;
+      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+    &:hover { background: rgba(#d6249f, 0.1); }
+  }
+  &.tiktok {
+    .social-icon { color: #000000; } /* Noir TikTok */
+    &:hover { background: rgba(#000000, 0.1); }
+  }
+  &.youtube {
+    .social-icon { color: #ff0000; } /* Rouge YouTube */
+    &:hover { background: rgba(#ff0000, 0.1); }
+  }
+  &.whatsapp {
+    .social-icon { color: #25d366; } /* Vert WhatsApp */
+    &:hover { background: rgba(#25d366, 0.1); }
+  }
+}
+
+/* Pour le téléphone et email */
+.contact-item {
+  .contact-icon {
+    color: var(--whiteColor) !important;
+  }
+  .social-icon.whatsapp {
+    color: #25d366 !important;
+  }
+}

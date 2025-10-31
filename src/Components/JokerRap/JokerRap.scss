@@ -1,0 +1,787 @@
+// Variables
+$primary-color: #ff6b00; // Orange vif
+$secondary-color: #ff8c42; // Orange plus clair
+$accent-color: #ffd700; // Or
+$text-color: #ffffff;
+$light-text: #cccccc;
+$background-dark: #000000;
+$background-light: #1a1a1a;
+$success-color: #2ecc71;
+$white: #ffffff;
+$shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+
+// Styles de base
+.rap-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 6rem 1rem 3rem;
+  font-family: 'Poppins', sans-serif;
+  color: $text-color;
+  position: relative;
+  background: radial-gradient(circle at top, #1a1a1a, #000);
+  border-radius: 15px;
+  box-shadow: $shadow;
+  min-height: 100vh;
+  overflow: hidden;
+
+  // Effet lumière en arrière-plan
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    top: -100px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    filter: blur(200px);
+    opacity: 0.5;
+    z-index: 0;
+  }
+
+  &::before {
+    left: -100px;
+    background: rgba(255, 107, 0, 0.7);
+    animation: pulse 6s infinite;
+  }
+
+  &::after {
+    right: -100px;
+    background: rgba(200, 60, 0, 0.7);
+    animation: pulse 8s infinite alternate;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    color: $primary-color;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: $light-text;
+    margin-bottom: 2rem;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+  }
+
+  .back-button {
+    display: inline-block;
+    padding: 0.7rem 1.8rem;
+    background: transparent;
+    color: $white;
+    border: 2px solid $primary-color;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+
+    &:hover {
+      background: $primary-color;
+      color: $white;
+      box-shadow: 0 0 15px rgba(255, 107, 0, 0.6);
+    }
+  }
+
+  .candidates-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .candidate-card {
+    background: linear-gradient(145deg, #111, #1c1c1c);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: $shadow;
+    transition: all 0.4s ease;
+    position: relative;
+
+    &:hover {
+      transform: translateY(-10px);
+      border-color: $primary-color;
+      box-shadow: 0 15px 30px rgba(255, 107, 0, 0.4);
+    }
+
+    .image-clickable {
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      height: 280px;
+
+      .rapper-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: all 0.5s ease;
+      }
+
+      .rapper-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba($primary-color, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+        color: $white;
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+
+      &:hover {
+        .rapper-image {
+          transform: scale(1.05);
+        }
+
+        .rapper-overlay {
+          opacity: 1;
+        }
+      }
+    }
+
+    .candidate-info {
+      padding: 1.5rem;
+
+      h3 {
+        margin: 0 0 0.8rem 0;
+        font-size: 1.6rem;
+        color: $white;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .details {
+        p {
+          margin: 0.5rem 0;
+          font-size: 1rem;
+          text-align: center;
+
+          &.price {
+            color: $accent-color;
+            font-weight: bold;
+          }
+
+          &.votes {
+            color: $success-color;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    .vote-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(100% - 3rem);
+      margin: 1rem 1.5rem;
+      padding: 0.9rem;
+      background: $primary-color;
+      color: $white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+
+      &:hover:not(:disabled) {
+        background: $secondary-color;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba($primary-color, 0.4);
+      }
+
+      &:disabled {
+        background: #95a5a6;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  // Popup styles
+  .image-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+
+    .image-popup-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      background: linear-gradient(145deg, #111, #1c1c1c);
+      padding: 2rem;
+      border-radius: 15px;
+      cursor: default;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+
+      img {
+        max-width: 100%;
+        max-height: 70vh;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      }
+
+      .close-popup {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: $white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: $primary-color;
+          transform: scale(1.2);
+        }
+      }
+
+      .popup-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 1rem 0 0.3rem;
+        color: $white;
+      }
+
+      .popup-subtitle {
+        font-size: 1.2rem;
+        color: $light-text;
+        margin: 0;
+        font-style: italic;
+      }
+    }
+  }
+
+  // Modal de paiement
+  .payment-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+
+    .payment-modal-content {
+      background: linear-gradient(145deg, #111, #1c1c1c);
+      border-radius: 15px;
+      padding: 2.5rem;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+
+      &.compact {
+        max-width: 450px;
+        padding: 2rem;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+
+        h3 {
+          margin: 0;
+          color: $white;
+          font-size: 1.5rem;
+        }
+
+        .close-payment-modal {
+          background: none;
+          border: none;
+          font-size: 2rem;
+          color: $light-text;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover:not(:disabled) {
+            color: $primary-color;
+            transform: scale(1.2);
+          }
+
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+      }
+
+      .vote-selection {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+
+        .vote-counter {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 1rem;
+
+          label {
+            color: $light-text;
+            font-weight: 500;
+          }
+
+          .counter-controls {
+            display: flex;
+            align-items: center;
+
+            button {
+              background: $primary-color;
+              color: $white;
+              border: none;
+              width: 35px;
+              height: 35px;
+              border-radius: 50%;
+              font-size: 1.2rem;
+              cursor: pointer;
+              transition: all 0.3s ease;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              &:hover:not(:disabled) {
+                background: $secondary-color;
+                transform: scale(1.1);
+              }
+
+              &:disabled {
+                background: #95a5a6;
+                cursor: not-allowed;
+              }
+            }
+
+            input {
+              width: 60px;
+              text-align: center;
+              margin: 0 0.5rem;
+              padding: 0.5rem;
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              border-radius: 5px;
+              background: rgba(255, 255, 255, 0.1);
+              color: $white;
+              font-size: 1rem;
+
+              &:focus {
+                outline: none;
+                border-color: $primary-color;
+              }
+
+              &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+              }
+            }
+          }
+        }
+
+        .total-amount {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-top: 1rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+          span {
+            color: $light-text;
+            font-weight: 500;
+          }
+
+          .amount {
+            color: $accent-color;
+            font-size: 1.3rem;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .compact-form {
+        .payment-methods {
+          margin-bottom: 1.5rem;
+
+          &.compact-methods {
+            .method-title {
+              margin-bottom: 0.8rem;
+              color: $light-text;
+              font-weight: 500;
+            }
+
+            .method-buttons {
+              display: flex;
+              gap: 1rem;
+
+              .method-btn {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.05);
+                border: 2px solid transparent;
+                border-radius: 10px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: $light-text;
+
+                &.selected {
+                  border-color: $primary-color;
+                  background: rgba(255, 107, 0, 0.2);
+                  color: $white;
+                }
+
+                &:hover:not(:disabled) {
+                  background: rgba(255, 255, 255, 0.1);
+                }
+
+                &:disabled {
+                  opacity: 0.5;
+                  cursor: not-allowed;
+                }
+
+                .payment-icon {
+                  width: 40px;
+                  height: 40px;
+                  margin-bottom: 0.5rem;
+                  background-size: contain;
+                  background-repeat: no-repeat;
+                  background-position: center;
+
+                  &.orange-money-icon {
+                    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23FF6600"/><text x="50" y="60" font-family="Arial" font-size="30" fill="white" text-anchor="middle">OM</text></svg>');
+                  }
+
+                  &.wave-icon {
+                    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%231986F2"/><text x="50" y="60" font-family="Arial" font-size="30" fill="white" text-anchor="middle">W</text></svg>');
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .form-group {
+          margin-bottom: 1.5rem;
+
+          &.compact-input {
+            label {
+              display: block;
+              margin-bottom: 0.5rem;
+              color: $light-text;
+              font-weight: 500;
+            }
+
+            input {
+              width: 100%;
+              padding: 0.8rem;
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              border-radius: 8px;
+              background: rgba(255, 255, 255, 0.1);
+              color: $white;
+              font-size: 1rem;
+
+              &:focus {
+                outline: none;
+                border-color: $primary-color;
+              }
+
+              &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+              }
+            }
+          }
+        }
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 1rem;
+
+        .cancel-btn {
+          flex: 1;
+          padding: 0.8rem;
+          background: rgba(255, 255, 255, 0.1);
+          color: $light-text;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 8px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          font-weight: 500;
+
+          &:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.2);
+          }
+
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+
+        .submit-payment {
+          flex: 2;
+          padding: 0.8rem;
+          background: $primary-color;
+          color: $white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &.compact-submit {
+            font-size: 1rem;
+          }
+
+          &:hover:not(:disabled) {
+            background: $secondary-color;
+            transform: translateY(-2px);
+          }
+
+          &:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+          }
+
+          .processing-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: $white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+
+  // Animation de chargement
+  .rap-loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+
+    .rap-loading {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+
+      .rapper {
+        width: 30px;
+        height: 50px;
+        background: $primary-color;
+        border-radius: 50% 50% 0 0;
+        position: relative;
+        animation: bounce 1.5s infinite ease-in-out;
+
+        &:nth-child(2) {
+          animation-delay: 0.2s;
+          background: $secondary-color;
+        }
+
+        &:nth-child(3) {
+          animation-delay: 0.4s;
+          background: $accent-color;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -10px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 40px;
+          height: 10px;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 50%;
+          filter: blur(4px);
+        }
+      }
+    }
+
+    .loading-text {
+      font-size: 1.5rem;
+      color: $white;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .loading-subtext {
+      font-size: 1rem;
+      color: $light-text;
+      font-style: italic;
+    }
+  }
+
+  .error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    text-align: center;
+
+    p {
+      font-size: 1.2rem;
+      color: #e74c3c;
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      padding: 0.8rem 1.5rem;
+      background: $primary-color;
+      color: $white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: $secondary-color;
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes pulse {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.3; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .rap-container {
+    padding: 5rem 1rem 2rem;
+
+    h1 {
+      font-size: 2.2rem;
+    }
+
+    .candidates-list {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .payment-modal-overlay .payment-modal-content {
+      padding: 1.5rem;
+      width: 95%;
+
+      &.compact {
+        padding: 1.2rem;
+      }
+
+      .vote-selection .vote-counter {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+
+        .counter-controls {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      .compact-form .payment-methods.compact-methods .method-buttons {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .modal-actions {
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+// Style pour la bannière de vote terminé
+.vote-ended-banner {
+  background: rgba(255, 0, 0, 0.2);
+  border: 2px solid rgba(255, 0, 0, 0.5);
+  color: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+// Style pour les boutons désactivés
+.vote-button:disabled {
+  background: #95a5a6 !important;
+  cursor: not-allowed !important;
+  opacity: 0.7;
+}
+
+// Animation pour la bannière
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+

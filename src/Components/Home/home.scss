@@ -1,0 +1,154 @@
+:root {
+    --PrimaryColor: hsl(199, 100%, 33%);
+    --SecondaryColor: hsl(187, 85%, 43%);
+    --gradientColor: linear-gradient(to right, hsl(187, 85%, 43%), hsl(199, 100%, 33%));
+    --whiteColor: hsl(0, 0%, 100%);
+    --blackColor: hsl(201, 33%, 16%);
+    --textColor: hsl(240, 4%, 36%);
+    --whiteColorDeam: hsl(0, 0%, 93%);
+    --greyText: rgb(190, 190, 190);
+    --inputColor: rgb(239, 239, 239);
+    --bodyColor: rgb(240, 240, 246);
+    --cardBG: rgb(225, 225, 235);
+}
+
+.home {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: 80px; /* Espace fixe sous la navbar */
+
+    .background-image {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        z-index: -1;
+    }
+
+    .overlay {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background: rgb(45, 55, 58);
+        top: 0;
+        left: 0;
+        z-index: 1;
+        mix-blend-mode: hard-light;
+    }
+
+    .homeContent {
+        width: 100%;
+        height: max-content;
+        padding: 8rem 1.5rem 3rem;
+        display: flex;
+        row-gap: 3rem;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        color: var(--whiteColor);
+        z-index: 100;
+        position: relative;
+
+        .textDiv {
+            padding: 2rem 0;
+            text-align: center;
+
+            .smallText {
+                font-size: 13px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                display: block;
+                margin-bottom: 0.5rem;
+            }
+
+            .homeTitle {
+                position: relative;
+                font-size: 1.8rem;
+                font-weight: 700;
+                display: inline-block;
+                margin-bottom: 1rem;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    width: 0;
+                    height: 3px;
+                    bottom: -5px;
+                    left: 0;
+                    background: var(--SecondaryColor);
+                    transition: width 0.3s ease;
+                }
+
+                &:hover::after {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+/* Version Tablette */
+@media screen and (min-width: 500px) {
+    .home {
+        .homeContent {
+            padding: 10rem 1.5rem 5rem;
+
+            .textDiv {
+                .smallText {
+                    font-size: 16px;
+                }
+
+                .homeTitle {
+                    font-size: 2.5rem;
+
+                    &::after {
+                        height: 4px;
+                        bottom: -8px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Version Desktop */
+@media screen and (min-width: 940px) {
+    .home {
+        height: 85vh; /* modifier la hauteur de l'image */
+        margin-top: 80px;
+
+        .homeContent {
+            padding: 12rem 1.5rem;
+
+            .textDiv {
+                .homeTitle {
+                    font-size: 3rem;
+                    margin-bottom: 1.5rem;
+
+                    &::after {
+                        height: 5px;
+                        bottom: -10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Grands écrans */
+@media screen and (min-width: 1240px) {
+    .home {
+        .homeContent {
+            padding-left: 0;
+            padding-right: 0;
+            max-width: 1200px;
+        }
+    }
+}

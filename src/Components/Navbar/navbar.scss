@@ -1,0 +1,474 @@
+@import url('https:fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+:root {
+    /* Rouge micro */
+    --PrimaryColor: hsl(350, 80%, 42%);
+
+    /* Doré couronne et cercle */
+    --SecondaryColor: hsl(43, 74%, 50%);
+
+    /* Dégradé rouge → doré */
+    --gradientColor: linear-gradient(to right, hsl(350, 80%, 42%), hsl(43, 74%, 50%));
+
+    /* Blanc du texte */
+    --whiteColor: hsl(0, 0%, 100%);
+
+    /* Noir de fond */
+    --blackColor: hsl(0, 0%, 0%);
+
+    /* Gris sombre pour texte secondaire */
+    --textColor: hsl(0, 0%, 40%);
+
+    /* Blanc cassé */
+    --whiteColorDeam: hsl(0, 0%, 93%);
+
+    /* Gris clair */
+    --greyText: rgb(190, 190, 190);
+
+    /* Gris très clair pour inputs */
+    --inputColor: rgb(239, 239, 239);
+
+    /* Fond global */
+    --bodyColor: rgb(245, 245, 245);
+
+    /* Fond cartes */
+    --cardBG: rgb(225, 225, 225);
+}
+
+
+.navBarSection {
+    .header {
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--whiteColorDeam);
+        width: 100%;
+        padding: 1rem;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(2, 15, 29, 0.242);
+        height: 50px; // Ajustez selon vos besoins
+        min-height: 65px; // Empêche le rétrécissement
+         background: hsl(0, 0%, 0%); /* Noir plus foncé que --blackColor */
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+
+        .logoDiv {
+             .logo {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                .logo-img {
+                    max-height: 70px; // Taille max du logo
+                    width: auto;
+                    object-fit: contain;
+                    // Supprimez les marges parasites si nécessaire
+                    margin: 0;
+                    padding: 0;
+
+                    &:hover {
+                        transform: scale(1.05);
+                    }
+                }
+
+                h1 {
+                    margin: 0;
+                    font-size: 1.5rem;
+                }
+            }
+        }
+
+        .navBar {
+            .navLists {
+                display: flex;
+                align-items: center;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+
+                .navItem {
+                    margin: 0 0.5rem;
+                    position: relative;
+
+                    .navLink {
+                        color: var(--textColor);
+                        font-size: 0.9rem;
+                        font-weight: 600;
+                        text-decoration: none;
+                        padding: 0.5rem 0;
+                        display: block;
+                        transition: all 0.3s ease;
+                        position: relative;
+
+                        &:hover {
+                            color: var(--PrimaryColor);
+                        }
+
+                        &.active {
+                            color: var(--PrimaryColor);
+                            font-weight: bold;
+
+                            &::after {
+                                content: '';
+                                position: absolute;
+                                bottom: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 2px;
+                                background: var(--PrimaryColor);
+                                transform: scaleX(1);
+                                transition: transform 0.3s ease;
+                            }
+                        }
+                    }
+                }
+
+                .btn {
+                    background: var(--gradientColor);
+                    border: none;
+                    border-radius: 3rem;
+                    padding: 0.5rem 1.5rem;
+                    margin-left: 1rem;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+
+                    a {
+                        color: var(--whiteColor);
+                        font-weight: 600;
+                        text-decoration: none;
+                    }
+
+                    &:hover {
+                        background: var(--SecondaryColor);
+                        transform: translateY(-2px);
+                    }
+                }
+            }
+
+            .closeNavbar {
+                display: none;
+                position: absolute;
+                top: 1rem;
+                right: 1.5rem;
+                color: var(--PrimaryColor);
+                cursor: pointer;
+
+                &:hover {
+                    color: var(--SecondaryColor);
+                }
+
+                .icon {
+                    font-size: 25px;
+                }
+            }
+        }
+
+        .toggleNavbar {
+            display: none;
+            cursor: pointer;
+
+            .icon {
+                font-size: 25px;
+                color: var(--PrimaryColor);
+
+                &:hover {
+                    color: var(--SecondaryColor);
+                }
+            }
+        }
+    }
+}
+
+/* Version Mobile */
+@media screen and (max-width: 768px) {
+    .navBarSection {
+        .header {
+            .logoDiv {
+                .logo {
+                    .logo-img {
+                        max-height: 50px; // Taille réduite pour mobile
+                    }
+                }
+            }
+            .navBar {
+                position: absolute;
+                background: var(--whiteColorDeam);
+                height: max-content;
+                width: 80%;
+                border-radius: 1rem;
+                top: -500rem;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 2000;
+                box-shadow: 0 2px 4px rgba(2, 15, 29, 0.904);
+                transition: 0.5s ease-in-out;
+                padding: 1rem;
+
+                .navLists {
+                    flex-direction: column;
+                    width: 100%;
+                    margin: auto;
+                    padding: 0.5rem 0;
+
+                    .navItem {
+                        width: 100%;
+                        padding: 0.5rem 0;
+                        margin: 0;
+
+                        .navLink {
+                            padding: 0.5rem 1rem;
+                            text-align: center;
+
+                            &.active::after {
+                                width: 30%;
+                                left: 35%;
+                            }
+                        }
+                    }
+
+                    .btn {
+                        width: 100%;
+                        margin: 1rem 0 0 0;
+                        text-align: center;
+                    }
+                }
+
+                .closeNavbar {
+                    display: block;
+                }
+            }
+
+            .activeNavbar {
+                top: 7rem;
+            }
+
+            .toggleNavbar {
+                display: block;
+            }
+        }
+    }
+}
+
+/* Version Desktop */
+@media screen and (min-width: 769px) {
+    .navBarSection {
+        .header {
+            padding: 1.5rem 2rem;
+
+            .navBar {
+                .navLists {
+                    flex-direction: row;
+
+                    .navItem {
+                        .navLink {
+                            padding: 0 0.45rem;
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+
+            .toggleNavbar,
+            .closeNavbar {
+                display: none;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 960px) {
+    .navBarSection {
+        .header {
+            .navBar {
+                .navLists {
+                    .navItem {
+                        padding: 0 0.7rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1240px) {
+    .navBarSection {
+        .header {
+            padding: 1rem 8.5rem;
+        }
+    }
+}
+
+
+.contactOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.contactContent {
+  background: #fff;
+  padding: 3rem;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+
+  h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #222;
+  }
+
+  .contactInfo {
+    p {
+      margin: 0.5rem 0;
+      font-size: 1rem;
+      color: #444;
+    }
+
+    .socialLinks {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-around;
+
+      a {
+        color: #555;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s;
+
+        &:hover {
+          color: #007bff;
+        }
+      }
+    }
+  }
+}
+
+.closeModalIcon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ticketContent {
+  background: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+
+  h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+    color: var(--PrimaryColor);
+    text-align: center;
+  }
+
+  .ticketInfo {
+    text-align: center;
+    color: var(--blackColor);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .ticketForm {
+    .formGroup {
+      margin-bottom: 1.2rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--blackColor);
+      }
+
+      input[type="text"],
+      input[type="email"] {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        color: var(--blackColor);
+        transition: border-color 0.3s;
+
+        &:focus {
+          border-color: var(--PrimaryColor);
+          outline: none;
+        }
+      }
+    }
+
+    .paymentMethods {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+
+      label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        font-weight: 400;
+      }
+    }
+
+    .submitBtn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--gradientColor);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: all 0.3s;
+
+      &:hover {
+        background: var(--SecondaryColor);
+        transform: translateY(-2px);
+      }
+    }
+  }
+}

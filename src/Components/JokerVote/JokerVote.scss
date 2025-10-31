@@ -1,0 +1,219 @@
+
+.joker-vote-section {
+    margin: 3rem 0;
+}
+
+// Styles pour la carte Joker
+.joker-card-container {
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem;
+}
+
+.joker-card {
+    position: relative;
+    background: linear-gradient(135deg, var(--cardBG) 0%, hsl(0, 0%, 12%) 100%);
+    border-radius: 20px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+        transform: rotate(45deg);
+        z-index: 0;
+    }
+}
+
+.joker-card-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg,
+        hsl(35, 100%, 50%),
+        hsl(45, 100%, 50%),
+        hsl(35, 100%, 50%));
+    background-size: 200% 100%;
+    animation: glowMove 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.joker-card-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+
+    h3 {
+        color: var(--whiteColor);
+        font-size: 2rem;
+        margin: 1rem 0 0.5rem;
+        background: linear-gradient(45deg, hsl(35, 100%, 50%), hsl(45, 100%, 50%));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    p {
+        color: var(--greyText);
+        font-size: 1.1rem;
+    }
+}
+
+.joker-badge {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(45deg, hsl(35, 100%, 50%), hsl(45, 100%, 50%));
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--blackColor);
+
+    .crown-icon {
+        margin-right: 0.5rem;
+        font-size: 1rem;
+    }
+}
+
+.joker-card-content {
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.joker-feature {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+
+    .feature-icon {
+        background: rgba(255, 255, 255, 0.1);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        flex-shrink: 0;
+
+        .icon {
+            color: hsl(35, 100%, 50%);
+            font-size: 1.5rem;
+        }
+    }
+
+    .feature-text {
+        h4 {
+            color: var(--whiteColor);
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        p {
+            color: var(--greyText);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+    }
+}
+
+.joker-card-footer {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+
+    .joker-vote-btn {
+        display: inline-flex;
+        align-items: center;
+        background: linear-gradient(45deg, hsl(35, 100%, 50%), hsl(45, 100%, 50%));
+        color: var(--blackColor);
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 30px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
+
+        .btn-icon {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 165, 0, 0.4);
+        }
+    }
+
+    .vote-info {
+        margin-top: 1rem;
+        color: var(--greyText);
+        font-size: 0.9rem;
+    }
+}
+
+// Animation d'entrée
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.joker-card {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+// Responsive
+@media screen and (max-width: 768px) {
+    .joker-card {
+        padding: 2rem 1.5rem;
+
+        .joker-card-header h3 {
+            font-size: 1.7rem;
+        }
+    }
+
+    .joker-feature {
+        flex-direction: column;
+        text-align: center;
+
+        .feature-icon {
+            margin-right: 0;
+            margin-bottom: 0.8rem;
+            align-self: center;
+        }
+    }
+
+    .joker-vote-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}

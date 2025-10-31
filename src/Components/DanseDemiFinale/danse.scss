@@ -1,0 +1,891 @@
+// Variables
+$primary-color: #8e44ad; // Violet profond
+$secondary-color: #9b59b6; // Violet plus clair
+$accent-color: #e74c3c; // Rouge accent
+$text-color: #2c3e50;
+$light-text: #ecf0f1;
+$background-dark: #2c3e50;
+$background-light: #ecf0f1;
+$success-color: #2ecc71;
+$white: #ffffff;
+$shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+$orange-money-color: #FF7900;
+$wave-color: #1E2B57;
+$payment-logo-size: 30px;
+
+// Styles de base
+.danse-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 6rem 1rem 3rem;
+  font-family: 'Montserrat', sans-serif;
+  color: $text-color;
+  position: relative;
+  background: #000000;
+  border-radius: 15px;
+  box-shadow: $shadow;
+
+  h1 {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    color: $primary-color;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: $secondary-color;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
+  .back-button {
+    display: inline-block;
+    padding: 0.7rem 1.8rem;
+    background: linear-gradient(135deg, $primary-color, $secondary-color);
+    color: $white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba($primary-color, 0.3);
+    font-weight: 600;
+    letter-spacing: 1px;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba($primary-color, 0.4);
+      background: linear-gradient(135deg, $secondary-color, $primary-color);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .candidates-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  .candidate-card {
+    background: $white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: $shadow;
+    transition: all 0.4s ease;
+    position: relative;
+    border: 1px solid rgba($primary-color, 0.1);
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .image-clickable {
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      height: 280px;
+
+      .dancer-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: all 0.5s ease;
+      }
+
+      .dancer-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba($primary-color, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+        color: $white;
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+
+      &:hover {
+        .dancer-image {
+          transform: scale(1.05);
+        }
+
+        .dancer-overlay {
+          opacity: 1;
+        }
+      }
+    }
+
+    .candidate-info {
+      padding: 1.5rem;
+
+      h3 {
+        margin: 0 0 0.8rem 0;
+        font-size: 1.6rem;
+        color: $primary-color;
+        font-weight: 600;
+      }
+
+      .details {
+        p {
+          margin: 0.5rem 0;
+          font-size: 1rem;
+
+          &.style {
+            color: $secondary-color;
+            font-weight: 500;
+          }
+
+          &.price {
+            color: $accent-color;
+            font-weight: bold;
+          }
+
+          &.votes {
+            color: $success-color;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    .vote-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(100% - 3rem);
+      margin: 1rem 1.5rem;
+      padding: 0.9rem;
+      background: linear-gradient(
+          135deg,
+          #8e44ad 0%,
+          #9b59b6 50%,
+          #8e44ad 100%
+        );
+      color: $white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
+
+      .vote-icon {
+        margin-right: 0.5rem;
+        font-size: 1.3rem;
+      }
+
+      &:hover {
+         background: linear-gradient(
+              135deg,
+              #9b59b6 0%,
+              #8e44ad 50%,
+              #9b59b6 100%
+            );
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba($primary-color, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(to right, $primary-color, $secondary-color, $accent-color);
+    }
+  }
+
+  // Popup styles
+  .image-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+
+    .image-popup-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      background: $white;
+      padding: 2rem;
+      border-radius: 15px;
+      cursor: default;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+
+      img {
+        max-width: 100%;
+        max-height: 70vh;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .popup-title {
+        margin-top: 1.5rem;
+        font-size: 1.8rem;
+        color: $primary-color;
+        font-weight: bold;
+      }
+
+      .popup-subtitle {
+        margin-top: 0.5rem;
+        font-size: 1.2rem;
+        color: $secondary-color;
+        font-style: italic;
+      }
+
+      .close-popup {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        width: 50px;
+        height: 50px;
+        background: $accent-color;
+        color: $white;
+        border: none;
+        border-radius: 50%;
+        font-size: 2rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: rotate(90deg);
+          background: darken($accent-color, 10%);
+        }
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dance {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+.candidate-card {
+  animation: fadeIn 0.6s ease-out forwards;
+  opacity: 0;
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: $i * 0.1s;
+    }
+  }
+
+  &:hover {
+    .vote-icon {
+      animation: dance 0.5s ease infinite;
+    }
+  }
+}
+
+// Loading and error states
+.loading-container, .error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  text-align: center;
+
+  p {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  button {
+    padding: 0.7rem 1.8rem;
+    background: $primary-color;
+    color: $white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+
+    &:hover {
+      background: darken($primary-color, 10%);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+
+  .dance-loading {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 2rem;
+
+    .dancer {
+      position: absolute;
+      width: 40px;
+      height: 80px;
+      background: linear-gradient(to bottom, #8e44ad, #9b59b6);
+      border-radius: 20px;
+      animation: danceMove 2s infinite ease-in-out;
+
+      &:nth-child(1) {
+        left: 0;
+        animation-delay: 0s;
+      }
+      &:nth-child(2) {
+        left: 40px;
+        animation-delay: 0.2s;
+      }
+      &:nth-child(3) {
+        left: 80px;
+        animation-delay: 0.4s;
+      }
+    }
+  }
+
+  .loading-text {
+    font-size: 1.5rem;
+    color: #8e44ad;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    position: relative;
+
+    &::after {
+      content: '...';
+      position: absolute;
+      animation: dotPulse 1.5s infinite steps(4);
+      width: 20px;
+      overflow: hidden;
+    }
+  }
+
+  .loading-subtext {
+    color: #7f8c8d;
+    font-style: italic;
+  }
+}
+
+@keyframes danceMove {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    height: 80px;
+  }
+  25% {
+    transform: translateY(-30px) rotate(-5deg);
+    height: 90px;
+  }
+  50% {
+    transform: translateY(0) rotate(0deg);
+    height: 80px;
+  }
+  75% {
+    transform: translateY(-15px) rotate(5deg);
+    height: 85px;
+  }
+}
+
+@keyframes dotPulse {
+  0% { width: 0; }
+  100% { width: 40px; }
+}
+
+.error-container {
+  p {
+    color: $accent-color;
+    font-weight: 500;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Responsive design
+@media (max-width: 992px) {
+  .danse-container {
+    padding: 5rem 1rem 2rem;
+
+    h1 {
+      font-size: 2.4rem;
+    }
+
+    .candidates-list {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .danse-container {
+    padding: 4rem 1rem 2rem;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+    }
+
+    .candidates-list {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .danse-container {
+    padding: 3.5rem 0.5rem 1.5rem;
+    border-radius: 0;
+
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    .candidates-list {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// Styles pour le modal de paiement - MODIFIÉ POUR MATCHER RAP.SCSS
+.payment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(3px);
+}
+
+.payment-modal-content {
+  position: relative;
+  padding: 2rem;
+  border-radius: 15px;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-out;
+
+  h3 {
+    margin-top: 0;
+    color: $primary-color;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .payment-amount {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 1rem 0 2rem;
+    color: $accent-color;
+  }
+}
+
+// Barre de navigation pour les étapes - AJOUTÉ POUR MATCHER RAP.SCSS
+.payment-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+
+  .nav-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #ddd;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-label {
+      font-size: 0.8rem;
+      color: #7f8c8d;
+    }
+
+    &.active {
+      .step-number {
+        background: $primary-color;
+      }
+
+      .step-label {
+        color: $primary-color;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .nav-connector {
+    width: 60px;
+    height: 2px;
+    background: #ddd;
+    margin: 0 10px;
+    position: relative;
+    top: -15px;
+  }
+}
+
+// Styles pour les logos de paiement
+.payment-logo {
+  width: $payment-logo-size;
+  height: $payment-logo-size;
+  border-radius: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 12px;
+  display: inline-block;
+
+  &.orange-money {
+    background-color: $orange-money-color;
+    background-image: url('../../Assets/orange-money2.png');
+    padding: 4px;
+  }
+
+  &.wave {
+    background-color: $wave-color;
+    background-image: url('../../Assets/wave.webp');
+    padding: 4px;
+  }
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1rem;
+  color: $text-color;
+}
+
+.time-left {
+  background-color: var(--PrimaryColor);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  margin: 1rem auto;
+  display: inline-block;
+  font-weight: bold;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.vote-button:disabled {
+  background-color: #95a5a6 !important;
+  cursor: not-allowed;
+}
+
+// Styles pour le modal compact
+.payment-modal-content.compact {
+  max-width: 400px;
+  padding: 1.5rem;
+
+  h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+
+  h3 {
+    margin: 0;
+    flex: 1;
+    padding-right: 1rem;
+  }
+}
+
+.vote-selection {
+
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.vote-counter {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+  label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: $text-color;
+  }
+}
+
+.counter-controls {
+  display: flex;
+  align-items: center;
+
+  button {
+    width: 36px;
+    height: 36px;
+    border: 2px solid $primary-color;
+    background: white;
+    color: $primary-color;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: $primary-color;
+      color: white;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  input {
+    width: 60px;
+    text-align: center;
+    margin: 0 0.5rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+}
+
+.total-amount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+  border-top: 1px dashed #ddd;
+  font-weight: 600;
+
+  .amount {
+    color: $accent-color;
+    font-size: 1.2rem;
+  }
+}
+
+.compact-form {
+  .method-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: $text-color;
+  }
+}
+
+.method-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.method-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    border-color: $primary-color;
+  }
+
+  &.selected {
+    border-color: $primary-color;
+    background: rgba($primary-color, 0.1);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.compact-input {
+  margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+
+  button {
+    flex: 1;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+}
+
+.cancel-btn {
+
+  border: 2px solid #dee2e6;
+  color: #6c757d;
+
+  &:hover:not(:disabled) {
+    background: #e9ecef;
+    border-color: #ced4da;
+  }
+}
+
+.compact-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+// Amélioration de la fermeture
+.payment-modal-overlay {
+  cursor: pointer;
+
+  .payment-modal-content {
+    cursor: default;
+  }
+}
+
+.close-payment-modal {
+  position: static;
+  width: 32px;
+  height: 32px;
+  top: auto;
+  right: auto;
+  background: #f1f3f5;
+  color: #6c757d;
+  font-size: 1.2rem;
+
+  &:hover:not(:disabled) {
+    background: #e9ecef;
+    transform: rotate(90deg);
+  }
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .payment-modal-content.compact {
+    width: 95%;
+    padding: 1rem;
+  }
+
+  .method-buttons {
+    flex-direction: column;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+}
+
+// Styles pour les icônes de paiement
+.payment-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.orange-money-icon {
+  background-color: #FF7900;
+  background-image: url('../../Assets/orange-money2.png');
+  padding: 4px;
+  border: 2px solid lighten(#FF7900, 10%);
+}
+
+.wave-icon {
+  background-color: #1E2B57;
+  background-image: url('../../Assets/wave.webp');
+  padding: 4px;
+  border: 2px solid lighten(#1E2B57, 10%);
+}

@@ -119,7 +119,7 @@ const Navbar = () => {
 
                             <li className="navItem">
                                 <a
-                                    href="#"
+                                    href="#contact"
                                     className="navLink"
                                     onClick={handleContactClick}
                                 >

@@ -1,0 +1,25 @@
+.ranking-chart {
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.ranking-chart-title {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.ranking-chart-empty {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.ranking-chart-error {
+  color: #ef4444;
+  font-size: 0.9rem;
+  text-align: center;
+}

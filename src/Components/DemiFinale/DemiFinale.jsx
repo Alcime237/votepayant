@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import chantImg from '../../Assets/chant.jpg';
 import rapImg from '../../Assets/rap.jpg';
@@ -8,8 +7,8 @@ import { LuClipboardCheck } from 'react-icons/lu';
 import './demiFinale.scss';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-
-const API_BASE_URL = "http://localhost:8080";
+import { getCampaignStatus } from '../../services/campaignService';
+import RankingChart from '../RankingChart/RankingChart';
 
 const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -25,10 +24,10 @@ const CountdownTimer = () => {
   useEffect(() => {
     const fetchVoteConfig = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/admin/vote-config/status`);
-        setVotingActive(response.data.isActive);
-        if (response.data.endDate) {
-          setEndTime(new Date(response.data.endDate).getTime());
+        const status = await getCampaignStatus();
+        setVotingActive(status.active);
+        if (status.endDate) {
+          setEndTime(new Date(status.endDate).getTime());
         }
       } catch (error) {
         console.error("Erreur:", error);
@@ -168,6 +167,8 @@ const DemiFinale = () => {
           </div>
         </div>
       </div>
+
+      <RankingChart />
     </section>
   );
 };

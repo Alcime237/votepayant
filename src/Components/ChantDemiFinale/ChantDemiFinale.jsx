@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './chant.scss';
+import { getCandidatesByCategory } from '../../services/candidateService';
+import { getCampaignStatus } from '../../services/campaignService';
+import { createVoteOrder, pollVoteOrderUntilSettled } from '../../services/voteOrderService';
+import { openTouchPayWidget } from '../../services/touchpayWidget';
+
+const UNIT_PRICE_FCFA = 200;
 
 const ChantDemiFinale = () => {
   const [candidates, setCandidates] = useState([]);
@@ -21,9 +27,7 @@ const ChantDemiFinale = () => {
   // Fonction pour récupérer les candidats
   const fetchCandidates = async () => {
     try {
-      const response = await fetch('http://localhost:8080/vote-chant');
-      if (!response.ok) throw new Error('Erreur réseau');
-      const data = await response.json();
+      const data = await getCandidatesByCategory('CHANT');
       setCandidates(data);
     } catch (err) {
       setError(err.message);
@@ -39,13 +43,12 @@ const ChantDemiFinale = () => {
   useEffect(() => {
     const checkVoteStatus = async () => {
       try {
-        const response = await fetch('http://localhost:8080/admin/vote-config/status');
-        const data = await response.json();
-        setVotingActive(data.isActive);
+        const data = await getCampaignStatus();
+        setVotingActive(data.active);
 
         if (data.endDate) {
           const endDate = new Date(data.endDate);
-          const now = new Date(data.currentTime || new Date());
+          const now = new Date(data.serverTime || new Date());
           const diff = endDate - now;
 
           if (diff > 0) {
@@ -78,7 +81,7 @@ const ChantDemiFinale = () => {
     }
   }, [timeLeft]);
 
-  const totalAmount = selectedCandidate ? selectedCandidate.prixVote * voteCount : 0;
+  const totalAmount = selectedCandidate ? UNIT_PRICE_FCFA * voteCount : 0;
 
   const handleVoteClick = (candidate) => {
     if (!votingActive) {
@@ -110,42 +113,30 @@ const ChantDemiFinale = () => {
     setIsProcessing(true);
 
     try {
-      // Simulation de paiement - À REMPLACER par votre logique réelle
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      // Envoyer le vote au backend
-      const response = await fetch('http://localhost:8080/vote-chant/vote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          candidateId: selectedCandidate.id,
-          votes: voteCount,
-          paymentMethod: paymentMethod,
-          phoneNumber: phoneNumber,
-          amount: totalAmount
-        })
+      const order = await createVoteOrder({
+        candidateId: selectedCandidate.id,
+        phoneNumber,
+        amountFcfa: totalAmount,
       });
 
-      if (!response.ok) {
-        throw new Error('Erreur lors de l\'enregistrement du vote');
+      await openTouchPayWidget(order.paymentWidgetParams);
+
+      const settled = await pollVoteOrderUntilSettled(order.id);
+
+      if (settled.status === 'PAID') {
+        alert(`Paiement confirmé pour ${voteCount} vote(s) sur ${selectedCandidate.fullName} !`);
+        await fetchCandidates();
+        setPaymentMethod('');
+        setPhoneNumber('');
+        setShowPaymentModal(false);
+        setCurrentStep(1);
+      } else if (settled.timedOut) {
+        alert("Le paiement est toujours en attente de confirmation. Vérifiez votre téléphone puis réessayez si besoin.");
+      } else {
+        alert(`Le paiement n'a pas abouti (statut: ${settled.status}).`);
       }
-
-      await response.json();
-
-      alert(`Paiement de ${totalAmount} FCFA accepté pour ${voteCount} vote(s) pour ${selectedCandidate.nomChant}`);
-
-      // Rafraîchir la liste des candidats pour mettre à jour les votes
-      await fetchCandidates();
-
-      setPaymentMethod('');
-      setPhoneNumber('');
-      setShowPaymentModal(false);
-      setCurrentStep(1);
-
     } catch (err) {
-      alert('Erreur de paiement: ' + err.message);
+      alert('Erreur de paiement: ' + (err.response?.data?.detail || err.message));
     } finally {
       setIsProcessing(false);
     }
@@ -186,18 +177,17 @@ const ChantDemiFinale = () => {
          {candidates.map((candidate) => (
            <div key={candidate.id} className="candidate-card">
              <div className="image-clickable" onClick={() => setSelectedImage({
-               url: `http://localhost:8080/vote-chant/photo/${candidate.id}`,
-               name: candidate.nomChant
+               url: candidate.photoUrl,
+               name: candidate.fullName
              })}>
                <img
-                 src={`http://localhost:8080/vote-chant/photo/${candidate.id}`}
-                 alt={candidate.nomChant}
+                 src={candidate.photoUrl}
+                 alt={candidate.fullName}
                />
              </div>
              <div className="candidate-info">
-               <h3>{candidate.nomChant}</h3>
-               <p className="price">Prix: {candidate.prixVote} FCFA/vote</p>
-               <p className="votes">Votes: {candidate.votes}</p>
+               <h3>{candidate.fullName}</h3>
+               <p className="price">Prix: {UNIT_PRICE_FCFA} FCFA/vote</p>
              </div>
              <button
                className={`vote-button ${!votingActive ? 'disabled' : ''}`}
@@ -239,7 +229,7 @@ const ChantDemiFinale = () => {
              </div>
 
              <div className="modal-header">
-               <h3>Voter pour {selectedCandidate.nomChant}</h3>
+               <h3>Voter pour {selectedCandidate.fullName}</h3>
                <button
                  className="close-payment-modal"
                  onClick={() => setShowPaymentModal(false)}

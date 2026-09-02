@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './danse.scss';
+import { getCandidatesByCategory } from '../../services/candidateService';
+import { getCampaignStatus } from '../../services/campaignService';
+import { createVoteOrder, pollVoteOrderUntilSettled } from '../../services/voteOrderService';
+import { openTouchPayWidget } from '../../services/touchpayWidget';
+
+const UNIT_PRICE_FCFA = 200;
 
 const Danse = () => {
   const [candidates, setCandidates] = useState([]);
@@ -18,37 +24,32 @@ const Danse = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const navigate = useNavigate();
 
-  const totalAmount = selectedCandidate ? selectedCandidate.prixVote * voteCount : 0;
+  const totalAmount = selectedCandidate ? UNIT_PRICE_FCFA * voteCount : 0;
+
+  const fetchCandidates = async () => {
+    try {
+      const data = await getCandidatesByCategory('DANSE');
+      setCandidates(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchCandidates = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/vote-danse');
-        if (!response.ok) {
-          throw new Error('Erreur lors de la récupération des candidats');
-        }
-        const data = await response.json();
-        setCandidates(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchCandidates();
   }, []);
 
   useEffect(() => {
     const checkVoteStatus = async () => {
       try {
-        const response = await fetch('http://localhost:8080/admin/vote-config/status');
-        const data = await response.json();
-        setVotingActive(data.isActive);
+        const data = await getCampaignStatus();
+        setVotingActive(data.active);
 
         if (data.endDate) {
           const endDate = new Date(data.endDate);
-          const now = new Date(data.currentTime || new Date());
+          const now = new Date(data.serverTime || new Date());
           const diff = endDate - now;
 
           if (diff > 0) {
@@ -110,14 +111,30 @@ const Danse = () => {
     setIsProcessing(true);
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      alert(`Paiement de ${totalAmount} FCFA effectué avec succès pour ${voteCount} vote(s) pour ${selectedCandidate.nomDanse} via ${paymentMethod === 'orange' ? 'Orange Money' : 'Wave'}`);
-      setPaymentMethod('');
-      setPhoneNumber('');
-      setShowPaymentModal(false);
-      setCurrentStep(1);
+      const order = await createVoteOrder({
+        candidateId: selectedCandidate.id,
+        phoneNumber,
+        amountFcfa: totalAmount,
+      });
+
+      await openTouchPayWidget(order.paymentWidgetParams);
+
+      const settled = await pollVoteOrderUntilSettled(order.id);
+
+      if (settled.status === 'PAID') {
+        alert(`Paiement confirmé pour ${voteCount} vote(s) sur ${selectedCandidate.fullName} !`);
+        await fetchCandidates();
+        setPaymentMethod('');
+        setPhoneNumber('');
+        setShowPaymentModal(false);
+        setCurrentStep(1);
+      } else if (settled.timedOut) {
+        alert("Le paiement est toujours en attente de confirmation. Vérifiez votre téléphone puis réessayez si besoin.");
+      } else {
+        alert(`Le paiement n'a pas abouti (statut: ${settled.status}).`);
+      }
     } catch (error) {
-      alert('Erreur lors du paiement: ' + error.message);
+      alert('Erreur lors du paiement: ' + (error.response?.data?.detail || error.message));
     } finally {
       setIsProcessing(false);
     }
@@ -168,14 +185,11 @@ const Danse = () => {
           <div key={candidate.id} className="candidate-card">
             <div
               className="image-clickable"
-              onClick={() => openImagePopup(
-                `http://localhost:8080/vote-danse/photo/${candidate.id}`,
-                candidate.nomDanse
-              )}
+              onClick={() => openImagePopup(candidate.photoUrl, candidate.fullName)}
             >
               <img
-                src={`http://localhost:8080/vote-danse/photo/${candidate.id}`}
-                alt={candidate.nomDanse}
+                src={candidate.photoUrl}
+                alt={candidate.fullName}
                 className="dancer-image"
               />
               <div className="dancer-overlay">
@@ -183,11 +197,9 @@ const Danse = () => {
               </div>
             </div>
             <div className="candidate-info">
-              <h3>{candidate.nomDanse}</h3>
+              <h3>{candidate.fullName}</h3>
               <div className="details">
-                <p className="style">Style: {candidate.style || 'Dance crew'}</p>
-                <p className="price">Prix: {candidate.prixVote} FCFA/vote</p>
-                <p className="votes">Votes: {candidate.votes}</p>
+                <p className="price">Prix: {UNIT_PRICE_FCFA} FCFA/vote</p>
               </div>
             </div>
             <button
@@ -231,7 +243,7 @@ const Danse = () => {
             </div>
 
             <div className="modal-header">
-              <h3>Voter pour {selectedCandidate.nomDanse}</h3>
+              <h3>Voter pour {selectedCandidate.fullName}</h3>
               <button
                 className="close-payment-modal"
                 onClick={() => setShowPaymentModal(false)}

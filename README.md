@@ -1,3 +1,43 @@
+# votepayant — Dakar Talent Show
+
+Front-end de vote payant. Le design est conservé tel quel ; seule la couche d'accès aux
+données a été reconstruite (Phase 3) pour parler au backend `../backend`.
+
+## Configuration
+
+```bash
+cp .env.example .env   # REACT_APP_API_URL (par défaut http://localhost:8080)
+npm install
+npm start
+```
+
+## Où se trouve quoi
+
+- `src/services/` : toute la couche API, centralisée (plus aucun `fetch`/`axios` en dur vers
+  `localhost:8080` dans les composants) — `apiClient`, `candidateService`, `campaignService`,
+  `voteOrderService`, `touchpayWidget`, `rankingService`.
+- `src/Components/RankingChart/` : graphique de classement en direct (Phase 5), abonné au
+  flux SSE du backend.
+
+## État du paiement (dépend de la Phase 2 backend)
+
+Le flux réel est câblé : création de commande → ouverture du widget MyTouchPoint
+(`touchpayWidget.js`, reproduit tel quel depuis l'exemple `SATURN FITNESS...htm` fourni) →
+polling du statut. **Tant que le webhook MyTouchPoint n'est pas implémenté côté backend
+(Phase 2, en attente de la documentation technique), le statut reste PENDING indéfiniment** —
+le polling se termine par un timeout attendu, pas une confirmation de paiement. Voir
+`../backend/README.md` et `../DEMANDE-MYTOUCHPOINT.md`.
+
+## Gaps connus hors périmètre des phases validées
+
+- La page `/partenaires` appelle un endpoint `/partenaire` que le nouveau backend n'expose pas
+  encore (jamais construit dans les phases 1-7) — elle affichera une liste vide tant que ce
+  module n'est pas ajouté.
+- Le champ `style` affiché sur les cartes de danse (ancien modèle) n'a pas d'équivalent dans
+  l'entité `Candidate` actuelle (attributs génériques uniquement) — retiré de l'affichage.
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

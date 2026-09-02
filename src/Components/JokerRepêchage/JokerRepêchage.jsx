@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { LuClock, LuMusic, LuMic, LuZap } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import "./JokerRepêchage.scss";
+import { getCampaignStatus } from "../../services/campaignService";
 
 const JokerRepêchage = () => {
   const navigate = useNavigate();
@@ -17,22 +18,6 @@ const JokerRepêchage = () => {
     { id: "danse", title: "Danse", icon: LuZap, description: "Danseurs prêts pour la revanche", path: "/voter-joker/danse" },
   ];
 
-  // Fonction pour récupérer le statut du vote joker
-  const fetchVoteStatus = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/joker/vote-config/status");
-      const data = await response.json();
-
-      setVoteStatus({
-        isActive: data.isActive,
-        endDate: data.endDate ? new Date(data.endDate) : null,
-        timeLeft: data.endDate ? calculateTimeLeft(new Date(data.endDate)) : null
-      });
-    } catch (error) {
-      console.error("Erreur lors de la récupération du statut:", error);
-    }
-  };
-
   // Calcul du temps restant
   const calculateTimeLeft = (endDate) => {
     const now = new Date();
@@ -42,6 +27,21 @@ const JokerRepêchage = () => {
 
     return Math.floor(difference / 1000);
   };
+
+  // Fonction pour récupérer le statut du vote joker
+  const fetchVoteStatus = useCallback(async () => {
+    try {
+      const data = await getCampaignStatus();
+
+      setVoteStatus({
+        isActive: data.active,
+        endDate: data.endDate ? new Date(data.endDate) : null,
+        timeLeft: data.endDate ? calculateTimeLeft(new Date(data.endDate)) : null
+      });
+    } catch (error) {
+      console.error("Erreur lors de la récupération du statut:", error);
+    }
+  }, []);
 
   // Mise à jour du compte à rebours
   useEffect(() => {

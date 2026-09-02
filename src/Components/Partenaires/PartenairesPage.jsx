@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './PartenairesPage.css'; // Nous créerons ce fichier CSS
+import { API_BASE_URL } from '../../services/apiClient';
 
-const API_BASE_URL = "http://localhost:8080";
+// NOTE : le nouveau backend n'expose pas encore d'API "partenaires" (hors périmètre des
+// phases 1-7 validées). Cette page appellera un endpoint /partenaire inexistant tant que
+// ce module n'est pas construit — comportement attendu, pas une régression de cette phase.
 
 const PartenairesPage = () => {
   const [partenaires, setPartenaires] = useState([]);

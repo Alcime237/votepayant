@@ -95,8 +95,6 @@ const AppPublic = () => {
           <Route path="/danse" element={<DanseDemiFinale />} />
           <Route path="/voter-joker" element={<JokerVote />} />
           <Route path="/joker-repechage" element={<JokerRepêchage />} />
-
-          // Ajoutez cette route avec les autres routes
           <Route path="/voter-joker/danse" element={<JokerDanse />} />
           <Route path="/voter-joker/chant" element={<JokerChant />} />
           <Route path="/voter-joker/rap" element={<JokerRap />} />

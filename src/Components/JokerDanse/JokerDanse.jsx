@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./JokerDanse.scss";
+import { getCandidatesByCategory } from '../../services/candidateService';
+import { getCampaignStatus } from '../../services/campaignService';
+import { createVoteOrder, pollVoteOrderUntilSettled } from '../../services/voteOrderService';
+import { openTouchPayWidget } from '../../services/touchpayWidget';
+
+const UNIT_PRICE_FCFA = 200;
 
 const JokerDanse = () => {
   const navigate = useNavigate();
@@ -22,8 +27,6 @@ const JokerDanse = () => {
   });
   const [currentStep, setCurrentStep] = useState(1);
 
-  const API_BASE_URL = "http://localhost:8080";
-
   useEffect(() => {
     fetchCandidates();
     fetchVoteStatus();
@@ -31,8 +34,8 @@ const JokerDanse = () => {
 
   const fetchCandidates = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/joker-danse`);
-      setCandidates(response.data);
+      const data = await getCandidatesByCategory('JOKER_DANSE');
+      setCandidates(data);
       setLoading(false);
     } catch (err) {
       setError("Erreur lors du chargement des candidats");
@@ -42,10 +45,10 @@ const JokerDanse = () => {
 
   const fetchVoteStatus = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/joker/vote-config/status`);
+      const data = await getCampaignStatus();
       setVoteStatus({
-        isActive: response.data.isActive,
-        endDate: response.data.endDate
+        isActive: data.active,
+        endDate: data.endDate
       });
     } catch (error) {
       console.error("Erreur lors de la récupération du statut:", error);
@@ -83,26 +86,30 @@ const JokerDanse = () => {
 
     setProcessing(true);
     try {
-      const totalAmount = selectedCandidate.prixVote * voteCount;
+      const totalAmount = UNIT_PRICE_FCFA * voteCount;
 
-      // Simuler un paiement (à remplacer par un vrai appel API)
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      // Enregistrer le vote
-      await axios.post(`${API_BASE_URL}/joker-danse/vote`, {
+      const order = await createVoteOrder({
         candidateId: selectedCandidate.id,
-        votes: voteCount,
-        amount: totalAmount,
-        paymentMethod,
-        phoneNumber
+        phoneNumber,
+        amountFcfa: totalAmount,
       });
 
-      alert("Vote enregistré avec succès!");
-      setShowPaymentModal(false);
-      setCurrentStep(1);
-      fetchCandidates(); // Recharger les données
+      await openTouchPayWidget(order.paymentWidgetParams);
+
+      const settled = await pollVoteOrderUntilSettled(order.id);
+
+      if (settled.status === 'PAID') {
+        alert("Vote enregistré avec succès !");
+        setShowPaymentModal(false);
+        setCurrentStep(1);
+        fetchCandidates();
+      } else if (settled.timedOut) {
+        alert("Le paiement est toujours en attente de confirmation. Vérifiez votre téléphone puis réessayez si besoin.");
+      } else {
+        alert(`Le paiement n'a pas abouti (statut: ${settled.status}).`);
+      }
     } catch (err) {
-      alert("Erreur lors du traitement du vote");
+      alert("Erreur lors du traitement du vote: " + (err.response?.data?.detail || err.message));
     } finally {
       setProcessing(false);
     }
@@ -110,8 +117,8 @@ const JokerDanse = () => {
 
   const openImagePopup = (candidate) => {
     setSelectedImage({
-      url: `${API_BASE_URL}/joker-danse/photo/${candidate.id}`,
-      name: candidate.nomJokerDanse
+      url: candidate.photoUrl,
+      name: candidate.fullName
     });
     setShowImagePopup(true);
   };
@@ -160,8 +167,8 @@ const JokerDanse = () => {
               onClick={() => openImagePopup(candidate)}
             >
               <img
-                src={`${API_BASE_URL}/joker-danse/photo/${candidate.id}`}
-                alt={candidate.nomJokerDanse}
+                src={candidate.photoUrl}
+                alt={candidate.fullName}
                 className="dancer-image"
                 onError={(e) => {
                   e.target.src = "https://via.placeholder.com/300x300/1a1a1a/ffffff?text=Image+Non+Disponible";
@@ -171,10 +178,9 @@ const JokerDanse = () => {
             </div>
 
             <div className="candidate-info">
-              <h3>{candidate.nomJokerDanse}</h3>
+              <h3>{candidate.fullName}</h3>
               <div className="details">
-                <p className="price">Prix du vote: {candidate.prixVote?.toLocaleString()} FCFA</p>
-                <p className="votes">Votes: {candidate.votes?.toLocaleString() || 0}</p>
+                <p className="price">Prix du vote: {UNIT_PRICE_FCFA.toLocaleString()} FCFA</p>
               </div>
             </div>
 
@@ -183,7 +189,7 @@ const JokerDanse = () => {
               onClick={() => handleVote(candidate)}
               disabled={!voteStatus.isActive}
             >
-              {voteStatus.isActive ? `VOTER (${candidate.prixVote} FCFA)` : "TERMINÉ"}
+              {voteStatus.isActive ? `VOTER (${UNIT_PRICE_FCFA} FCFA)` : "TERMINÉ"}
             </button>
           </div>
         ))}
@@ -207,7 +213,7 @@ const JokerDanse = () => {
             </div>
 
             <div className="modal-header">
-              <h3>Voter pour {selectedCandidate.nomJokerDanse}</h3>
+              <h3>Voter pour {selectedCandidate.fullName}</h3>
               <button
                 className="close-payment-modal"
                 onClick={() => setShowPaymentModal(false)}
@@ -247,7 +253,7 @@ const JokerDanse = () => {
                 <div className="total-amount">
                   <span>Total:</span>
                   <span className="amount">
-                    {(selectedCandidate.prixVote * voteCount).toLocaleString()} FCFA
+                    {(UNIT_PRICE_FCFA * voteCount).toLocaleString()} FCFA
                   </span>
                 </div>
               </div>
@@ -321,7 +327,7 @@ const JokerDanse = () => {
                       Traitement...
                     </>
                   ) : (
-                    `Payer ${(selectedCandidate.prixVote * voteCount).toLocaleString()} FCFA`
+                    `Payer ${(UNIT_PRICE_FCFA * voteCount).toLocaleString()} FCFA`
                   )}
                 </button>
               )}

@@ -41,9 +41,9 @@
     right: 0;
     height: 5px;
     background: linear-gradient(90deg,
-        hsl(35, 100%, 50%),
-        hsl(45, 100%, 50%),
-        hsl(35, 100%, 50%));
+        var(--SecondaryColor),
+        var(--AccentGold),
+        var(--SecondaryColor));
     background-size: 200% 100%;
     animation: glowMove 3s ease-in-out infinite alternate;
 }
@@ -64,10 +64,12 @@
     z-index: 1;
 
     h3 {
+        font-family: var(--font-display);
         color: var(--whiteColor);
         font-size: 2rem;
+        font-weight: 800;
         margin: 1rem 0 0.5rem;
-        background: linear-gradient(45deg, hsl(35, 100%, 50%), hsl(45, 100%, 50%));
+        background: linear-gradient(45deg, var(--SecondaryColor), var(--AccentGold));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -82,7 +84,7 @@
 .joker-badge {
     display: inline-flex;
     align-items: center;
-    background: linear-gradient(45deg, hsl(35, 100%, 50%), hsl(45, 100%, 50%));
+    background: linear-gradient(45deg, var(--SecondaryColor), var(--AccentGold));
     padding: 0.5rem 1rem;
     border-radius: 30px;
     font-size: 0.8rem;
@@ -118,7 +120,7 @@
         flex-shrink: 0;
 
         .icon {
-            color: hsl(35, 100%, 50%);
+            color: var(--SecondaryColor);
             font-size: 1.5rem;
         }
     }
@@ -146,7 +148,7 @@
     .joker-vote-btn {
         display: inline-flex;
         align-items: center;
-        background: linear-gradient(45deg, hsl(35, 100%, 50%), hsl(45, 100%, 50%));
+        background: linear-gradient(45deg, var(--SecondaryColor), var(--AccentGold));
         color: var(--blackColor);
         border: none;
         padding: 1rem 2rem;

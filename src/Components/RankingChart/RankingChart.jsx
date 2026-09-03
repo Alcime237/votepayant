@@ -69,9 +69,25 @@ const RankingChart = () => {
     colorTier: entry.colorTier,
   }));
 
+  const podium = data.slice(0, 3);
+  const medals = ['🥇', '🥈', '🥉'];
+
   return (
     <div className="ranking-chart">
       <h3 className="ranking-chart-title">Classement en direct</h3>
+
+      {podium.length > 0 && (
+        <div className="ranking-podium">
+          {podium.map((entry, i) => (
+            <div key={entry.name} className={`ranking-podium__item rank-${i + 1}`}>
+              <span className="ranking-podium__medal">{medals[i]}</span>
+              <span className="ranking-podium__name">{entry.name}</span>
+              <span className="ranking-podium__points">{entry.points} pts</span>
+            </div>
+          ))}
+        </div>
+      )}
+
       <ResponsiveContainer width="100%" height={Math.max(220, data.length * 48)}>
         <BarChart data={data} layout="vertical" margin={{ top: 8, right: 32, bottom: 8, left: 8 }}>
           <XAxis type="number" hide />

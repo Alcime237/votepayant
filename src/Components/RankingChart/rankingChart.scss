@@ -1,25 +1,125 @@
 .ranking-chart {
-  max-width: 720px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  max-width: 760px;
+  margin: 3rem auto 1rem;
+  padding: 2rem 1.75rem;
+  background: linear-gradient(180deg, hsla(0, 0%, 100%, 0.05), hsla(0, 0%, 100%, 0.015));
+  border: 1px solid var(--cardBorder);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradientColor);
+  }
 }
 
 .ranking-chart-title {
-  margin: 0 0 1rem;
-  font-size: 1.1rem;
+  margin: 0 0 1.5rem;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--whiteColor);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  &::before {
+    content: '🏆';
+    font-size: 1.2rem;
+  }
+}
+
+.ranking-podium {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.ranking-podium__item {
+  flex: 1;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1rem 0.75rem;
+  border-radius: var(--radius-md);
+  background: hsla(0, 0%, 100%, 0.03);
+  border: 1px solid hsla(0, 0%, 100%, 0.08);
+  text-align: center;
+
+  &.rank-1 {
+    border-color: hsla(45, 100%, 60%, 0.5);
+    background: hsla(45, 100%, 55%, 0.08);
+    order: 2;
+    transform: translateY(-8px);
+  }
+
+  &.rank-2 { order: 1; }
+  &.rank-3 { order: 3; }
+}
+
+.ranking-podium__medal {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.ranking-podium__name {
   font-weight: 600;
+  color: var(--whiteColor);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.ranking-podium__points {
+  font-family: var(--font-display);
+  color: var(--AccentGold);
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .ranking-chart-empty {
-  color: #6b7280;
+  color: var(--greyText);
   font-size: 0.95rem;
+  text-align: center;
+  padding: 1.5rem 0;
 }
 
 .ranking-chart-error {
-  color: #ef4444;
+  color: #ff6b6b;
   font-size: 0.9rem;
   text-align: center;
+}
+
+/* recharts rend son propre SVG : on retouche uniquement le texte des axes/tooltip */
+.ranking-chart .recharts-text {
+  fill: var(--whiteColorDeam);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.ranking-chart .recharts-default-tooltip {
+  background: hsl(0, 0%, 8%) !important;
+  border: 1px solid var(--cardBorder) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--whiteColor) !important;
+}
+
+.ranking-chart .recharts-tooltip-label {
+  color: var(--AccentGold) !important;
+}
+
+.ranking-chart .recharts-bar-rectangle {
+  filter: drop-shadow(0 4px 10px hsla(0, 0%, 0%, 0.4));
 }

@@ -50,23 +50,30 @@ const PartenairesPage = () => {
   return (
     <div className="partenaires-container">
       <h1 className="partenaires-title">Nos Partenaires</h1>
-      <div className="partenaires-grid">
-        {partenaires.map((partenaire) =>
-          partenaire.websiteUrl ? (
-            <a
-              key={partenaire.id}
-              href={partenaire.websiteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="partenaire-card-link"
-            >
-              {renderCard(partenaire)}
-            </a>
-          ) : (
-            renderCard(partenaire)
-          )
-        )}
-      </div>
+      <p className="partenaires-subtitle">
+        Ils rendent possible le Dakar Talent Show et accompagnent les talents jusqu'à la grande finale.
+      </p>
+      {partenaires.length === 0 ? (
+        <p className="partenaires-empty">Aucun partenaire à afficher pour le moment.</p>
+      ) : (
+        <div className="partenaires-grid">
+          {partenaires.map((partenaire) =>
+            partenaire.websiteUrl ? (
+              <a
+                key={partenaire.id}
+                href={partenaire.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="partenaire-card-link"
+              >
+                {renderCard(partenaire)}
+              </a>
+            ) : (
+              renderCard(partenaire)
+            )
+          )}
+        </div>
+      )}
     </div>
   );
 };

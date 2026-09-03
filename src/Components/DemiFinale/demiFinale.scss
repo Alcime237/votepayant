@@ -1,139 +1,43 @@
-:root{
-    --PrimaryColor: hsl(199, 100%, 33%);
-    --SecondaryColor: hsl(187, 85%, 43%);
-    --gradientColor: linear-gradient(to right, hsl(187, 85%, 43%), hsl(199, 100%, 33%));
-    --whiteColor: hsl(0, 0%, 100%);
-    --blackColor: hsl(201, 33%, 16%);
-    --textColor: hsl(240, 4%, 36%);
-    --whiteColorDeam: hsl(0, 0%, 93%);
-    --greyText: rgb(190, 190, 190);
-    --inputColor: rgb(239, 239, 239);
-    --bodyColor: rgb(240, 240, 246);
-    --cardBG: rgb(225, 225, 235);
-    --cardHover: rgb(255, 255, 255);
-}
+@import '../../styles/destinationCards';
 
 .demi-finale {
   padding: 4rem 0 2rem;
-
-  .secTitle {
-    text-align: center;
-    margin-bottom: 2rem;
-
-    .title {
-      color: var(--PrimaryColor);
-      font-size: 2rem;
-      font-weight: 600;
-    }
-  }
-
-  .secContent {
-    display: grid;
-    gap: 2rem;
-    justify-content: center;
-
-    .singleDestination {
-      background: var(--cardBG);
-      border-radius: 1rem;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-      }
-
-      .imageDiv {
-        height: 200px;
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.5s ease;
-        }
-
-        &::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.7));
-        }
-      }
-
-      &:hover .imageDiv img {
-        transform: scale(1.05);
-      }
-
-      .cardInfo {
-        padding: 1.5rem;
-
-        .destTitle {
-          color: var(--blackColor);
-          font-size: 1.5rem;
-          margin-bottom: 1rem;
-        }
-
-        .desc {
-          color: var(--textColor);
-          margin-bottom: 1.5rem;
-          line-height: 1.5;
-        }
-
-        .btn {
-          background: var(--gradientColor);
-          color: var(--whiteColor);
-          padding: 0.8rem 1.8rem;
-          border: none;
-          border-radius: 3rem;
-          font-weight: 600;
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-          &:hover {
-            background: var(--SecondaryColor);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-          }
-
-          .icon {
-            font-size: 1.2rem;
-          }
-        }
-      }
-    }
-  }
 }
 
 .countdown-section {
-  background: var(--PrimaryColor);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, hsla(0, 0%, 100%, 0.05), hsla(0, 0%, 100%, 0.015));
+  border: 1px solid var(--cardBorder);
   color: var(--whiteColor);
-  padding: 2rem;
-  border-radius: 1rem;
-  margin: 2rem 0;
+  padding: 2.25rem 1.5rem;
+  border-radius: var(--radius-lg);
+  margin: 0 0 3rem;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-card);
+
+  &.inactive {
+    background: hsla(0, 0%, 100%, 0.03);
+    padding: 1.5rem;
+
+    h3 {
+      color: var(--greyText);
+      font-weight: 500;
+      margin: 0;
+    }
+  }
 
   h3 {
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
+    font-family: var(--font-display);
+    margin-bottom: 1.75rem;
+    font-size: 1.3rem;
+    color: var(--whiteColorDeam);
   }
 
   .countdown-timer {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.25rem;
     flex-wrap: wrap;
   }
 
@@ -142,81 +46,53 @@
     flex-direction: column;
     align-items: center;
     min-width: 80px;
+    padding: 0.9rem 0.5rem;
+    border-radius: var(--radius-md);
+    background: hsla(0, 0%, 0%, 0.35);
+    border: 1px solid hsla(38, 100%, 60%, 0.2);
   }
 
   .countdown-value {
-    font-size: 2.5rem;
-    font-weight: bold;
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 800;
     line-height: 1;
+    background: var(--gradientText);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-variant-numeric: tabular-nums;
   }
 
   .countdown-label {
-    font-size: 1rem;
+    font-size: 0.78rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    opacity: 0.8;
+    letter-spacing: 1.5px;
+    opacity: 0.75;
+    margin-top: 0.35rem;
   }
 }
 
 /* Responsive Design */
-@media (min-width: 768px) {
-  .demi-finale {
-    .secContent {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-}
-
 @media (max-width: 768px) {
   .demi-finale {
     padding: 3rem 0 1rem;
-
-    .secContent {
-      grid-template-columns: 1fr;
-
-      .singleDestination {
-        max-width: 400px;
-        margin: 0 auto;
-      }
-    }
   }
 
   .countdown-section {
-    padding: 1.5rem;
+    padding: 1.5rem 1rem;
 
     .countdown-timer {
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
     .countdown-item {
-      min-width: 70px;
+      min-width: 65px;
+      padding: 0.7rem 0.4rem;
     }
 
     .countdown-value {
-      font-size: 2rem;
+      font-size: 1.9rem;
     }
   }
 }
-
-@media (max-width: 480px) {
-  .demi-finale {
-    .secTitle .title {
-      font-size: 1.5rem;
-    }
-
-    .singleDestination {
-      .cardInfo {
-        padding: 1rem;
-
-        .destTitle {
-          font-size: 1.3rem;
-        }
-
-        .btn {
-          padding: 0.6rem 1.2rem;
-        }
-      }
-    }
-  }
-}
-

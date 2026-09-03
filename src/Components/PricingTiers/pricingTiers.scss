@@ -1,0 +1,134 @@
+.pricingTiers {
+  padding: 3rem 0 1rem;
+
+  .tiersGrid {
+    display: grid;
+    gap: 1.75rem;
+    grid-template-columns: 1fr;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .tierCard {
+    position: relative;
+    text-align: center;
+    padding: 2.25rem 1.75rem 2rem;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0.045), hsla(0, 0%, 100%, 0.015));
+    border: 1px solid var(--cardBorder);
+    box-shadow: var(--shadow-card);
+    transition: transform var(--transition-med), border-color var(--transition-med);
+
+    &:hover {
+      transform: translateY(-8px);
+      border-color: hsla(38, 100%, 60%, 0.4);
+    }
+
+    &--highlight {
+      border-color: var(--AccentGold);
+      background: linear-gradient(180deg, hsla(38, 100%, 55%, 0.1), hsla(0, 0%, 100%, 0.02));
+      box-shadow: 0 24px 60px hsla(22, 100%, 50%, 0.22);
+
+      &:hover {
+        transform: translateY(-10px) scale(1.02);
+      }
+    }
+
+    .tierBadge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gradientColor);
+      color: var(--whiteColor);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-pill);
+      box-shadow: var(--shadow-glow);
+      white-space: nowrap;
+    }
+
+    .tierIcon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--gradientColorSoft);
+      color: var(--AccentGold);
+      font-size: 1.6rem;
+    }
+
+    .tierName {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--whiteColor);
+      margin-bottom: 0.35rem;
+    }
+
+    .tierRange {
+      color: var(--greyText);
+      font-size: 0.92rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tierPoints {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid hsla(0, 0%, 100%, 0.08);
+
+      .tierPointsValue {
+        font-family: var(--font-display);
+        font-size: 2.2rem;
+        font-weight: 800;
+        background: var(--gradientText);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        line-height: 1.1;
+      }
+
+      .tierPointsUnit {
+        font-size: 0.8rem;
+        color: var(--greyText);
+      }
+    }
+
+    .tierFeatures {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.88rem;
+        color: var(--textColor);
+      }
+
+      .checkIcon {
+        color: var(--AccentGold);
+        flex-shrink: 0;
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .pricingTiers .tiersGrid {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+  }
+}

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import './main.scss'
-import img1 from '../../Assets/dts.jpg'
+import img1 from '../../Assets/iame.jpeg'
 import img2 from '../../Assets/dts.jpg'
-import img3 from '../../Assets/dts.jpg'
+import img3 from '../../Assets/recompense.jpg'
 import { LuClipboardCheck } from 'react-icons/lu'
 import { useNavigate } from 'react-router-dom';
 import Aos from 'aos'
@@ -47,16 +47,18 @@ const Main = () => {
 
     return (
         <section className="main container section">
-            <div data-aos="fade-up" className="secTitle">
-                <h3 data-aos="fade-right" className="title">
-                    Déroulement de la compétition
-                </h3>
+            <div className="secTitle sectionTitle">
+                <span className="eyebrow" data-aos="fade-up">Le parcours</span>
+                <h3 data-aos="fade-up">Déroulement de la compétition</h3>
+                <p data-aos="fade-up">Trois étapes, un seul objectif : révéler le meilleur talent du Sénégal.</p>
+                <div className="titleUnderline" data-aos="fade-up"></div>
             </div>
 
-            <div data-aos="fade-up" className="secContent grid">
-                <div className="singleDestination">
+            <div className="secContent grid">
+                <div className="singleDestination" data-aos="fade-up" data-aos-delay="0">
+                    <span className="stepNumber">01</span>
                     <div className="imageDiv">
-                        <img src={img1} alt="A propos" />
+                        <img src={img1} alt="Auditions" />
                     </div>
                     <div className="cardInfo">
                         <h4 className="destTitle">Auditions</h4>
@@ -71,7 +73,8 @@ const Main = () => {
                     </div>
                 </div>
 
-                <div className="singleDestination">
+                <div className="singleDestination" data-aos="fade-up" data-aos-delay="150">
+                    <span className="stepNumber">02</span>
                     <div className="imageDiv">
                         <img src={img2} alt="1/2 finale" />
                     </div>
@@ -88,7 +91,8 @@ const Main = () => {
                     </div>
                 </div>
 
-                <div className="singleDestination">
+                <div className="singleDestination" data-aos="fade-up" data-aos-delay="300">
+                    <span className="stepNumber">03</span>
                     <div className="imageDiv">
                         <img src={img3} alt="Finale" />
                     </div>

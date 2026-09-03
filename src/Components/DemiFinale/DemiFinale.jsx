@@ -9,6 +9,7 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { getCampaignStatus } from '../../services/campaignService';
 import RankingChart from '../RankingChart/RankingChart';
+import PricingTiers from '../PricingTiers/PricingTiers';
 
 const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -106,15 +107,16 @@ const DemiFinale = () => {
       {/* Section du compte à rebours */}
       <CountdownTimer />
 
-      <div data-aos="fade-up" className="secTitle">
-        <h3 data-aos="fade-right" className="title">
-          Demi-finale - Sélectionnez une rubrique
-        </h3>
+      <div className="secTitle sectionTitle">
+        <span className="eyebrow" data-aos="fade-up">Demi-finale</span>
+        <h3 data-aos="fade-up">Sélectionnez une rubrique</h3>
+        <p data-aos="fade-up">Trois disciplines, un seul vainqueur par catégorie. Choisissez où voter.</p>
+        <div className="titleUnderline" data-aos="fade-up"></div>
       </div>
 
-      <div data-aos="fade-up" className="secContent grid">
+      <div className="secContent grid">
         {/* Carte Chant */}
-        <div className="singleDestination">
+        <div className="singleDestination" data-aos="fade-up" data-aos-delay="0">
           <div className="imageDiv">
             <img src={chantImg} alt="Chant" />
           </div>
@@ -132,7 +134,7 @@ const DemiFinale = () => {
         </div>
 
         {/* Carte Rap */}
-        <div className="singleDestination">
+        <div className="singleDestination" data-aos="fade-up" data-aos-delay="150">
           <div className="imageDiv">
             <img src={rapImg} alt="Rap" />
           </div>
@@ -150,7 +152,7 @@ const DemiFinale = () => {
         </div>
 
         {/* Carte Danse */}
-        <div className="singleDestination">
+        <div className="singleDestination" data-aos="fade-up" data-aos-delay="300">
           <div className="imageDiv">
             <img src={danseImg} alt="Danse" />
           </div>
@@ -167,6 +169,8 @@ const DemiFinale = () => {
           </div>
         </div>
       </div>
+
+      <PricingTiers />
 
       <RankingChart />
     </section>

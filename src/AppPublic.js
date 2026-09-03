@@ -8,7 +8,7 @@ import Footer from "./Components/Footer/Footer";
 import Home from "./Components/Home/Home";
 import Main from "./Components/Main/Main";
 import Price from './Components/Price/Price';
-import DocumentPage from './Components/DocumentPage/DocumentPage';
+import AboutPage from './Components/AboutPage/AboutPage';
 import DemiFinale from './Components/DemiFinale/DemiFinale';
 import ChantDemiFinale from './Components/ChantDemiFinale/ChantDemiFinale';
 import RapDemiFinale from './Components/RapDemiFinale/RapDemiFinale';
@@ -87,7 +87,7 @@ const AppPublic = () => {
       <main className="main-content">
         <Routes>
           <Route path="/" element={<><Home /><Price /><Main /><Voter /><JokerVote /></>} />
-          <Route path="/reglement" element={<DocumentPage />} />
+          <Route path="/a-propos" element={<AboutPage />} />
           <Route path="/partenaires" element={<PartenairesPage />} />
           <Route path="/demi-finale" element={<DemiFinale />} />
           <Route path="/chant" element={<ChantDemiFinale />} />

@@ -24,19 +24,6 @@ const Navbar = () => {
         setActive('navBar');
     };
 
-    const handleAboutClick = (e) => {
-        e.preventDefault();
-        const pdfUrl = process.env.PUBLIC_URL + '/documents/Apropos.pdf';
-
-        const a = document.createElement('a');
-        a.href = pdfUrl;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    };
-
     const handleContactClick = (e) => {
         e.preventDefault();
         setShowContact(true);
@@ -99,13 +86,13 @@ const Navbar = () => {
                             </li>
 
                             <li className="navItem">
-                                <a
-                                    href="/documents/Apropos.pdf"
-                                    className="navLink"
-                                    onClick={handleAboutClick}
+                                <Link
+                                    to="/a-propos"
+                                    className={`navLink ${location.pathname === '/a-propos' ? 'active' : ''}`}
+                                    onClick={removeNavbar}
                                 >
                                     A propos
-                                </a>
+                                </Link>
                             </li>
 
                             <li className="navItem">

@@ -1,45 +1,48 @@
-@import url('https:fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap');
 
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 :root {
-    /* Rouge foncé - Couleur principale */
-    --PrimaryColor: hsl(5, 85%, 40%);
+    /* --- Identité de marque : rouge -> orange -> or, sur noir profond --- */
+    --PrimaryColor: hsl(5, 85%, 45%);
+    --PrimaryColorDark: hsl(5, 85%, 32%);
+    --SecondaryColor: hsl(38, 100%, 52%);
+    --AccentGold: hsl(45, 100%, 58%);
 
-    /* Orange doré - Couleur secondaire */
-    --SecondaryColor: hsl(35, 100%, 50%);
+    --gradientColor: linear-gradient(115deg, hsl(5, 85%, 42%), hsl(22, 100%, 48%), hsl(42, 100%, 55%));
+    --gradientColorSoft: linear-gradient(115deg, hsla(5, 85%, 42%, 0.16), hsla(42, 100%, 55%, 0.16));
+    --gradientText: linear-gradient(95deg, hsl(45, 100%, 65%), hsl(22, 100%, 60%), hsl(5, 90%, 58%));
 
-    /* Dégradé rouge → orange → jaune */
-    --gradientColor: linear-gradient(to right, hsl(5, 85%, 40%), hsl(25, 100%, 45%), hsl(45, 100%, 50%));
-
-    /* Blanc pur */
     --whiteColor: hsl(0, 0%, 100%);
-
-    /* Noir profond */
-    --blackColor: hsl(0, 0%, 5%);
-
-    /* Texte gris clair */
-    --textColor: hsl(0, 0%, 80%);
-
-    /* Blanc cassé/ivoire */
+    --blackColor: hsl(0, 0%, 4%);
+    --textColor: hsl(0, 0%, 82%);
     --whiteColorDeam: hsl(40, 30%, 95%);
-
-    /* Gris moyen */
-    --greyText: hsl(0, 0%, 50%);
-
-    /* Fond input sombre */
+    --greyText: hsl(0, 0%, 58%);
     --inputColor: hsl(0, 0%, 15%);
+    --bodyColor: hsl(0, 0%, 5%);
+    --cardBG: hsl(0, 0%, 9%);
+    --cardBorder: hsla(38, 100%, 60%, 0.14);
 
-    /* Fond du body en noir */
-    --bodyColor: hsl(0, 0%, 0%);
+    /* --- Système d'espacement / forme / mouvement --- */
+    --radius-sm: 10px;
+    --radius-md: 18px;
+    --radius-lg: 28px;
+    --radius-pill: 999px;
 
-    /* Fond des cartes légèrement plus clair que le body */
-    --cardBG: hsl(0, 0%, 10%);
+    --shadow-soft: 0 10px 30px hsla(0, 0%, 0%, 0.35);
+    --shadow-glow: 0 8px 32px hsla(22, 100%, 50%, 0.25);
+    --shadow-card: 0 20px 50px hsla(0, 0%, 0%, 0.45);
+
+    --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: 0.25s var(--ease-premium);
+    --transition-med: 0.45s var(--ease-premium);
+
+    --font-display: 'Playfair Display', 'Poppins', serif;
 }
 
 html{
@@ -79,19 +82,98 @@ li{
 }
 
 .btn{
-    padding: .6rem 1.5rem;
+    padding: .8rem 2rem;
     background: var(--gradientColor);
-    border-radius: 3rem;
+    background-size: 200% 100%;
+    background-position: 0% 0%;
+    border-radius: var(--radius-pill);
     border: none;
     outline: none;
     cursor: pointer;
+    color: var(--whiteColor);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    box-shadow: var(--shadow-glow);
+    transition: background-position var(--transition-med), transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 .btn a{
     color: var(--whiteColor);
     font-weight: 500;
 }
 .btn:hover{
-    background: var(--SecondaryColor);
+    background-position: 100% 0%;
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px hsla(22, 100%, 50%, 0.4);
+}
+.btn:active{
+    transform: translateY(-1px);
+}
+
+.btnGhost {
+    padding: .8rem 2rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid hsla(0, 0%, 100%, 0.28);
+    background: hsla(0, 0%, 100%, 0.03);
+    backdrop-filter: blur(6px);
+    color: var(--whiteColor);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btnGhost:hover {
+    border-color: var(--AccentGold);
+    background: hsla(38, 100%, 60%, 0.1);
+    transform: translateY(-3px);
+}
+
+/* --- Vocabulaire visuel partagé, réutilisé par les pages de vote --- */
+.sectionTitle{
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.sectionTitle .eyebrow{
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--AccentGold);
+    margin-bottom: 0.6rem;
+}
+
+.sectionTitle h2, .sectionTitle h3{
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    background: var(--gradientText);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.6rem;
+}
+
+.sectionTitle p{
+    color: var(--greyText);
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+.sectionTitle .titleUnderline{
+    width: 64px;
+    height: 4px;
+    margin: 1rem auto 0;
+    border-radius: var(--radius-pill);
+    background: var(--gradientColor);
+}
+
+.glassCard{
+    background: linear-gradient(180deg, hsla(0,0%,100%,0.04), hsla(0,0%,100%,0.015));
+    border: 1px solid var(--cardBorder);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-card);
 }
 
 img, video{
@@ -104,7 +186,7 @@ input{
 }
 
 body{
-    background: #000000 !important;
+    background: var(--bodyColor) !important;
     color: var(--whiteColorDeam);
 }
 
@@ -144,89 +226,52 @@ html, body, #root {
 
 /* Styles pour la section inscription */
 .inscription-section {
-  padding: 3rem 2rem;
+  position: relative;
+  overflow: hidden;
+  padding: 4rem 2rem;
   text-align: center;
   background: var(--gradientColor);
   color: var(--whiteColor);
   margin: 2rem 0;
 
-  h2 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
+}
 
-  p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    max-width: 800px;
-    margin: 0 auto;
-  }
+.inscription-section::before{
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, hsla(0,0%,100%,0.25), transparent 45%);
+  pointer-events: none;
+}
+
+.inscription-section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.inscription-section p {
+  font-size: 1.1rem;
+  opacity: 0.95;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
 }
 
 /* Responsive */
 @media screen and (max-width: 768px) {
   .inscription-section {
-    padding: 2rem 1rem;
+    padding: 2.5rem 1.25rem;
 
     h2 {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
     }
 
     p {
       font-size: 1rem;
     }
   }
-}
-
-/* Luxury Loader Styles */
-.luxury-loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  overflow: hidden;
-}
-
-/* Particules animées */
-.particles {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.particle {
-  position: absolute;
-  width: var(--size);
-  height: var(--size);
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  top: var(--y);
-  left: var(--x);
-  animation: float var(--duration) infinite ease-in-out var(--delay);
-  filter: blur(1px);
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translate(0, 0);
-    opacity: 0.2;
-  }
-  50% {
-    transform: translate(calc(var(--size) * 2), calc(var(--size) * -2));
-    opacity: 0.8;
-  }
-}
-
-/* Contenu du loader */
-.loader-content {
-  text-align: center;
-  z-index: 2;
 }
 
 /* Luxury Loader Styles */
@@ -326,6 +371,7 @@ html, body, #root {
 }
 
 .loader-title {
+  font-family: var(--font-display);
   color: white;
   font-size: 2.5rem;
   margin-bottom: 1rem;
@@ -364,3 +410,12 @@ html, body, #root {
   100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
 }
 
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}

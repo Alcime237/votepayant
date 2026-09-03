@@ -22,11 +22,11 @@
   border-radius: var(--radius-lg);
   max-width: 460px;
   width: 100%;
-  background: linear-gradient(165deg, hsl(0, 0%, 9%), hsl(0, 0%, 5%));
-  border: 1px solid var(--cardBorder);
+  background: var(--surface);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow-card);
   animation: fadeInUp 0.35s var(--ease-premium);
-  color: var(--whiteColorDeam);
+  color: var(--ink);
 
   &.compact {
     max-width: 420px;
@@ -36,17 +36,20 @@
   h3 {
     margin-top: 0;
     font-family: var(--font-display);
-    color: var(--whiteColor);
+    text-transform: uppercase;
+    color: var(--ink);
     text-align: center;
-    font-size: 1.35rem;
+    font-size: 1.4rem;
   }
 
   .payment-amount {
     text-align: center;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 1.3rem;
     font-weight: 700;
     margin: 1rem 0 2rem;
-    color: var(--AccentGold);
+    color: var(--signal);
   }
 }
 
@@ -183,7 +186,7 @@
 
     &:hover:not(:disabled) {
       background: var(--gradientColor);
-      color: var(--whiteColor);
+      color: var(--signal-ink);
       border-color: transparent;
     }
 
@@ -212,13 +215,14 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 0.9rem;
-  border-top: 1px dashed hsla(0, 0%, 100%, 0.14);
+  border-top: 1px dashed var(--line);
   font-weight: 600;
-  color: var(--whiteColorDeam);
+  color: var(--ink);
 
   .amount {
-    font-family: var(--font-display);
-    color: var(--AccentGold);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    color: var(--signal);
     font-size: 1.35rem;
   }
 }
@@ -305,8 +309,8 @@
   button {
     flex: 1;
     padding: 0.85rem;
-    border-radius: var(--radius-pill);
-    font-weight: 600;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
     cursor: pointer;
     transition: all var(--transition-fast);
     border: none;
@@ -314,23 +318,23 @@
 }
 
 .cancel-btn {
-  background: hsla(0, 0%, 100%, 0.05);
-  border: 1px solid hsla(0, 0%, 100%, 0.14) !important;
-  color: var(--whiteColorDeam);
+  background: transparent;
+  border: 1px solid var(--line) !important;
+  color: var(--ink);
 
   &:hover:not(:disabled) {
-    background: hsla(0, 0%, 100%, 0.1);
+    border-color: var(--muted) !important;
   }
 }
 
 .submit-payment {
   background: var(--gradientColor);
-  color: var(--whiteColor);
+  color: var(--signal-ink);
   box-shadow: var(--shadow-glow);
 
   &:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 14px 36px hsla(22, 100%, 50%, 0.4);
+    box-shadow: 0 14px 32px hsla(38, 100%, 56%, 0.35);
   }
 
   &:disabled {

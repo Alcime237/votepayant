@@ -177,6 +177,11 @@ $shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
           font-size: 1rem;
           text-align: center;
 
+          &.style {
+            color: $secondary-color;
+            font-weight: 500;
+          }
+
           &.price {
             color: $accent-color;
             font-weight: bold;

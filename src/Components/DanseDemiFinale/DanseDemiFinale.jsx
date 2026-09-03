@@ -199,6 +199,7 @@ const Danse = () => {
             <div className="candidate-info">
               <h3>{candidate.fullName}</h3>
               <div className="details">
+                {candidate.style && <p className="style">Style: {candidate.style}</p>}
                 <p className="price">Prix: {UNIT_PRICE_FCFA} FCFA/vote</p>
               </div>
             </div>

@@ -180,6 +180,7 @@ const JokerDanse = () => {
             <div className="candidate-info">
               <h3>{candidate.fullName}</h3>
               <div className="details">
+                {candidate.style && <p className="style">Style: {candidate.style}</p>}
                 <p className="price">Prix du vote: {UNIT_PRICE_FCFA.toLocaleString()} FCFA</p>
               </div>
             </div>

@@ -16,8 +16,7 @@ export async function getVoteOrderStatus(orderId) {
 
 /**
  * Interroge périodiquement le statut de la commande jusqu'à confirmation ou timeout.
- * NB : tant que le webhook MyTouchPoint (Phase 2) n'est pas branché côté serveur, le
- * statut ne quittera jamais PENDING — ce polling se terminera par un timeout attendu.
+ * Le statut passe à PAID/FAILED dès que le webhook serveur-à-serveur confirme le paiement.
  */
 export async function pollVoteOrderUntilSettled(orderId, { intervalMs = 3000, timeoutMs = 90000 } = {}) {
   const startedAt = Date.now();

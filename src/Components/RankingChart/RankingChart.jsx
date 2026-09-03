@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Link } from 'react-router-dom';
 import { getCampaignStatus } from '../../services/campaignService';
 import { getRanking, subscribeToRanking } from '../../services/rankingService';
 import './rankingChart.scss';
 
-const COLOR_BY_TIER = {
-  VERT: '#22c55e',
-  ORANGE: '#f97316',
-  ROUGE: '#ef4444',
-  GRIS: '#9ca3af',
+const CATEGORY_LABEL = {
+  CHANT: 'Chant',
+  DANSE: 'Danse',
+  RAP: 'Rap',
+  JOKER_CHANT: 'Joker · Chant',
+  JOKER_DANSE: 'Joker · Danse',
+  JOKER_RAP: 'Joker · Rap',
 };
 
 const RankingChart = () => {
@@ -54,52 +56,45 @@ const RankingChart = () => {
     return <div className="ranking-chart ranking-chart-error">{error}</div>;
   }
 
-  if (ranking.length === 0) {
-    return (
-      <div className="ranking-chart">
-        <h3 className="ranking-chart-title">Classement en direct</h3>
-        <p className="ranking-chart-empty">Aucun vote pour l'instant.</p>
-      </div>
-    );
-  }
-
-  const data = ranking.map((entry) => ({
-    name: entry.fullName || 'Candidat',
-    points: entry.points,
-    colorTier: entry.colorTier,
-  }));
-
-  const podium = data.slice(0, 3);
-  const medals = ['🥇', '🥈', '🥉'];
-
   return (
     <div className="ranking-chart">
-      <h3 className="ranking-chart-title">Classement en direct</h3>
+      <h3 className="ranking-chart-title">
+        <span className="live-dot" />
+        Classement en direct
+      </h3>
 
-      {podium.length > 0 && (
-        <div className="ranking-podium">
-          {podium.map((entry, i) => (
-            <div key={entry.name} className={`ranking-podium__item rank-${i + 1}`}>
-              <span className="ranking-podium__medal">{medals[i]}</span>
-              <span className="ranking-podium__name">{entry.name}</span>
-              <span className="ranking-podium__points">{entry.points} pts</span>
-            </div>
-          ))}
+      {ranking.length === 0 ? (
+        <p className="ranking-chart-empty">Aucun vote pour l'instant.</p>
+      ) : (
+        <div className="board">
+          {ranking.map((entry, i) => {
+            const rank = i + 1;
+            return (
+              <Link
+                to={`/candidat/${entry.candidateId}`}
+                key={entry.candidateId}
+                className={`board-row rank-${Math.min(rank, 4)}`}
+              >
+                <span className="rank">{String(rank).padStart(2, '0')}</span>
+                <span className="who">
+                  <b>{entry.fullName}</b>
+                  <span>{CATEGORY_LABEL[entry.category] || entry.category}</span>
+                </span>
+                <span className="bar-wrap">
+                  <span
+                    className={`bar tier-${(entry.colorTier || 'GRIS').toLowerCase()}`}
+                    style={{ width: `${Math.max(entry.percentage, 2)}%` }}
+                  />
+                </span>
+                <span className="pts">
+                  {entry.points.toLocaleString('fr-FR')}
+                  <span>points</span>
+                </span>
+              </Link>
+            );
+          })}
         </div>
       )}
-
-      <ResponsiveContainer width="100%" height={Math.max(220, data.length * 48)}>
-        <BarChart data={data} layout="vertical" margin={{ top: 8, right: 32, bottom: 8, left: 8 }}>
-          <XAxis type="number" hide />
-          <YAxis type="category" dataKey="name" width={140} tick={{ fontSize: 13 }} />
-          <Tooltip formatter={(value) => [`${value} points`, 'Points']} />
-          <Bar dataKey="points" radius={[0, 6, 6, 0]}>
-            {data.map((entry) => (
-              <Cell key={entry.name} fill={COLOR_BY_TIER[entry.colorTier] || COLOR_BY_TIER.GRIS} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
     </div>
   );
 };

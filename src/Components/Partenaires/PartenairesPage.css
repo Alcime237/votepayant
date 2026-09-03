@@ -19,6 +19,12 @@
   padding: 20px;
 }
 
+.partenaire-card-link {
+  display: contents;
+  text-decoration: none;
+  color: inherit;
+}
+
 .partenaire-card {
   background: white;
   border-radius: 12px;

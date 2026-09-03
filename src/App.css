@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Mono:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 :root {
-    /* --- Studio Vote : fond studio sombre, ambre "tally light" comme signal --- */
+    /* --- Studio Vote : fond studio sombre, orange foncé comme signal --- */
     --ground: hsl(226, 39%, 8%);
     --surface: hsl(222, 36%, 12%);
     --surface-2: hsl(222, 33%, 16%);
@@ -16,8 +16,9 @@
     --ink: hsl(222, 33%, 96%);
     --muted: hsl(220, 15%, 62%);
 
-    --signal: hsl(38, 100%, 56%);
-    --signal-ink: hsl(38, 100%, 8%);
+    --signal: hsl(22, 88%, 42%);
+    --signal-light: hsl(30, 90%, 50%);
+    --signal-ink: hsl(30, 45%, 97%);
     --live: hsl(355, 100%, 67%);
     --gain: hsl(154, 60%, 52%);
 
@@ -25,12 +26,12 @@
        héritent automatiquement de la nouvelle palette sans être tous réécrits. */
     --PrimaryColor: var(--live);
     --PrimaryColorDark: hsl(355, 70%, 45%);
-    --SecondaryColor: hsl(28, 100%, 58%);
+    --SecondaryColor: var(--signal-light);
     --AccentGold: var(--signal);
 
-    --gradientColor: linear-gradient(100deg, hsl(38, 100%, 56%), hsl(28, 100%, 58%));
-    --gradientColorSoft: linear-gradient(100deg, hsla(38, 100%, 56%, 0.14), hsla(28, 100%, 58%, 0.14));
-    --gradientText: linear-gradient(95deg, hsl(45, 100%, 70%), hsl(35, 100%, 58%));
+    --gradientColor: linear-gradient(100deg, var(--signal), var(--signal-light));
+    --gradientColorSoft: linear-gradient(100deg, hsla(22, 88%, 42%, 0.14), hsla(30, 90%, 50%, 0.14));
+    --gradientText: linear-gradient(95deg, hsl(32, 92%, 58%), hsl(18, 85%, 46%));
 
     --whiteColor: var(--ink);
     --blackColor: var(--ground);
@@ -49,7 +50,7 @@
     --radius-pill: 999px;
 
     --shadow-soft: 0 10px 30px hsla(226, 60%, 3%, 0.5);
-    --shadow-glow: 0 8px 28px hsla(38, 100%, 56%, 0.22);
+    --shadow-glow: 0 8px 28px hsla(22, 88%, 42%, 0.3);
     --shadow-card: 0 20px 45px hsla(226, 60%, 3%, 0.55);
 
     --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
@@ -57,7 +58,7 @@
     --transition-med: 0.4s var(--ease-premium);
 
     --font-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
-    --font-body: 'Manrope', -apple-system, sans-serif;
+    --font-body: 'Open Sans', -apple-system, sans-serif;
     --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
 
@@ -224,6 +225,15 @@ li{
     background: var(--signal);
 }
 
+/* Texte de paragraphe long : justifié, taille et interligne confortables */
+.justify, .bodyText{
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: var(--muted);
+}
+
 .glassCard{
     background: linear-gradient(180deg, hsla(0,0%,100%,0.04), hsla(0,0%,100%,0.015));
     border: 1px solid var(--cardBorder);
@@ -278,56 +288,6 @@ html, body, #root {
     body{
         zoom: 1.7;
     }
-}
-
-/* Styles pour la section inscription */
-.inscription-section {
-  position: relative;
-  overflow: hidden;
-  padding: 4rem 2rem;
-  text-align: center;
-  background: var(--gradientColor);
-  color: var(--whiteColor);
-  margin: 2rem 0;
-
-}
-
-.inscription-section::before{
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 20% 20%, hsla(0,0%,100%,0.25), transparent 45%);
-  pointer-events: none;
-}
-
-.inscription-section h2 {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  margin-bottom: 1rem;
-  position: relative;
-}
-
-.inscription-section p {
-  font-size: 1.1rem;
-  opacity: 0.95;
-  max-width: 800px;
-  margin: 0 auto;
-  position: relative;
-}
-
-/* Responsive */
-@media screen and (max-width: 768px) {
-  .inscription-section {
-    padding: 2.5rem 1.25rem;
-
-    h2 {
-      font-size: 1.6rem;
-    }
-
-    p {
-      font-size: 1rem;
-    }
-  }
 }
 
 /* Luxury Loader Styles */

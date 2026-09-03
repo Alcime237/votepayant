@@ -4,9 +4,27 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { useNavigate } from 'react-router-dom';
 import { LuMic, LuMusic4, LuSparkles, LuUsers, LuCalendarDays, LuTv } from 'react-icons/lu';
+import HeroSlider from '../HeroSlider/HeroSlider';
 import chantImg from '../../Assets/chant.jpg';
 import danseImg from '../../Assets/danse.webp';
 import rapImg from '../../Assets/rap.jpg';
+import iameImg from '../../Assets/iame.jpeg';
+import dtsImg from '../../Assets/dts.jpg';
+
+const HERO_SLIDES = [
+  {
+    image: iameImg,
+    eyebrow: 'À propos',
+    title: 'Dakar Talent Show',
+    subtitle: 'Une émission de divertissement culturel qui célèbre la diversité artistique du continent.',
+  },
+  {
+    image: dtsImg,
+    eyebrow: 'Notre mission',
+    title: 'Révéler les talents de demain',
+    subtitle: "Une plateforme de découverte, portée par le public, pour le public dakarois.",
+  },
+];
 
 const DISCIPLINES = [
   { key: 'chant', name: 'Chant', img: chantImg, desc: "Des voix qui font vibrer la scène du Dakar Talent Show." },
@@ -30,35 +48,26 @@ const AboutPage = () => {
 
   return (
     <div className="aboutPage">
-      <section className="aboutHero">
-        <div className="aboutHero__overlay"></div>
-        <div className="container aboutHero__content">
-          <span className="eyebrow" data-aos="fade-up">À propos</span>
-          <h1 data-aos="fade-up" data-aos-delay="100">Dakar Talent Show</h1>
-          <p data-aos="fade-up" data-aos-delay="200">
-            Une émission de divertissement culturel qui célèbre la diversité artistique du continent.
-          </p>
-        </div>
-      </section>
+      <HeroSlider slides={HERO_SLIDES} height="56vh" />
 
       <section className="section container">
         <div className="aboutConcept">
           <div data-aos="fade-right" className="aboutConcept__text">
             <span className="eyebrow">Le concept</span>
             <h2>Une plateforme de découverte pour le public dakarois</h2>
-            <p>
+            <p className="justify">
               <strong>DAKAR TALENT SHOW</strong> est une émission de divertissement culturel mettant en
               compétition des jeunes talents de tout âge dans leurs disciplines respectives : la danse,
               le chant et le rap. La compétition s'étend sur une durée d'un mois, pour une diffusion sur
               quatre semaines.
             </p>
-            <p>
+            <p className="justify">
               L'objectif majeur de ce programme est de <em>« célébrer la diversité culturelle du
               continent, de favoriser les échanges tout en offrant une plateforme de divertissement et
               de découverte pour le public dakarois »</em>, avec une qualité de son et de lumière
               professionnelle, un jury compétent, et des images et vidéos de qualité.
             </p>
-            <button className="btn" onClick={() => navigate('/demi-finale')}>
+            <button className="btn" onClick={() => navigate('/vote')}>
               Découvrir les candidats
             </button>
           </div>
@@ -100,12 +109,14 @@ const AboutPage = () => {
         </div>
       </section>
 
-      <section className="aboutCta">
-        <div className="container aboutCta__inner" data-aos="fade-up">
-          <h2>Chaque vote rapproche votre talent préféré de la grande finale</h2>
+      <section className="aboutCta container">
+        <div className="aboutCta__inner" data-aos="fade-up">
+          <LuSparkles className="aboutCta__icon" />
+          <h2>Envie de faire partie de l'aventure ?</h2>
+          <p>Découvrez les candidats en lice et donnez votre voix à celui ou celle qui mérite la grande finale.</p>
           <div className="aboutCta__actions">
-            <button className="btn" onClick={() => navigate('/demi-finale')}>Voter maintenant</button>
-            <button className="btnGhost" onClick={() => navigate('/partenaires')}>Nos partenaires</button>
+            <button className="btn" onClick={() => navigate('/vote')}>Découvrir les candidats</button>
+            <button className="btnGhost" onClick={() => navigate('/#partenaires')}>Nos partenaires</button>
           </div>
         </div>
       </section>

@@ -10,29 +10,6 @@
   }
 }
 
-.deroulement-hero {
-  margin-top: 78px;
-  padding: 5rem 1.5rem 3rem;
-  text-align: center;
-  background: linear-gradient(180deg, var(--surface), var(--ground));
-  border-bottom: 1px solid var(--line);
-
-  h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2.1rem, 5vw, 3.4rem);
-    font-weight: 800;
-    text-transform: uppercase;
-    color: var(--ink);
-    margin-bottom: 0.9rem;
-  }
-
-  p {
-    color: var(--muted);
-    max-width: 560px;
-    margin: 0 auto;
-  }
-}
-
 .deroulement-body {
   padding: 3rem 1.5rem 5rem;
 }
@@ -70,8 +47,8 @@
   max-width: 640px;
   margin: 0 auto 2rem;
   color: var(--muted);
-  font-size: 1.02rem;
-  line-height: 1.6;
+  font-size: 1.05rem;
+  line-height: 1.7;
 }
 
 .vote-note {
@@ -110,14 +87,39 @@
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  padding: 1.6rem 1.5rem;
+  padding: 0 0 1.6rem;
+  overflow: hidden;
+  transition: transform var(--transition-med), border-color var(--transition-med);
+
+  &:hover {
+    transform: translateY(-6px);
+    border-color: hsla(22, 88%, 50%, 0.4);
+  }
+}
+
+.discipline-card__image {
+  height: 150px;
+  overflow: hidden;
+  margin-bottom: 1.4rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--ease-premium);
+  }
+}
+
+.discipline-card:hover .discipline-card__image img,
+.criteria-card:hover .discipline-card__image img {
+  transform: scale(1.08);
 }
 
 .discipline-card__head, .criteria-card__head {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 1.1rem;
+  margin: 0 1.5rem 1.1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--line);
 
@@ -144,7 +146,7 @@
 .discipline-card__rules {
   list-style: none;
   padding: 0;
-  margin: 0 0 1rem;
+  margin: 0 1.5rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -172,6 +174,7 @@
 .discipline-card__notation {
   display: flex;
   gap: 0.7rem;
+  margin: 0 1.5rem;
   padding-top: 1rem;
   border-top: 1px dashed var(--line);
 
@@ -198,7 +201,7 @@
 .criteria-card ul {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.55rem;

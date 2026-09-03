@@ -4,6 +4,22 @@ import './deroulementPage.scss';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { LuMic, LuMusic4, LuSparkles, LuUsers, LuGavel, LuTrophy } from 'react-icons/lu';
+import HeroSlider from '../HeroSlider/HeroSlider';
+import chantImg from '../../Assets/chant.jpg';
+import rapImg from '../../Assets/rap.jpg';
+import danseImg from '../../Assets/danse.webp';
+import recompenseImg from '../../Assets/recompense.jpg';
+
+const HERO_SLIDES = [
+  {
+    image: recompenseImg,
+    eyebrow: 'Règlement de la compétition',
+    title: 'Déroulement de la compétition',
+    subtitle: 'Trois étapes, un même objectif : révéler le meilleur talent du Sénégal en chant, rap et danse.',
+  },
+];
+
+const DISCIPLINE_IMAGE = { Chant: chantImg, Rap: rapImg, 'Groupe de danse': danseImg, Danse: danseImg };
 
 const PHASES = [
   {
@@ -128,15 +144,7 @@ const DeroulementPage = () => {
 
   return (
     <div className="deroulement-page">
-      <section className="deroulement-hero">
-        <div className="container">
-          <span className="eyebrow" data-aos="fade-up">Règlement de la compétition</span>
-          <h1 data-aos="fade-up" data-aos-delay="100">Déroulement de la compétition</h1>
-          <p data-aos="fade-up" data-aos-delay="200">
-            Trois étapes, un même objectif : révéler le meilleur talent du Sénégal en chant, rap et danse.
-          </p>
-        </div>
-      </section>
+      <HeroSlider slides={HERO_SLIDES} height="50vh" />
 
       <div className="container deroulement-body">
         <div className="phase-tabs" role="tablist">
@@ -168,6 +176,11 @@ const DeroulementPage = () => {
             <div className="discipline-grid">
               {phase.disciplines.map(({ name, icon: Icon, rules, notation }, i) => (
                 <div className="discipline-card" data-aos="fade-up" data-aos-delay={i * 100} key={name}>
+                  {DISCIPLINE_IMAGE[name] && (
+                    <div className="discipline-card__image">
+                      <img src={DISCIPLINE_IMAGE[name]} alt={name} />
+                    </div>
+                  )}
                   <div className="discipline-card__head">
                     <Icon className="discipline-card__icon" />
                     <h3>{name}</h3>
@@ -192,6 +205,11 @@ const DeroulementPage = () => {
             <div className="criteria-grid">
               {phase.criteria.map(({ name, icon: Icon, items }, i) => (
                 <div className="criteria-card" data-aos="fade-up" data-aos-delay={i * 100} key={name}>
+                  {DISCIPLINE_IMAGE[name] && (
+                    <div className="discipline-card__image">
+                      <img src={DISCIPLINE_IMAGE[name]} alt={name} />
+                    </div>
+                  )}
                   <div className="criteria-card__head">
                     <Icon className="discipline-card__icon" />
                     <h3>{name}</h3>

@@ -1,0 +1,85 @@
+import React, { useEffect } from 'react';
+import './contactPage.scss';
+import Aos from 'aos';
+import 'aos/dist/aos.css';
+import HeroSlider from '../HeroSlider/HeroSlider';
+import AfricaSenegalMap from './AfricaSenegalMap';
+import { FaPhone, FaEnvelope, FaFacebookF, FaWhatsapp, FaInstagram, FaTiktok, FaYoutube, FaMapMarkerAlt } from 'react-icons/fa';
+import heroImg from '../../Assets/recompense.jpg';
+
+const SLIDES = [
+  {
+    image: heroImg,
+    eyebrow: 'Contact',
+    title: 'Parlons du Dakar Talent Show',
+    subtitle: "Une question sur le vote, un partenariat, la presse ? Notre équipe vous répond.",
+  },
+];
+
+const ContactPage = () => {
+  useEffect(() => {
+    Aos.init({ duration: 900 });
+  }, []);
+
+  return (
+    <div className="contact-page">
+      <HeroSlider slides={SLIDES} height="52vh" />
+
+      <div className="container contact-body">
+        <div className="contact-grid">
+          <div className="contact-card" data-aos="fade-up">
+            <FaPhone className="contact-card__icon" />
+            <h3>Téléphone</h3>
+            <p className="justify">Disponible du lundi au samedi, pour toute question sur la compétition ou le vote.</p>
+            <a href="tel:+221785386225" className="contact-card__value">+221 78 538 62 25</a>
+          </div>
+
+          <div className="contact-card" data-aos="fade-up" data-aos-delay="100">
+            <FaWhatsapp className="contact-card__icon whatsapp" />
+            <h3>WhatsApp</h3>
+            <p className="justify">Le canal le plus rapide pour joindre l'organisation en direct.</p>
+            <a href="https://wa.me/221785386225" target="_blank" rel="noopener noreferrer" className="contact-card__value">Écrire sur WhatsApp</a>
+          </div>
+
+          <div className="contact-card" data-aos="fade-up" data-aos-delay="200">
+            <FaEnvelope className="contact-card__icon" />
+            <h3>Email</h3>
+            <p className="justify">Presse, partenariats, candidatures : écrivez-nous, nous revenons vers vous rapidement.</p>
+            <a href="mailto:dakartalentshow@gmail.com" className="contact-card__value">dakartalentshow@gmail.com</a>
+          </div>
+        </div>
+
+        <div className="social-strip" data-aos="fade-up">
+          <span className="social-strip__label">Suivez l'émission</span>
+          <div className="social-strip__links">
+            <a href="https://www.facebook.com/share/16d5VhcsCg/" target="_blank" rel="noopener noreferrer"><FaFacebookF /> Facebook</a>
+            <a href="https://www.instagram.com/dakar_talent_show/" target="_blank" rel="noopener noreferrer"><FaInstagram /> Instagram</a>
+            <a href="https://www.tiktok.com/@dakar_talent_show221?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer"><FaTiktok /> TikTok</a>
+            <a href="https://youtube.com/@dakartalentshow?si=kb4IcI94K8TKmety" target="_blank" rel="noopener noreferrer"><FaYoutube /> YouTube</a>
+          </div>
+        </div>
+
+        <section className="africaMap" data-aos="fade-up">
+          <div className="africaMap__text">
+            <span className="eyebrow">Où se déroule l'événement</span>
+            <h2>Depuis Dakar, pour tout le Sénégal</h2>
+            <p className="justify">
+              Le Dakar Talent Show est produit et diffusé depuis Dakar, capitale du Sénégal, en Afrique de
+              l'Ouest. Auditions, demi-finales et grande finale se déroulent sur place, avec un vote du
+              public ouvert en ligne à tous, où que vous soyez.
+            </p>
+            <div className="africaMap__badge">
+              <FaMapMarkerAlt /> Dakar, Sénégal
+            </div>
+          </div>
+
+          <div className="africaMap__figure">
+            <AfricaSenegalMap />
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+};
+
+export default ContactPage;

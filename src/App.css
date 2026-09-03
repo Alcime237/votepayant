@@ -1,48 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Manrope', sans-serif;
 }
 
 :root {
-    /* --- Identité de marque : rouge -> orange -> or, sur noir profond --- */
-    --PrimaryColor: hsl(5, 85%, 45%);
-    --PrimaryColorDark: hsl(5, 85%, 32%);
-    --SecondaryColor: hsl(38, 100%, 52%);
-    --AccentGold: hsl(45, 100%, 58%);
+    /* --- Studio Vote : fond studio sombre, ambre "tally light" comme signal --- */
+    --ground: hsl(226, 39%, 8%);
+    --surface: hsl(222, 36%, 12%);
+    --surface-2: hsl(222, 33%, 16%);
+    --line: hsl(219, 30%, 21%);
+    --ink: hsl(222, 33%, 96%);
+    --muted: hsl(220, 15%, 62%);
 
-    --gradientColor: linear-gradient(115deg, hsl(5, 85%, 42%), hsl(22, 100%, 48%), hsl(42, 100%, 55%));
-    --gradientColorSoft: linear-gradient(115deg, hsla(5, 85%, 42%, 0.16), hsla(42, 100%, 55%, 0.16));
-    --gradientText: linear-gradient(95deg, hsl(45, 100%, 65%), hsl(22, 100%, 60%), hsl(5, 90%, 58%));
+    --signal: hsl(38, 100%, 56%);
+    --signal-ink: hsl(38, 100%, 8%);
+    --live: hsl(355, 100%, 67%);
+    --gain: hsl(154, 60%, 52%);
 
-    --whiteColor: hsl(0, 0%, 100%);
-    --blackColor: hsl(0, 0%, 4%);
-    --textColor: hsl(0, 0%, 82%);
-    --whiteColorDeam: hsl(40, 30%, 95%);
-    --greyText: hsl(0, 0%, 58%);
-    --inputColor: hsl(0, 0%, 15%);
-    --bodyColor: hsl(0, 0%, 5%);
-    --cardBG: hsl(0, 0%, 9%);
-    --cardBorder: hsla(38, 100%, 60%, 0.14);
+    /* Alias historiques — laissés en place pour que les composants existants
+       héritent automatiquement de la nouvelle palette sans être tous réécrits. */
+    --PrimaryColor: var(--live);
+    --PrimaryColorDark: hsl(355, 70%, 45%);
+    --SecondaryColor: hsl(28, 100%, 58%);
+    --AccentGold: var(--signal);
+
+    --gradientColor: linear-gradient(100deg, hsl(38, 100%, 56%), hsl(28, 100%, 58%));
+    --gradientColorSoft: linear-gradient(100deg, hsla(38, 100%, 56%, 0.14), hsla(28, 100%, 58%, 0.14));
+    --gradientText: linear-gradient(95deg, hsl(45, 100%, 70%), hsl(35, 100%, 58%));
+
+    --whiteColor: var(--ink);
+    --blackColor: var(--ground);
+    --textColor: var(--muted);
+    --whiteColorDeam: var(--ink);
+    --greyText: var(--muted);
+    --inputColor: var(--surface-2);
+    --bodyColor: var(--ground);
+    --cardBG: var(--surface);
+    --cardBorder: var(--line);
 
     /* --- Système d'espacement / forme / mouvement --- */
-    --radius-sm: 10px;
-    --radius-md: 18px;
-    --radius-lg: 28px;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
     --radius-pill: 999px;
 
-    --shadow-soft: 0 10px 30px hsla(0, 0%, 0%, 0.35);
-    --shadow-glow: 0 8px 32px hsla(22, 100%, 50%, 0.25);
-    --shadow-card: 0 20px 50px hsla(0, 0%, 0%, 0.45);
+    --shadow-soft: 0 10px 30px hsla(226, 60%, 3%, 0.5);
+    --shadow-glow: 0 8px 28px hsla(38, 100%, 56%, 0.22);
+    --shadow-card: 0 20px 45px hsla(226, 60%, 3%, 0.55);
 
     --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
-    --transition-fast: 0.25s var(--ease-premium);
-    --transition-med: 0.45s var(--ease-premium);
+    --transition-fast: 0.2s var(--ease-premium);
+    --transition-med: 0.4s var(--ease-premium);
 
-    --font-display: 'Playfair Display', 'Poppins', serif;
+    --font-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+    --font-body: 'Manrope', -apple-system, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
 
 html{
@@ -82,49 +98,88 @@ li{
 }
 
 .btn{
-    padding: .8rem 2rem;
+    padding: .85rem 1.85rem;
     background: var(--gradientColor);
     background-size: 200% 100%;
     background-position: 0% 0%;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
     border: none;
     outline: none;
     cursor: pointer;
-    color: var(--whiteColor);
-    font-weight: 600;
-    letter-spacing: 0.03em;
+    color: var(--signal-ink);
+    font-weight: 700;
+    letter-spacing: 0.01em;
     box-shadow: var(--shadow-glow);
     transition: background-position var(--transition-med), transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 .btn a{
-    color: var(--whiteColor);
-    font-weight: 500;
+    color: var(--signal-ink);
+    font-weight: 700;
 }
 .btn:hover{
     background-position: 100% 0%;
-    transform: translateY(-3px);
-    box-shadow: 0 14px 40px hsla(22, 100%, 50%, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 34px hsla(38, 100%, 56%, 0.35);
 }
 .btn:active{
-    transform: translateY(-1px);
+    transform: translateY(0);
 }
 
 .btnGhost {
-    padding: .8rem 2rem;
-    border-radius: var(--radius-pill);
-    border: 1px solid hsla(0, 0%, 100%, 0.28);
-    background: hsla(0, 0%, 100%, 0.03);
-    backdrop-filter: blur(6px);
-    color: var(--whiteColor);
-    font-weight: 600;
+    padding: .85rem 1.85rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    font-weight: 700;
     cursor: pointer;
     transition: all var(--transition-fast);
 }
 
 .btnGhost:hover {
-    border-color: var(--AccentGold);
-    background: hsla(38, 100%, 60%, 0.1);
-    transform: translateY(-3px);
+    border-color: var(--signal);
+    background: hsla(38, 100%, 56%, 0.08);
+    color: var(--signal);
+}
+
+.btn-live{
+    background: var(--live);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .85rem 1.85rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    cursor: pointer;
+}
+.btn-live::before{
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 4px hsla(355, 100%, 67%, 0.28);
+}
+
+.pill{
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: .5rem 1rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    background: transparent;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+.pill.active, .pill:hover{
+    color: var(--signal);
+    border-color: var(--signal);
+    background: hsla(38, 100%, 56%, 0.08);
 }
 
 /* --- Vocabulaire visuel partagé, réutilisé par les pages de vote --- */
@@ -145,27 +200,28 @@ li{
 
 .sectionTitle h2, .sectionTitle h3{
     font-family: var(--font-display);
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-size: clamp(2rem, 4.5vw, 3.1rem);
     font-weight: 800;
-    background: var(--gradientText);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 0.98;
+    color: var(--ink);
     margin-bottom: 0.6rem;
+    text-wrap: balance;
 }
 
 .sectionTitle p{
-    color: var(--greyText);
+    color: var(--muted);
     max-width: 560px;
     margin: 0 auto;
 }
 
 .sectionTitle .titleUnderline{
-    width: 64px;
-    height: 4px;
-    margin: 1rem auto 0;
+    width: 44px;
+    height: 3px;
+    margin: 1.1rem auto 0;
     border-radius: var(--radius-pill);
-    background: var(--gradientColor);
+    background: var(--signal);
 }
 
 .glassCard{

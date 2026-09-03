@@ -96,6 +96,16 @@ const Navbar = () => {
                             </li>
 
                             <li className="navItem">
+                                <Link
+                                    to="/deroulement"
+                                    className={`navLink ${location.pathname === '/deroulement' ? 'active' : ''}`}
+                                    onClick={removeNavbar}
+                                >
+                                    Déroulement
+                                </Link>
+                            </li>
+
+                            <li className="navItem">
                               <Link
                                 to="/partenaires"
                                 className={`navLink ${location.pathname === '/partenaires' ? 'active' : ''}`}

@@ -9,6 +9,8 @@ import Home from "./Components/Home/Home";
 import Main from "./Components/Main/Main";
 import Price from './Components/Price/Price';
 import AboutPage from './Components/AboutPage/AboutPage';
+import DeroulementPage from './Components/Deroulement/DeroulementPage';
+import CandidatePage from './Components/CandidatePage/CandidatePage';
 import DemiFinale from './Components/DemiFinale/DemiFinale';
 import ChantDemiFinale from './Components/ChantDemiFinale/ChantDemiFinale';
 import RapDemiFinale from './Components/RapDemiFinale/RapDemiFinale';
@@ -65,9 +67,8 @@ const AppPublic = () => {
                 <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="url(#gradient)"/>
                 <defs>
                   <linearGradient id="gradient" x1="12" y1="2" x2="12" y2="21.02" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="hsl(5, 85%, 40%)"/>
-                    <stop offset="0.5" stopColor="hsl(35, 100%, 50%)"/>
-                    <stop offset="1" stopColor="hsl(45, 100%, 50%)"/>
+                    <stop stopColor="hsl(45, 100%, 70%)"/>
+                    <stop offset="1" stopColor="hsl(28, 100%, 58%)"/>
                   </linearGradient>
                 </defs>
               </svg>
@@ -88,6 +89,8 @@ const AppPublic = () => {
         <Routes>
           <Route path="/" element={<><Home /><Price /><Main /><Voter /><JokerVote /></>} />
           <Route path="/a-propos" element={<AboutPage />} />
+          <Route path="/deroulement" element={<DeroulementPage />} />
+          <Route path="/candidat/:id" element={<CandidatePage />} />
           <Route path="/partenaires" element={<PartenairesPage />} />
           <Route path="/demi-finale" element={<DemiFinale />} />
           <Route path="/chant" element={<ChantDemiFinale />} />

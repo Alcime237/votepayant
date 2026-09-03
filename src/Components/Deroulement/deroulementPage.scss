@@ -1,0 +1,226 @@
+.deroulement-page {
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-bottom: 0.9rem;
+  }
+}
+
+.deroulement-hero {
+  margin-top: 78px;
+  padding: 5rem 1.5rem 3rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--surface), var(--ground));
+  border-bottom: 1px solid var(--line);
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.9rem;
+  }
+
+  p {
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+.deroulement-body {
+  padding: 3rem 1.5rem 5rem;
+}
+
+.phase-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-bottom: 2.75rem;
+}
+
+.phase-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.3rem;
+  font-size: 0.82rem;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.phase-tab__index {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.phase-panel {
+  animation: fadeInUp 0.4s var(--ease-premium);
+}
+
+.phase-intro {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 2rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.vote-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  max-width: 720px;
+  margin: 0 auto 2.5rem;
+  padding: 1.25rem 1.5rem;
+  background: hsla(38, 100%, 56%, 0.06);
+  border: 1px solid hsla(38, 100%, 56%, 0.25);
+  border-radius: var(--radius-md);
+
+  &__icon {
+    flex-shrink: 0;
+    font-size: 1.4rem;
+    color: var(--signal);
+    margin-top: 0.15rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--ink);
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+}
+
+.discipline-grid, .criteria-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+
+.discipline-card, .criteria-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 1.6rem 1.5rem;
+}
+
+.discipline-card__head, .criteria-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+
+  h3 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0;
+    flex: 1;
+  }
+}
+
+.discipline-card__icon {
+  font-size: 1.3rem;
+  color: var(--signal);
+}
+
+.trophy-icon {
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+.discipline-card__rules {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  li {
+    position: relative;
+    padding-left: 1.1rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--signal);
+    }
+  }
+}
+
+.discipline-card__notation {
+  display: flex;
+  gap: 0.7rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--line);
+
+  .notation-icon {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  span {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink);
+  }
+}
+
+.criteria-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.criteria-card li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+  padding-bottom: 0.55rem;
+  border-bottom: 1px dashed var(--line);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+@media (min-width: 760px) {
+  .discipline-grid, .criteria-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

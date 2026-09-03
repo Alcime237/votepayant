@@ -261,17 +261,18 @@ html, body, #root {
     height: 100%;
 }
 
-/* Filet de sécurité : empêche tout débordement horizontal sur mobile
-   (éléments décoratifs positionnés en absolu, images larges, etc.) */
-html, body {
-    overflow-x: hidden;
-    width: 100%;
-}
-
 .app-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    /* Filet de sécurité : empêche tout débordement horizontal sur mobile
+       (éléments décoratifs positionnés en absolu, images larges, etc.)
+       — posé ici plutôt que sur html/body pour ne pas casser le scroll
+       de page (html/body ont height:100%, un overflow-x explicite dessus
+       les transforme en conteneurs de scroll indépendants et bloque le
+       défilement au-delà de la hauteur de l'écran). */
+    overflow-x: hidden;
+    width: 100%;
 }
 
 .main-content {

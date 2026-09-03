@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
@@ -6,17 +6,14 @@ import 'aos/dist/aos.css';
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
 import Home from "./Components/Home/Home";
-import Main from "./Components/Main/Main";
-import Price from './Components/Price/Price';
 import AboutPage from './Components/AboutPage/AboutPage';
 import DeroulementPage from './Components/Deroulement/DeroulementPage';
 import CandidatePage from './Components/CandidatePage/CandidatePage';
-import DemiFinale from './Components/DemiFinale/DemiFinale';
+import VotePage from './Components/VotePage/VotePage';
 import ChantDemiFinale from './Components/ChantDemiFinale/ChantDemiFinale';
 import RapDemiFinale from './Components/RapDemiFinale/RapDemiFinale';
 import DanseDemiFinale from './Components/DanseDemiFinale/DanseDemiFinale';
-import Voter from './Components/Voter/Voter';
-import PartenairesPage from './Components/Partenaires/PartenairesPage';
+import ContactPage from './Components/ContactPage/ContactPage';
 
 import JokerVote from './Components/JokerVote/JokerVote';
 import JokerRepêchage from './Components/JokerRepêchage/JokerRepêchage';
@@ -25,6 +22,25 @@ import JokerChant from './Components/JokerChant/JokerChant';
 import JokerRap from './Components/JokerRap/JokerRap';
 
 import './App.css';
+
+/** Remonte en haut de page à chaque navigation, ou fait défiler jusqu'à
+ * l'ancre demandée (ex. /#partenaires, /deroulement#finale). */
+const ScrollManager = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.getElementById(location.hash.slice(1));
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+        return;
+      }
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }, [location.pathname, location.hash]);
+
+  return null;
+};
 
 const AppPublic = () => {
   const [loading, setLoading] = useState(true);
@@ -67,8 +83,8 @@ const AppPublic = () => {
                 <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="url(#gradient)"/>
                 <defs>
                   <linearGradient id="gradient" x1="12" y1="2" x2="12" y2="21.02" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="hsl(45, 100%, 70%)"/>
-                    <stop offset="1" stopColor="hsl(28, 100%, 58%)"/>
+                    <stop stopColor="hsl(32, 92%, 58%)"/>
+                    <stop offset="1" stopColor="hsl(18, 85%, 46%)"/>
                   </linearGradient>
                 </defs>
               </svg>
@@ -84,18 +100,21 @@ const AppPublic = () => {
 
   return (
     <div className="app-container">
+      <ScrollManager />
       <Navbar />
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<><Home /><Price /><Main /><Voter /><JokerVote /></>} />
+          <Route path="/" element={<Home />} />
           <Route path="/a-propos" element={<AboutPage />} />
           <Route path="/deroulement" element={<DeroulementPage />} />
           <Route path="/candidat/:id" element={<CandidatePage />} />
-          <Route path="/partenaires" element={<PartenairesPage />} />
-          <Route path="/demi-finale" element={<DemiFinale />} />
+          <Route path="/vote" element={<VotePage />} />
+          <Route path="/demi-finale" element={<Navigate to="/vote" replace />} />
+          <Route path="/partenaires" element={<Navigate to="/#partenaires" replace />} />
           <Route path="/chant" element={<ChantDemiFinale />} />
           <Route path="/rap" element={<RapDemiFinale />} />
           <Route path="/danse" element={<DanseDemiFinale />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/voter-joker" element={<JokerVote />} />
           <Route path="/joker-repechage" element={<JokerRepêchage />} />
           <Route path="/voter-joker/danse" element={<JokerDanse />} />
@@ -103,10 +122,6 @@ const AppPublic = () => {
           <Route path="/voter-joker/rap" element={<JokerRap />} />
         </Routes>
       </main>
-      <section id="inscription" className="inscription-section" data-aos="fade-up">
-        <h2>Chaque vote compte!</h2>
-        <p>Regarder en temps réel le classement des candidats votés par rubriques.</p>
-      </section>
       <Footer />
     </div>
   );

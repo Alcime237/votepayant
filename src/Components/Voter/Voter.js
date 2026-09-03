@@ -12,7 +12,7 @@ const Voter = () => {
   }, []);
 
   const handleVote = () => {
-    navigate('/demi-finale'); // Redirection directe vers la page des demi-finales
+    navigate('/vote'); // Redirection directe vers la page des demi-finales
   };
 
   return (

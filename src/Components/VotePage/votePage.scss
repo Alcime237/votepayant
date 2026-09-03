@@ -1,7 +1,65 @@
 @import '../../styles/destinationCards';
 
-.demi-finale {
-  padding: 4rem 0 2rem;
+.vote-page {
+  .demi-finale {
+    padding: 3.5rem 0 2rem;
+  }
+}
+
+.howToVote {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  max-width: 1000px;
+  margin: 0 auto 3.5rem;
+
+  &__step {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    position: relative;
+    transition: transform var(--transition-med), border-color var(--transition-med);
+
+    &:hover {
+      transform: translateY(-6px);
+      border-color: hsla(22, 88%, 50%, 0.4);
+    }
+  }
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--gradientColorSoft);
+    color: var(--signal-light);
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+}
+
+@media (min-width: 760px) {
+  .howToVote {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .countdown-section {

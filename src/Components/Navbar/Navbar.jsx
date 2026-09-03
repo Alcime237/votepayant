@@ -7,7 +7,6 @@ import logoImg from '../../Assets/logo.png';
 
 const Navbar = () => {
     const [active, setActive] = useState('navBar');
-    const [showContact, setShowContact] = useState(false);
     const [showTicketModal, setShowTicketModal] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -22,16 +21,6 @@ const Navbar = () => {
 
     const removeNavbar = () => {
         setActive('navBar');
-    };
-
-    const handleContactClick = (e) => {
-        e.preventDefault();
-        setShowContact(true);
-        removeNavbar();
-    };
-
-    const handleBackToHome = () => {
-        setShowContact(false);
     };
 
     const handleTicketClick = (e) => {
@@ -73,13 +62,14 @@ const Navbar = () => {
                     </Link>
                 </div>
 
-                {!showContact && !showTicketModal ? (
+                {!showTicketModal ? (
                     <div className={active}>
                         <ul className="navLists flex">
                             <li className="navItem">
                                 <Link
                                     to="/"
                                     className={`navLink ${location.pathname === '/' ? 'active' : ''}`}
+                                    onClick={removeNavbar}
                                 >
                                     Accueil
                                 </Link>
@@ -107,21 +97,22 @@ const Navbar = () => {
 
                             <li className="navItem">
                               <Link
-                                to="/partenaires"
-                                className={`navLink ${location.pathname === '/partenaires' ? 'active' : ''}`}
+                                to="/vote"
+                                className={`navLink ${location.pathname === '/vote' ? 'active' : ''}`}
+                                onClick={removeNavbar}
                               >
-                                Partenaires
+                                Voter
                               </Link>
                             </li>
 
                             <li className="navItem">
-                                <a
-                                    href="#contact"
-                                    className="navLink"
-                                    onClick={handleContactClick}
+                                <Link
+                                    to="/contact"
+                                    className={`navLink ${location.pathname === '/contact' ? 'active' : ''}`}
+                                    onClick={removeNavbar}
                                 >
                                     Contact
-                                </a>
+                                </Link>
                             </li>
 
                             <li className="navItem">
@@ -137,32 +128,12 @@ const Navbar = () => {
                     </div>
                 ) : null}
 
-                {!showContact && !showTicketModal && (
+                {!showTicketModal && (
                     <div onClick={showNav} className="toggleNavbar">
                         <TbGridDots className="icon" />
                     </div>
                 )}
             </header>
-
-            {showContact && (
-                <div className="contactOverlay" onClick={handleBackToHome}>
-                    <div className="contactContent" onClick={(e) => e.stopPropagation()}>
-                        <IoIosCloseCircle className="closeModalIcon" onClick={handleBackToHome} />
-
-                        <h2>Contactez-nous</h2>
-                        <div className="contactInfo">
-                            <p><strong>Téléphone:</strong> +221 78 538 62 25</p>
-                            <p><strong>Email:</strong> dakartalentshow@gmail.com</p>
-                            <div className="socialLinks">
-                                <a href="https://www.facebook.com/share/16d5VhcsCg/" target="_blank" rel="noopener noreferrer">Facebook</a>
-                                <a href="https://www.tiktok.com/@dakar_talent_show221?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer">TikTok</a>
-                                <a href="https://www.instagram.com/dakar_talent_show/" target="_blank" rel="noopener noreferrer">Instagram</a>
-                                <a href="https://wa.me/221785386225" target="_blank" rel="noopener noreferrer">Whatsapp</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
 
             {showTicketModal && (
                 <div className="contactOverlay" onClick={() => setShowTicketModal(false)}>

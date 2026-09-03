@@ -69,12 +69,12 @@ const CandidatePage = () => {
     return (
       <div className="candidate-page-error">
         <p>{error}</p>
-        <button className="btn" onClick={() => navigate('/demi-finale')}>Retour aux catégories</button>
+        <button className="btn" onClick={() => navigate('/vote')}>Retour aux catégories</button>
       </div>
     );
   }
 
-  const voteRoute = VOTE_ROUTE[candidate.category] || '/demi-finale';
+  const voteRoute = VOTE_ROUTE[candidate.category] || '/vote';
 
   return (
     <div className="candidate-page">

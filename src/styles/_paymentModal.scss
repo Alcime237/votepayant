@@ -396,8 +396,12 @@
 }
 
 @media (max-width: 480px) {
-  .payment-modal-content.compact {
+  .payment-modal-content {
     padding: 1.25rem;
+
+    &.compact {
+      padding: 1.25rem;
+    }
   }
 
   .method-buttons {
@@ -406,5 +410,21 @@
 
   .modal-actions {
     flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 380px) {
+  .payment-nav .nav-connector {
+    width: 32px;
+    margin: 0 6px;
+  }
+
+  .payment-nav .nav-step .step-number {
+    width: 28px;
+    height: 28px;
+  }
+
+  .payment-nav .nav-step .step-label {
+    font-size: 0.68rem;
   }
 }

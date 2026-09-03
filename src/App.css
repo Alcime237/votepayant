@@ -261,6 +261,13 @@ html, body, #root {
     height: 100%;
 }
 
+/* Filet de sécurité : empêche tout débordement horizontal sur mobile
+   (éléments décoratifs positionnés en absolu, images larges, etc.) */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 .app-container {
     display: flex;
     flex-direction: column;

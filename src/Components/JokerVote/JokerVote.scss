@@ -148,13 +148,15 @@
     .joker-vote-btn {
         display: inline-flex;
         align-items: center;
-        background: linear-gradient(45deg, var(--SecondaryColor), var(--AccentGold));
-        color: var(--blackColor);
+        background: var(--gradientColor);
+        color: var(--signal-ink);
         border: none;
         padding: 1rem 2rem;
-        border-radius: 30px;
-        font-weight: 700;
-        font-size: 1rem;
+        border-radius: var(--radius-sm);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        font-size: 0.95rem;
         cursor: pointer;
         transition: all 0.3s ease;
         box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);

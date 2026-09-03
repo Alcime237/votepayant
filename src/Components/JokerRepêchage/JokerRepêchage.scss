@@ -25,13 +25,13 @@
 
   &::before {
     left: -100px;
-    background: hsla(5, 85%, 42%, 0.7);
+    background: var(--live);
     animation: repechagePulse 6s infinite;
   }
 
   &::after {
     right: -100px;
-    background: hsla(38, 100%, 52%, 0.7);
+    background: var(--signal);
     animation: repechagePulse 8s infinite alternate;
   }
 }
@@ -75,7 +75,7 @@
     background: hsla(0, 0%, 0%, 0.4);
     border: 1px solid hsla(38, 100%, 60%, 0.25);
     padding: 0.5rem 1.25rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
     display: inline-block;
   }
 }
@@ -136,10 +136,10 @@
 
     .vote-now-btn {
       background: var(--gradientColor);
-      color: var(--whiteColor);
+      color: var(--signal-ink);
       padding: 0.7rem 1.5rem;
       border: none;
-      border-radius: var(--radius-pill);
+      border-radius: var(--radius-sm);
       font-weight: 700;
       cursor: pointer;
       box-shadow: var(--shadow-glow);
@@ -162,13 +162,14 @@
     color: var(--whiteColor);
     border: 1px solid hsla(38, 100%, 60%, 0.4);
     padding: 0.6rem 1.4rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     font-weight: 500;
     transition: all var(--transition-fast);
 
     &:hover {
       background: var(--gradientColor);
+      color: var(--signal-ink);
       border-color: transparent;
       box-shadow: var(--shadow-glow);
     }

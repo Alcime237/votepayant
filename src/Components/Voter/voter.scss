@@ -27,11 +27,9 @@
   h3 {
     position: relative;
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    background: var(--gradientText);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    text-transform: uppercase;
+    color: var(--ink);
     margin-bottom: 0.5rem;
   }
 }
@@ -54,11 +52,13 @@
   background: var(--gradientColor);
   background-size: 200% 100%;
   background-position: 0% 0%;
-  color: var(--whiteColor);
+  color: var(--signal-ink);
   border: none;
-  border-radius: var(--radius-pill);
-  font-size: 1.1rem;
-  font-weight: 700;
+  border-radius: var(--radius-sm);
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
   cursor: pointer;
   transition: background-position var(--transition-med), transform var(--transition-fast), box-shadow var(--transition-fast);
   margin-top: 0.75rem;
@@ -68,8 +68,8 @@
 
 .vote-btn:hover {
   background-position: 100% 0%;
-  transform: translateY(-3px);
-  box-shadow: 0 14px 40px hsla(22, 100%, 50%, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px hsla(38, 100%, 56%, 0.35);
 }
 
 .vote-btn::after {

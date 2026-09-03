@@ -1,0 +1,141 @@
+// Grille de cartes "étape/destination" partagée par Main (déroulement) et
+// DemiFinale (choix de rubrique) — un seul design premium au lieu de trois
+// palettes divergentes redéfinies par page.
+
+.secContent {
+  justify-content: center;
+  gap: 1.75rem;
+
+  .singleDestination {
+    position: relative;
+    height: 100%;
+    display: grid;
+    row-gap: 0;
+    border-radius: var(--radius-lg);
+    align-items: start;
+    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0.045), hsla(0, 0%, 100%, 0.015));
+    border: 1px solid var(--cardBorder);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med);
+
+    &:hover {
+      transform: translateY(-8px);
+      border-color: hsla(38, 100%, 60%, 0.4);
+      box-shadow: 0 26px 60px hsla(0, 0%, 0%, 0.55), var(--shadow-glow);
+    }
+
+    .stepNumber {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 3;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--whiteColor);
+      background: hsla(0, 0%, 0%, 0.45);
+      border: 1px solid hsla(38, 100%, 60%, 0.4);
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .imageDiv {
+      height: 190px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, transparent 45%, hsla(0, 0%, 3%, 0.92));
+      }
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        transition: transform 1.6s var(--ease-premium);
+      }
+    }
+
+    &:hover .imageDiv img {
+      transform: scale(1.1);
+    }
+
+    .cardInfo {
+      padding: 1.5rem 1.5rem 1.75rem;
+
+      .destTitle {
+        font-family: var(--font-display);
+        color: var(--whiteColor);
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.6rem;
+      }
+
+      .continent {
+        gap: .5rem;
+
+        .icon {
+          color: var(--textColor);
+          font-size: 18px;
+        }
+
+        .name {
+          color: var(--textColor);
+          font-weight: 400;
+          font-size: 14px;
+        }
+      }
+
+      .desc {
+        font-size: 15px;
+        color: var(--greyText);
+        font-weight: 400;
+        line-height: 1.55;
+        margin-bottom: 1.25rem;
+      }
+
+      .btn {
+        color: var(--whiteColor);
+        font-weight: 600;
+        justify-content: center;
+        gap: .5rem;
+        width: 100%;
+
+        .icon {
+          align-self: center;
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .secContent {
+    grid-template-columns: repeat(2, 1fr);
+
+    .singleDestination {
+      height: auto;
+    }
+  }
+}
+
+@media screen and (min-width: 840px) {
+  .secContent {
+    grid-template-columns: repeat(3, 1fr);
+
+    .singleDestination {
+      height: auto;
+    }
+  }
+}

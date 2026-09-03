@@ -1,0 +1,410 @@
+// Design partagé par toutes les pages de vote (Chant/Danse/Rap + leurs variantes
+// Joker). Ces six pages utilisaient déjà les mêmes noms de classe dans des
+// fichiers SCSS séparés (donc en collision globale) — on les unifie ici en une
+// seule identité premium au lieu de six palettes divergentes.
+
+.chant-container,
+.danse-container,
+.rap-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 7rem 1.25rem 3rem;
+  position: relative;
+
+  h1 {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    background: var(--gradientText);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--greyText);
+    margin-bottom: 2.5rem;
+  }
+
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.5rem;
+    background: hsla(0, 0%, 100%, 0.05);
+    border: 1px solid hsla(0, 0%, 100%, 0.14);
+    color: var(--whiteColorDeam);
+    border-radius: var(--radius-pill);
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+
+    &:hover {
+      border-color: var(--AccentGold);
+      color: var(--AccentGold);
+      transform: translateX(-3px);
+    }
+  }
+}
+
+.candidates-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.candidate-card {
+  background: linear-gradient(180deg, hsla(0, 0%, 100%, 0.045), hsla(0, 0%, 100%, 0.015));
+  border: 1px solid var(--cardBorder);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-med), border-color var(--transition-med), box-shadow var(--transition-med);
+  position: relative;
+  opacity: 0;
+  animation: cardEnter 0.6s var(--ease-premium) forwards;
+
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      animation-delay: $i * 0.07s;
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradientColor);
+    z-index: 2;
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    border-color: hsla(38, 100%, 60%, 0.4);
+    box-shadow: 0 26px 60px hsla(0, 0%, 0%, 0.55), var(--shadow-glow);
+  }
+
+  .image-clickable {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    height: 270px;
+
+    img, .dancer-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s var(--ease-premium);
+    }
+
+    .dancer-overlay {
+      position: absolute;
+      inset: 0;
+      background: hsla(0, 0%, 0%, 0.55);
+      backdrop-filter: blur(2px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+      color: var(--whiteColor);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    &:hover img,
+    &:hover .dancer-image {
+      transform: scale(1.08);
+    }
+
+    &:hover .dancer-overlay {
+      opacity: 1;
+    }
+  }
+
+  .candidate-info {
+    padding: 1.4rem 1.5rem 0.4rem;
+
+    h3 {
+      margin: 0 0 0.7rem 0;
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      color: var(--whiteColor);
+      font-weight: 700;
+    }
+
+    .details p,
+    > p {
+      margin: 0.4rem 0;
+      font-size: 0.95rem;
+    }
+
+    .style {
+      color: var(--AccentGold);
+      font-weight: 500;
+    }
+
+    .price {
+      color: var(--textColor);
+      font-weight: 600;
+    }
+
+    .votes {
+      color: #2ecc71;
+      font-weight: bold;
+    }
+  }
+
+  .vote-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: calc(100% - 3rem);
+    margin: 1.1rem 1.5rem 1.5rem;
+    padding: 0.85rem;
+    background: var(--gradientColor);
+    background-size: 200% 100%;
+    background-position: 0% 0%;
+    color: var(--whiteColor);
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-position var(--transition-med), transform var(--transition-fast), box-shadow var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: var(--shadow-glow);
+
+    .vote-icon {
+      margin-right: 0.3rem;
+      font-size: 1.2rem;
+    }
+
+    &:hover:not(:disabled) {
+      background-position: 100% 0%;
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px hsla(22, 100%, 50%, 0.4);
+    }
+
+    &:active {
+      transform: translateY(-1px);
+    }
+
+    &:disabled,
+    &.disabled {
+      background: hsla(0, 0%, 100%, 0.08);
+      color: var(--greyText);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+}
+
+@keyframes cardEnter {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Popup image plein écran */
+.image-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: hsla(0, 0%, 0%, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  animation: fadeInPopup 0.25s ease-out;
+  padding: 1.5rem;
+
+  .image-popup-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    background: hsl(0, 0%, 8%);
+    border: 1px solid var(--cardBorder);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    cursor: default;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+
+    img {
+      max-width: 100%;
+      max-height: 68vh;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+    }
+
+    .popup-title {
+      margin-top: 1.25rem;
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--whiteColor);
+      font-weight: 700;
+    }
+
+    .popup-subtitle {
+      margin-top: 0.35rem;
+      font-size: 1rem;
+      color: var(--AccentGold);
+    }
+
+    .close-popup {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 44px;
+      height: 44px;
+      background: var(--gradientColor);
+      color: var(--whiteColor);
+      border: none;
+      border-radius: 50%;
+      font-size: 1.6rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-glow);
+      transition: transform var(--transition-fast);
+
+      &:hover {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}
+
+@keyframes fadeInPopup {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* États chargement / erreur génériques */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  text-align: center;
+  padding: 2rem;
+
+  p {
+    font-size: 1.15rem;
+    margin-bottom: 1.5rem;
+    color: #ff6b6b;
+  }
+
+  button {
+    padding: 0.7rem 1.8rem;
+    background: var(--gradientColor);
+    color: var(--whiteColor);
+    border: none;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform var(--transition-fast);
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+/* Loader générique à trois barres (dancer / singer / rapper) */
+[class$="-loading-container"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 5rem;
+}
+
+.dance-loading,
+.chant-loading,
+.rap-loading {
+  position: relative;
+  width: 120px;
+  height: 100px;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+
+  .dancer,
+  .singer,
+  .rapper {
+    width: 26px;
+    height: 70px;
+    border-radius: var(--radius-sm);
+    background: var(--gradientColor);
+    animation: barBounce 1.1s ease-in-out infinite;
+
+    &:nth-child(1) { animation-delay: 0s; }
+    &:nth-child(2) { animation-delay: 0.15s; }
+    &:nth-child(3) { animation-delay: 0.3s; }
+  }
+}
+
+@keyframes barBounce {
+  0%, 100% { transform: scaleY(0.6); opacity: 0.7; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+[class$="-loading-container"] .loading-text {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--whiteColor);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+[class$="-loading-container"] .loading-subtext {
+  color: var(--greyText);
+  font-style: italic;
+  font-size: 0.92rem;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .chant-container, .danse-container, .rap-container {
+    padding-top: 6rem;
+  }
+
+  .candidates-list {
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .chant-container, .danse-container, .rap-container {
+    padding: 5.5rem 0.75rem 2rem;
+  }
+
+  .candidates-list {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}

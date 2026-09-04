@@ -1,223 +1,251 @@
+// Redesign "VOTE EXCLUSIF" : bandeau spotlight asymétrique (texte+CTA à gauche, visuel
+// animé à droite), remplace l'ancienne carte centrée statique.
 
 .joker-vote-section {
     margin: 3rem 0;
 }
 
-// Styles pour la carte Joker
-.joker-card-container {
-    display: flex;
-    justify-content: center;
-    padding: 0 1rem;
-}
-
-.joker-card {
+.spotlight {
     position: relative;
-    background: linear-gradient(135deg, var(--cardBG) 0%, hsl(0, 0%, 12%) 100%);
-    border-radius: 20px;
-    padding: 2.5rem;
-    width: 100%;
-    max-width: 600px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    display: grid;
+    // Colonne texte plus large que la colonne visuelle, comme sur les bandeaux "moment fort"
+    // des award shows (le message et l'action priment sur la décoration).
+    grid-template-columns: 1.3fr 1fr;
+    align-items: center;
+    gap: 2.5rem;
+    background: linear-gradient(135deg, var(--surface) 0%, hsl(226, 40%, 6%) 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 3rem 3rem 3rem 3.5rem;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-card);
 
+    // Halo décoratif diffus en fond, cohérent avec le reste de la charte "studio sombre"
     &::before {
         content: '';
         position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
-        transform: rotate(45deg);
-        z-index: 0;
+        inset: 0;
+        background: radial-gradient(circle at 85% 30%, hsla(30, 90%, 50%, 0.16), transparent 60%);
+        pointer-events: none;
+    }
+
+    // Liseré animé en haut du bandeau — reprend le "glowMove" de l'ancienne version,
+    // signal discret que cette section est mise en avant par rapport aux autres.
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--signal), var(--signal-light), var(--signal));
+        background-size: 200% 100%;
+        animation: spotlightGlow 3s ease-in-out infinite alternate;
     }
 }
 
-.joker-card-glow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg,
-        var(--SecondaryColor),
-        var(--AccentGold),
-        var(--SecondaryColor));
-    background-size: 200% 100%;
-    animation: glowMove 3s ease-in-out infinite alternate;
+@keyframes spotlightGlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
 }
 
-@keyframes glowMove {
-    0% {
-        background-position: 0% 50%;
-    }
-    100% {
-        background-position: 100% 50%;
-    }
-}
-
-.joker-card-header {
-    text-align: center;
-    margin-bottom: 2rem;
+.spotlight__content {
     position: relative;
     z-index: 1;
-
-    h3 {
-        font-family: var(--font-display);
-        color: var(--whiteColor);
-        font-size: 2rem;
-        font-weight: 800;
-        margin: 1rem 0 0.5rem;
-        background: linear-gradient(45deg, var(--SecondaryColor), var(--AccentGold));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    p {
-        color: var(--greyText);
-        font-size: 1.1rem;
-    }
 }
 
-.joker-badge {
+// Badge "VOTE EXCLUSIF" — grand eyebrow très visible, premier élément lu par l'œil
+.spotlight__badge {
     display: inline-flex;
     align-items: center;
-    background: linear-gradient(45deg, var(--SecondaryColor), var(--AccentGold));
-    padding: 0.5rem 1rem;
-    border-radius: 30px;
+    gap: 0.5rem;
+    background: var(--gradientColor);
+    color: var(--signal-ink);
+    padding: 0.55rem 1.1rem;
+    border-radius: var(--radius-pill);
     font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--blackColor);
-
-    .crown-icon {
-        margin-right: 0.5rem;
-        font-size: 1rem;
-    }
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    box-shadow: var(--shadow-glow);
+    margin-bottom: 1.1rem;
 }
 
-.joker-card-content {
+.spotlight__badge-icon {
+    font-size: 1rem;
+}
+
+.spotlight__title {
+    font-family: var(--font-display);
+    color: var(--ink);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+    margin: 0 0 0.4rem;
+}
+
+.spotlight__subtitle {
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin-bottom: 1.75rem;
+}
+
+.spotlight__features {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
     margin-bottom: 2rem;
-    position: relative;
-    z-index: 1;
 }
 
-.joker-feature {
+.spotlight__feature {
     display: flex;
     align-items: flex-start;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
 
-    .feature-icon {
-        background: rgba(255, 255, 255, 0.1);
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 1rem;
-        flex-shrink: 0;
+.spotlight__feature-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsla(0, 0%, 100%, 0.06);
+    color: var(--signal-light);
+    font-size: 1.25rem;
+}
 
-        .icon {
-            color: var(--SecondaryColor);
-            font-size: 1.5rem;
-        }
+.spotlight__feature-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+
+    strong {
+        color: var(--ink);
+        font-size: 1.02rem;
     }
 
-    .feature-text {
-        h4 {
-            color: var(--whiteColor);
-            margin-bottom: 0.3rem;
-            font-size: 1.1rem;
-        }
+    span {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+}
 
-        p {
-            color: var(--greyText);
-            font-size: 0.95rem;
-            line-height: 1.4;
+// CTA "impossible à rater" : plein contraste, icône flèche qui glisse légèrement au survol
+.spotlight__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--gradientColor);
+    color: var(--signal-ink);
+    border: none;
+    padding: 1rem 2.1rem;
+    border-radius: var(--radius-sm);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-glow);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 34px hsla(38, 100%, 56%, 0.35);
+
+        .spotlight__cta-icon {
+            transform: translateX(4px);
         }
     }
 }
 
-.joker-card-footer {
-    text-align: center;
+.spotlight__cta-icon {
+    transition: transform var(--transition-fast);
+}
+
+.spotlight__note {
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+// Colonne droite : couronne + deux anneaux concentriques animés, purement décoratif
+.spotlight__visual {
     position: relative;
     z-index: 1;
-
-    .joker-vote-btn {
-        display: inline-flex;
-        align-items: center;
-        background: var(--gradientColor);
-        color: var(--signal-ink);
-        border: none;
-        padding: 1rem 2rem;
-        border-radius: var(--radius-sm);
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.02em;
-        font-size: 0.95rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
-
-        .btn-icon {
-            margin-right: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        &:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 165, 0, 0.4);
-        }
-    }
-
-    .vote-info {
-        margin-top: 1rem;
-        color: var(--greyText);
-        font-size: 0.9rem;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 220px;
 }
 
-// Animation d'entrée
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.spotlight__visual-icon {
+    font-size: 5rem;
+    color: var(--signal-light);
+    filter: drop-shadow(0 0 24px hsla(30, 90%, 50%, 0.55));
+    animation: crownFloat 3.2s ease-in-out infinite;
 }
 
-.joker-card {
-    animation: fadeInUp 0.8s ease-out forwards;
+.spotlight__visual-ring {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 1px solid hsla(30, 90%, 60%, 0.35);
+    animation: ringSpin 12s linear infinite;
 }
 
-// Responsive
-@media screen and (max-width: 768px) {
-    .joker-card {
-        padding: 2rem 1.5rem;
+.spotlight__visual-ring--2 {
+    width: 230px;
+    height: 230px;
+    border-color: hsla(30, 90%, 60%, 0.18);
+    // sens inverse + vitesse différente : évite un rendu trop mécanique/synchrone
+    animation-direction: reverse;
+    animation-duration: 18s;
+}
 
-        .joker-card-header h3 {
-            font-size: 1.7rem;
-        }
-    }
+@keyframes crownFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
 
-    .joker-feature {
-        flex-direction: column;
+// Empile les deux colonnes en mobile, la lisibilité du texte prime sur la mise en scène
+@media screen and (max-width: 860px) {
+    .spotlight {
+        grid-template-columns: 1fr;
+        padding: 2.25rem 1.5rem;
         text-align: center;
-
-        .feature-icon {
-            margin-right: 0;
-            margin-bottom: 0.8rem;
-            align-self: center;
-        }
     }
 
-    .joker-vote-btn {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
+    .spotlight__feature {
+        text-align: left;
+    }
+
+    .spotlight__visual {
+        order: -1; // le visuel passe au-dessus du texte en mobile, plus impactant en premier
+        height: 160px;
+    }
+
+    .spotlight__visual-icon {
+        font-size: 3.5rem;
+    }
+
+    .spotlight__visual-ring {
+        width: 130px;
+        height: 130px;
+    }
+
+    .spotlight__visual-ring--2 {
+        width: 165px;
+        height: 165px;
+    }
+}
+
+// Respecte les préférences d'accessibilité : coupe les animations continues si demandé
+@media (prefers-reduced-motion: reduce) {
+    .spotlight::after,
+    .spotlight__visual-icon,
+    .spotlight__visual-ring {
+        animation: none;
     }
 }

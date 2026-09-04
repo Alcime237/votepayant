@@ -14,12 +14,22 @@ import ChantDemiFinale from './Components/ChantDemiFinale/ChantDemiFinale';
 import RapDemiFinale from './Components/RapDemiFinale/RapDemiFinale';
 import DanseDemiFinale from './Components/DanseDemiFinale/DanseDemiFinale';
 import ContactPage from './Components/ContactPage/ContactPage';
+// PartnersSlider est monté une seule fois ici (layout global), juste avant le Footer,
+// pour apparaître sur TOUTES les pages de l'app et pas seulement sur l'accueil.
+import PartnersSlider from './Components/PartnersSlider/PartnersSlider';
 
-import JokerVote from './Components/JokerVote/JokerVote';
-import JokerRepêchage from './Components/JokerRepêchage/JokerRepêchage';
-import JokerDanse from './Components/JokerDanse/JokerDanse';
-import JokerChant from './Components/JokerChant/JokerChant';
-import JokerRap from './Components/JokerRap/JokerRap';
+// Rubrique "Votez pour le Joker" désactivée partout (consigne section 4) : les imports et
+// les 5 routes qui suivent restent en place (rien n'est supprimé) mais sont commentés, donc
+// injoignables par URL directe. Décommenter les 5 lignes ci-dessous + les 5 <Route> plus bas
+// pour réactiver entièrement la rubrique.
+// import JokerVote from './Components/JokerVote/JokerVote';
+// import JokerRepêchage from './Components/JokerRepêchage/JokerRepêchage';
+// import JokerDanse from './Components/JokerDanse/JokerDanse';
+// import JokerChant from './Components/JokerChant/JokerChant';
+// import JokerRap from './Components/JokerRap/JokerRap';
+
+// Vrai logo de l'app (déjà utilisé dans la Navbar), réutilisé pour l'animer sur le splashscreen
+import logoImg from './Assets/logo.png';
 
 import './App.css';
 
@@ -73,25 +83,13 @@ const AppPublic = () => {
           })}
         </div>
         <div className="loader-content">
-          <div className="luxury-spinner">
-            <div className="spinner-circle"></div>
-            <div className="spinner-circle"></div>
-            <div className="spinner-circle"></div>
-            <div className="spinner-logo">
-
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="url(#gradient)"/>
-                <defs>
-                  <linearGradient id="gradient" x1="12" y1="2" x2="12" y2="21.02" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="hsl(32, 92%, 58%)"/>
-                    <stop offset="1" stopColor="hsl(18, 85%, 46%)"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
+          {/* Halo + vrai logo animés (remplace l'ancien spinner générique + icône SVG en dur) */}
+          <div className="loader-logo-wrap">
+            <span className="loader-logo-ring" />
+            <img src={logoImg} alt="Sénégal Talent Show" className="loader-logo-img" />
           </div>
-          <h1 className="loader-title">Dakar Talent Show</h1>
-          <p className="loader-subtitle">Vivez une expérience unique</p>
+          {/* Slogan officiel demandé, mis en avant comme accroche principale du splashscreen */}
+          <p className="loader-slogan">Le plus grand rendez-vous des talents</p>
           <p className="loader-wait-text">Chargement de l'application en cours...</p>
         </div>
       </div>
@@ -115,13 +113,17 @@ const AppPublic = () => {
           <Route path="/rap" element={<RapDemiFinale />} />
           <Route path="/danse" element={<DanseDemiFinale />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/voter-joker" element={<JokerVote />} />
-          <Route path="/joker-repechage" element={<JokerRepêchage />} />
-          <Route path="/voter-joker/danse" element={<JokerDanse />} />
-          <Route path="/voter-joker/chant" element={<JokerChant />} />
-          <Route path="/voter-joker/rap" element={<JokerRap />} />
+          {/* Routes Joker désactivées (voir imports commentés plus haut) : décommenter les
+              5 lignes ci-dessous en même temps que les imports pour tout réactiver. */}
+          {/* <Route path="/voter-joker" element={<JokerVote />} /> */}
+          {/* <Route path="/joker-repechage" element={<JokerRepêchage />} /> */}
+          {/* <Route path="/voter-joker/danse" element={<JokerDanse />} /> */}
+          {/* <Route path="/voter-joker/chant" element={<JokerChant />} /> */}
+          {/* <Route path="/voter-joker/rap" element={<JokerRap />} /> */}
         </Routes>
       </main>
+      {/* Bandeau partenaires affiché sur toutes les pages, juste avant le pied de page */}
+      <PartnersSlider />
       <Footer />
     </div>
   );

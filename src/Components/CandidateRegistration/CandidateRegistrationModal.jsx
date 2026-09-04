@@ -5,6 +5,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IoIosCloseCircle } from 'react-icons/io';
 import { LuMic, LuMusic4, LuActivity, LuCheck, LuUpload, LuX, LuLoaderCircle } from 'react-icons/lu';
 import { registerCandidate } from '../../services/candidateService';
+// Distingue un serveur injoignable (mode démo) d'une vraie erreur d'inscription
+import { isUnreachableError } from '../../services/demoMode';
 import './candidateRegistrationModal.scss';
 
 // Les 3 disciplines ouvertes à l'inscription publique — Joker exclu (section 6, comme
@@ -144,9 +146,15 @@ const CandidateRegistrationModal = ({ onClose }) => {
       await registerCandidate(formData);
       setSubmitSuccess(true);
     } catch (err) {
-      // friendlyMessage vient de l'intercepteur axios (apiClient.js) ; à défaut, le message
-      // métier renvoyé par le backend (ex. "La discipline doit être Chant, Rap ou Danse.")
-      setSubmitError(err.friendlyMessage || err.response?.data?.detail || err.message);
+      if (isUnreachableError(err)) {
+        // Serveur injoignable (ex. aperçu de démonstration sans backend relié) : message
+        // honnête plutôt qu'une erreur technique — l'inscription n'a pas pu être enregistrée.
+        setSubmitError("Mode démonstration : cette page n'est pas reliée à un serveur pour l'instant, l'inscription n'a pas pu être enregistrée.");
+      } else {
+        // friendlyMessage vient de l'intercepteur axios (apiClient.js) ; à défaut, le message
+        // métier renvoyé par le backend (ex. "La discipline doit être Chant, Rap ou Danse.")
+        setSubmitError(err.friendlyMessage || err.response?.data?.detail || err.message);
+      }
     } finally {
       setSubmitting(false);
     }

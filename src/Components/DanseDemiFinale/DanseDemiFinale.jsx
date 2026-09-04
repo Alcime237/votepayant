@@ -7,6 +7,9 @@ import { createVoteOrder, pollVoteOrderUntilSettled } from '../../services/voteO
 import { openTouchPayWidget } from '../../services/touchpayWidget';
 // "Verdict final" : diagramme en bâtons du classement, scopé à la discipline Danse (section 8.3)
 import RankingChart from '../RankingChart/RankingChart';
+// Distingue un serveur injoignable (mode démo) d'une vraie erreur de paiement, pour ne pas
+// afficher un message technique de développeur aux visiteurs d'un aperçu sans backend relié.
+import { isUnreachableError } from '../../services/demoMode';
 
 const UNIT_PRICE_FCFA = 200;
 // Nouvelle règle de vote unique (section 5) : 200 FCFA = 5 points, point. Plus aucun palier
@@ -141,8 +144,14 @@ const Danse = () => {
         alert(`Le paiement n'a pas abouti (statut: ${settled.status}).`);
       }
     } catch (error) {
-      // Même principe : friendlyMessage donne un message actionnable plutôt que l'erreur axios brute
-      alert('Erreur lors du paiement: ' + (error.friendlyMessage || error.message));
+      if (isUnreachableError(error)) {
+        // Serveur injoignable (ex. aperçu de démonstration sans backend relié) : message
+        // honnête plutôt qu'une erreur technique — aucun paiement n'a été tenté ni facturé.
+        alert("Mode démonstration : cette page n'est pas reliée à un serveur de paiement pour l'instant, aucun vote réel n'a été enregistré.");
+      } else {
+        // Même principe : friendlyMessage donne un message actionnable plutôt que l'erreur axios brute
+        alert('Erreur lors du paiement: ' + (error.friendlyMessage || error.message));
+      }
     } finally {
       setIsProcessing(false);
     }

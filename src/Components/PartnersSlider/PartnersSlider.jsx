@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './partnersSlider.scss';
 import { getPartners } from '../../services/partnerService';
+// Signale le mode démo dès qu'on sait que le backend est injoignable (ex. aperçu Vercel sans
+// backend relié) — ce composant est monté sur toutes les pages, donc souvent le premier à
+// détecter la panne, ce qui évite aux autres services (classement en direct, etc.) de tenter
+// des appels voués à échouer.
+import { isUnreachableError, markDemoMode } from '../../services/demoMode';
 
 // Lettres utilisées pour varier l'initiale affichée sur chaque tuile de substitution,
 // pour que les placeholders ne soient pas tous strictement identiques.
@@ -30,7 +35,10 @@ const PartnersSlider = () => {
       // sinon on conserve les placeholders, pour que "Nos partenaires" reste visible
       // sur toutes les pages même avant que de vrais partenaires soient configurés.
       .then((data) => setPartners(Array.isArray(data) && data.length > 0 ? data : PLACEHOLDER_PARTNERS))
-      .catch(() => setPartners(PLACEHOLDER_PARTNERS));
+      .catch((error) => {
+        if (isUnreachableError(error)) markDemoMode();
+        setPartners(PLACEHOLDER_PARTNERS);
+      });
   }, []);
 
   // La liste est dupliquée pour permettre un défilement en boucle continue et fluide :

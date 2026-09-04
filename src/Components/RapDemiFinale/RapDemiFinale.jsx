@@ -5,8 +5,13 @@ import { getCandidatesByCategory } from '../../services/candidateService';
 import { getCampaignStatus } from '../../services/campaignService';
 import { createVoteOrder, pollVoteOrderUntilSettled } from '../../services/voteOrderService';
 import { openTouchPayWidget } from '../../services/touchpayWidget';
+// "Verdict final" : diagramme en bâtons du classement, scopé à la discipline Rap (section 8.3)
+import RankingChart from '../RankingChart/RankingChart';
 
 const UNIT_PRICE_FCFA = 200;
+// Nouvelle règle de vote unique (section 5) : 200 FCFA = 5 points, point. Plus aucun palier
+// standard/soutien/premium ni multiplicateur — un seul taux fixe, affiché partout pareil.
+const POINTS_PER_UNIT = 5;
 
 const Rap = () => {
   const [candidates, setCandidates] = useState([]);
@@ -31,7 +36,9 @@ const Rap = () => {
       const data = await getCandidatesByCategory('RAP');
       setCandidates(data);
     } catch (err) {
-      setError(err.message);
+      // friendlyMessage (posé par l'intercepteur axios, voir apiClient.js) explique la cause
+      // réelle (serveur injoignable / CORS / erreur métier) au lieu du "Network Error" générique
+      setError(err.friendlyMessage || err.message);
     } finally {
       setLoading(false);
     }
@@ -134,7 +141,8 @@ const Rap = () => {
         alert(`Le paiement n'a pas abouti (statut: ${settled.status}).`);
       }
     } catch (error) {
-      alert('Erreur lors du paiement: ' + (error.response?.data?.detail || error.message));
+      // Même principe : friendlyMessage donne un message actionnable plutôt que l'erreur axios brute
+      alert('Erreur lors du paiement: ' + (error.friendlyMessage || error.message));
     } finally {
       setIsProcessing(false);
     }
@@ -200,7 +208,8 @@ const Rap = () => {
             </div>
             <div className="candidate-info">
               <h3>{candidate.fullName}</h3>
-              <p className="price">Prix: {UNIT_PRICE_FCFA} FCFA/vote</p>
+              {/* Règle de vote unique affichée sur chaque carte (section 5) : plus de palier */}
+              <p className="price">{UNIT_PRICE_FCFA} FCFA = {POINTS_PER_UNIT} points</p>
             </div>
             <button
               className="vote-button"
@@ -212,6 +221,11 @@ const Rap = () => {
           </div>
         ))}
       </div>
+
+      {/* "Verdict final" (section 8.3) : classement en direct, strictement scopé à Rap —
+          category="RAP" filtre la liste reçue et recalcule le pourcentage localement
+          (voir le commentaire détaillé dans RankingChart.jsx). */}
+      <RankingChart category="RAP" title="Verdict final — Rap" showExplanation />
 
       {selectedImage && (
         <div className="image-popup-overlay" onClick={closeImagePopup}>
@@ -286,7 +300,8 @@ const Rap = () => {
 
                 <div className="total-amount">
                   <span>Total:</span>
-                  <span className="amount">{totalAmount} FCFA</span>
+                  {/* Points affichés à côté du montant : cohérent avec la règle unique 200 FCFA = 5 points */}
+                  <span className="amount">{totalAmount} FCFA · {voteCount * POINTS_PER_UNIT} points</span>
                 </div>
               </div>
             )}

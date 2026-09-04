@@ -34,6 +34,15 @@
   50% { opacity: 0.4; }
 }
 
+// Texte explicatif affiché au-dessus du board sur les pages de discipline ("Verdict final") —
+// absent sur le classement global de la page Vote (prop showExplanation non passée là-bas).
+.ranking-chart-explanation {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: -0.75rem 0 1.5rem;
+}
+
 .ranking-chart-empty {
   color: var(--muted);
   font-size: 0.95rem;
@@ -85,6 +94,26 @@
 }
 
 .who {
+  // Ligne = photo (optionnelle) + nom/discipline, plutôt qu'une colonne de grille dédiée :
+  // fonctionne aussi bien pour les candidats sans photo que pour ceux qui en ont une.
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+// Miniature du candidat dans le classement — "photo en bonne taille" pour la liste des
+// candidats elle-même (voir CandidateGrid), ici juste un repère visuel compact par ligne.
+.who-photo {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+}
+
+.who-text {
   display: flex;
   flex-direction: column;
   min-width: 0;

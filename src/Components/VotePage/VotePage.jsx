@@ -25,7 +25,9 @@ const HERO_SLIDES = [
 const STEPS = [
   { icon: LuListChecks, title: '1. Choisissez la rubrique', text: 'Chant, Rap ou Danse — sélectionnez la catégorie que vous suivez.' },
   { icon: LuUserCheck, title: '2. Sélectionnez le candidat', text: "Parcourez les talents en lice et choisissez celui que vous voulez soutenir." },
-  { icon: LuSmartphone, title: '3. Payez en Mobile Money', text: 'Choisissez votre palier (200 FCFA et plus), payez via Orange Money ou Wave, et c\'est voté.' },
+  // "Choisissez votre palier" retiré : il n'existe plus de palier, la règle est unique
+  // (200 FCFA = 5 points, section 5). Le texte décrit maintenant simplement le geste de paiement.
+  { icon: LuSmartphone, title: '3. Payez en Mobile Money', text: 'Chaque tranche de 200 FCFA rapporte 5 points. Payez via Orange Money ou Wave, et c\'est voté.' },
 ];
 
 const CountdownTimer = () => {

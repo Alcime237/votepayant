@@ -1,136 +1,70 @@
+// Règle de vote unique (200 FCFA = 5 points) — remplace l'ancienne grille à 3 paliers
+// (standard/soutien/premium) qui n'existe plus dans le produit (section 5 du brief).
 .pricingTiers {
   padding: 3rem 0 1rem;
 
-  .tiersGrid {
-    display: grid;
-    gap: 1.75rem;
-    grid-template-columns: 1fr;
-    max-width: 1100px;
+  .ruleCard {
+    max-width: 640px;
     margin: 0 auto;
-  }
-
-  .tierCard {
-    position: relative;
     text-align: center;
-    padding: 2.25rem 1.75rem 2rem;
+    padding: 3rem 2rem;
     border-radius: var(--radius-lg);
-    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0.045), hsla(0, 0%, 100%, 0.015));
-    border: 1px solid var(--cardBorder);
-    box-shadow: var(--shadow-card);
-    transition: transform var(--transition-med), border-color var(--transition-med);
+    // Même traitement visuel "carte mise en avant" que l'ancien palier "highlight" —
+    // cohérent avec le reste de la charte pour une règle qui mérite d'être visible.
+    background: linear-gradient(180deg, hsla(38, 100%, 55%, 0.1), hsla(0, 0%, 100%, 0.02));
+    border: 1px solid var(--AccentGold);
+    box-shadow: 0 24px 60px hsla(22, 100%, 50%, 0.22);
+  }
 
-    &:hover {
-      transform: translateY(-8px);
-      border-color: hsla(38, 100%, 60%, 0.4);
-    }
+  .ruleCard__equation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
 
-    &--highlight {
-      border-color: var(--AccentGold);
-      background: linear-gradient(180deg, hsla(38, 100%, 55%, 0.1), hsla(0, 0%, 100%, 0.02));
-      box-shadow: 0 24px 60px hsla(22, 100%, 50%, 0.22);
+  .ruleCard__amount,
+  .ruleCard__points {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 800;
+    color: var(--ink);
+  }
 
-      &:hover {
-        transform: translateY(-10px) scale(1.02);
-      }
-    }
+  .ruleCard__points {
+    // Le résultat (les points) ressort en couleur signal : c'est l'information qui compte
+    color: var(--signal);
+  }
 
-    .tierBadge {
-      position: absolute;
-      top: -14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--gradientColor);
-      color: var(--whiteColor);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.4rem 1rem;
-      border-radius: var(--radius-pill);
-      box-shadow: var(--shadow-glow);
-      white-space: nowrap;
-    }
+  .ruleCard__equals {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--muted);
+  }
 
-    .tierIcon {
-      width: 52px;
-      height: 52px;
-      margin: 0 auto 1rem;
+  .ruleCard__guarantees {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    text-align: left;
+    max-width: 440px;
+    margin: 0 auto;
+
+    li {
       display: flex;
       align-items: center;
-      justify-content: center;
-      border-radius: var(--radius-md);
-      background: var(--gradientColorSoft);
-      color: var(--signal);
-      font-size: 1.5rem;
-    }
-
-    .tierName {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
-    }
-
-    .tierRange {
-      color: var(--ink);
-      font-size: 0.9rem;
-      margin-bottom: 1.4rem;
-    }
-
-    .tierPoints {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--line);
-
-      .tierPointsValue {
-        font-family: var(--font-display);
-        font-size: 2.6rem;
-        font-weight: 800;
-        color: var(--signal);
-        line-height: 1;
-      }
-
-      .tierPointsUnit {
-        font-family: var(--font-mono);
-        font-size: 0.72rem;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-      }
-    }
-
-    .tierFeatures {
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-
-      li {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.88rem;
-        color: var(--textColor);
-      }
-
-      .checkIcon {
-        color: var(--AccentGold);
-        flex-shrink: 0;
-        font-size: 1rem;
-      }
+      gap: 0.7rem;
+      font-size: 0.92rem;
+      color: var(--textColor);
     }
   }
-}
 
-@media screen and (min-width: 700px) {
-  .pricingTiers .tiersGrid {
-    grid-template-columns: repeat(3, 1fr);
-    align-items: center;
+  .ruleCard__guaranteeIcon {
+    flex-shrink: 0;
+    color: var(--AccentGold);
+    font-size: 1.15rem;
   }
 }

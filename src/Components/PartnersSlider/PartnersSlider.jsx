@@ -2,29 +2,40 @@ import React, { useEffect, useState } from 'react';
 import './partnersSlider.scss';
 import { getPartners } from '../../services/partnerService';
 
-// Silhouettes utilisées tant que le logo réel d'un partenaire n'est pas
-// encore fourni — garde la section crédible en attendant les vraies images.
+// Lettres utilisées pour varier l'initiale affichée sur chaque tuile de substitution,
+// pour que les placeholders ne soient pas tous strictement identiques.
+const PLACEHOLDER_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
+// Partenaires de substitution : le cahier des charges demande d'utiliser des images
+// "placeholder" en attendant les vrais logos. On les garde donc comme valeur par défaut
+// tant que l'API ne renvoie rien d'exploitable, plutôt que de ne rien afficher du tout.
+const PLACEHOLDER_PARTNERS = PLACEHOLDER_LETTERS.map((letter, i) => ({
+  id: `placeholder-${i}`,
+  name: `Partenaire ${letter}`,
+  logoUrl: null,
+  websiteUrl: null,
+}));
+
+// Construit l'initiale affichée dans la tuile ronde quand il n'y a pas encore de logo réel
 const PLACEHOLDER_INITIAL = (name) => (name || '?').trim().charAt(0).toUpperCase();
 
 const PartnersSlider = () => {
-  const [partners, setPartners] = useState([]);
-  const [active, setActive] = useState(0);
+  // On démarre directement avec les placeholders (plutôt qu'un tableau vide) pour éviter
+  // un "flash" de section invisible le temps que la requête réseau réponde.
+  const [partners, setPartners] = useState(PLACEHOLDER_PARTNERS);
 
   useEffect(() => {
-    getPartners().then(setPartners).catch(() => setPartners([]));
+    getPartners()
+      // Si l'API renvoie une vraie liste (non vide), elle remplace les placeholders ;
+      // sinon on conserve les placeholders, pour que "Nos partenaires" reste visible
+      // sur toutes les pages même avant que de vrais partenaires soient configurés.
+      .then((data) => setPartners(Array.isArray(data) && data.length > 0 ? data : PLACEHOLDER_PARTNERS))
+      .catch(() => setPartners(PLACEHOLDER_PARTNERS));
   }, []);
 
-  useEffect(() => {
-    if (partners.length <= 1) return undefined;
-    const timer = setInterval(() => {
-      setActive((prev) => (prev + 1) % partners.length);
-    }, 3200);
-    return () => clearInterval(timer);
-  }, [partners.length]);
-
-  if (partners.length === 0) {
-    return null;
-  }
+  // La liste est dupliquée pour permettre un défilement en boucle continue et fluide :
+  // voir le commentaire sur @keyframes partnersMarquee dans le fichier .scss associé.
+  const marqueeItems = [...partners, ...partners];
 
   return (
     <section className="partnersSlider" id="partenaires">
@@ -35,37 +46,29 @@ const PartnersSlider = () => {
         <div className="titleUnderline" data-aos="fade-up"></div>
       </div>
 
-      <div className="partnersSlider__stage" data-aos="fade-up">
-        {partners.map((p, i) => (
-          <a
-            key={p.id}
-            href={p.websiteUrl || undefined}
-            target={p.websiteUrl ? '_blank' : undefined}
-            rel={p.websiteUrl ? 'noopener noreferrer' : undefined}
-            className={`partnersSlider__slide ${i === active ? 'is-active' : ''}`}
-          >
-            {p.logoUrl ? (
-              <img src={p.logoUrl} alt={p.name} />
-            ) : (
-              <div className="partnersSlider__placeholder">{PLACEHOLDER_INITIAL(p.name)}</div>
-            )}
-            <span className="partnersSlider__name">{p.name}</span>
-          </a>
-        ))}
-      </div>
-
-      {partners.length > 1 && (
-        <div className="partnersSlider__dots">
-          {partners.map((p, i) => (
-            <button
-              key={p.id}
-              className={`partnersSlider__dot ${i === active ? 'is-active' : ''}`}
-              onClick={() => setActive(i)}
-              aria-label={`Voir ${p.name}`}
-            />
+      {/* Bandeau autoplay en boucle infinie (défilement CSS pur, mis en pause au survol) */}
+      <div className="partnersSlider__viewport" data-aos="fade-up">
+        <div className="partnersSlider__track">
+          {marqueeItems.map((p, i) => (
+            <a
+              key={`${p.id}-${i}`}
+              href={p.websiteUrl || undefined}
+              target={p.websiteUrl ? '_blank' : undefined}
+              rel={p.websiteUrl ? 'noopener noreferrer' : undefined}
+              className="partnersSlider__tile"
+              // Une tuile placeholder n'a pas de vraie destination : on neutralise le clic
+              onClick={p.websiteUrl ? undefined : (e) => e.preventDefault()}
+            >
+              {p.logoUrl ? (
+                <img src={p.logoUrl} alt={p.name} />
+              ) : (
+                <div className="partnersSlider__placeholder">{PLACEHOLDER_INITIAL(p.name)}</div>
+              )}
+              <span className="partnersSlider__name">{p.name}</span>
+            </a>
           ))}
         </div>
-      )}
+      </div>
     </section>
   );
 };

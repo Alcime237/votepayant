@@ -1,90 +1,110 @@
+// Rubrique "Nos partenaires" — refonte en bandeau défilant en continu (façon "mur de
+// sponsors" des award shows), affichée sur toutes les pages via AppPublic.js.
 .partnersSlider {
-  padding: 3.5rem 1.5rem 1rem;
-  max-width: 1100px;
-  margin: 0 auto;
+  // Section pleine largeur : contrairement à l'ancien carousel, le bandeau doit pouvoir
+  // s'étendre jusqu'aux bords de l'écran pour donner l'effet de défilement continu.
+  padding: 3rem 0 2.5rem;
+  overflow: hidden; // sécurité anti-débordement horizontal (cohérent avec .app-container)
 
-  &__stage {
+  &__viewport {
+    // "Fenêtre" qui masque tout ce qui dépasse du bandeau défilant
     position: relative;
-    height: 220px;
-    max-width: 420px;
-    margin: 0 auto;
+    width: 100%;
+    overflow: hidden;
+    // Estompe les logos sur les bords gauche/droit plutôt qu'une coupure nette —
+    // rendu "mur de sponsors" continu plus soigné qu'un simple overflow:hidden.
+    mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
   }
 
-  &__slide {
-    position: absolute;
-    inset: 0;
+  &__track {
+    // Rangée de tuiles, deux fois plus longue que la liste réelle (elle est dupliquée
+    // dans le JSX) : translateX(-50%) ramène donc exactement au point de départ visuel,
+    // ce qui donne une boucle infinie sans saut perceptible.
+    display: flex;
+    align-items: center;
+    gap: 3.5rem;
+    width: max-content;
+    animation: partnersMarquee 28s linear infinite;
+  }
+
+  // Le défilement se met en pause au survol : le visiteur peut regarder un logo précis
+  // sans que le bandeau continue de glisser sous le curseur.
+  &__viewport:hover &__track {
+    animation-play-state: paused;
+  }
+
+  &__tile {
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1.1rem;
+    gap: 0.6rem;
     text-decoration: none;
-    opacity: 0;
-    transform: scale(0.96);
-    transition: opacity 0.6s var(--ease-premium), transform 0.6s var(--ease-premium);
-    pointer-events: none;
-
-    &.is-active {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-    }
+    width: 160px;
 
     img {
-      max-width: 220px;
-      max-height: 110px;
+      max-width: 140px;
+      max-height: 64px;
       width: auto;
       object-fit: contain;
-      background: hsl(0, 0%, 97%);
-      border-radius: var(--radius-md);
-      padding: 1rem 1.5rem;
-      box-shadow: var(--shadow-card);
+      // Logos en niveaux de gris par défaut, révélés en couleur au survol — signature
+      // visuelle classique des murs de sponsors haut de gamme.
+      filter: grayscale(1) opacity(0.65);
+      transition: filter var(--transition-fast), transform var(--transition-fast);
+    }
+
+    &:hover img {
+      filter: grayscale(0) opacity(1);
+      transform: translateY(-2px) scale(1.04);
     }
   }
 
   &__placeholder {
-    width: 96px;
-    height: 96px;
+    // Tuile de substitution (initiale de la marque) tant qu'aucun vrai logo n'est fourni
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     background: var(--gradientColorSoft);
     border: 1px solid var(--line);
     color: var(--signal-light);
     font-family: var(--font-display);
-    font-size: 2.4rem;
+    font-size: 1.5rem;
     font-weight: 800;
     display: flex;
     align-items: center;
     justify-content: center;
+    filter: grayscale(1) opacity(0.75);
+    transition: filter var(--transition-fast), transform var(--transition-fast);
+  }
+
+  &__tile:hover &__placeholder {
+    filter: grayscale(0) opacity(1);
+    transform: translateY(-2px) scale(1.04);
   }
 
   &__name {
     font-family: var(--font-display);
-    font-size: 1.15rem;
+    font-size: 0.78rem;
     text-transform: uppercase;
-    letter-spacing: 0.02em;
-    color: var(--ink);
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    white-space: nowrap;
   }
+}
 
-  &__dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-  }
+// Fait glisser le bandeau d'exactement la moitié de sa largeur totale (la liste dupliquée) :
+// à -50% le second exemplaire des tuiles est pile aligné là où le premier a commencé.
+@keyframes partnersMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 
-  &__dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    border: none;
-    background: var(--line);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-
-    &.is-active {
-      width: 22px;
-      border-radius: 4px;
-      background: var(--signal);
-    }
+// Respecte les préférences d'accessibilité : pas d'animation continue si l'utilisateur a
+// demandé de réduire les mouvements dans son système.
+@media (prefers-reduced-motion: reduce) {
+  .partnersSlider__track {
+    animation: none;
   }
 }

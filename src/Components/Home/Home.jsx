@@ -8,8 +8,13 @@ import 'aos/dist/aos.css'
 
 import HeroSlider from '../HeroSlider/HeroSlider';
 import Main from '../Main/Main';
-import PartnersSlider from '../PartnersSlider/PartnersSlider';
+// PartnersSlider n'est plus importé ici : il est désormais monté une seule fois dans
+// AppPublic.js (layout global, entre les Routes et le Footer) pour apparaître sur TOUTES
+// les pages de l'app, comme demandé, plutôt que seulement sur la page d'accueil.
 import Voter from '../Voter/Voter';
+// JokerVote reste importé (le code n'est pas supprimé, juste désactivé à l'usage plus bas)
+// afin de pouvoir réactiver la rubrique "Votez pour le Joker" facilement si besoin.
+// eslint-disable-next-line no-unused-vars -- import volontairement inutilisé tant que la rubrique est désactivée
 import JokerVote from '../JokerVote/JokerVote';
 
 import iameImg from '../../Assets/iame.jpeg';
@@ -21,7 +26,8 @@ const SLIDES = [
     {
         image: iameImg,
         eyebrow: '1ère édition',
-        title: 'Dakar Talent Show',
+        // "Dakar Talent Show" → "Sénégal Talent Show" (rebranding demandé, section 3)
+        title: 'Sénégal Talent Show',
         subtitle: "Chant, Danse, Rap : le Sénégal a un incroyable talent. Découvrez-le, votez pour lui.",
     },
     {
@@ -83,11 +89,16 @@ const Home = () => {
 
             <Main />
 
-            <PartnersSlider />
+            {/* PartnersSlider retiré d'ici : rendu globalement dans AppPublic.js pour
+                apparaître sur toutes les pages, pas seulement l'accueil. */}
 
             <Voter />
 
-            <JokerVote />
+            {/* Rubrique "Votez pour le Joker" désactivée (consigne section 4) : le composant
+                JokerVote a été redesigné en spotlight premium (section 1.2 "VOTE EXCLUSIF")
+                mais son rendu reste commenté ici pour qu'il n'apparaisse plus dans l'app —
+                décommenter la ligne ci-dessous pour le réactiver. */}
+            {/* <JokerVote /> */}
         </div>
     )
 }

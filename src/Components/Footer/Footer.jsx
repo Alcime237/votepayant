@@ -57,7 +57,8 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} Dakar Talent Show. Tous droits réservés.</p>
+        {/* "Dakar Talent Show" → "Sénégal Talent Show" dans le copyright du footer (global, sur toutes les pages) */}
+        <p>&copy; {new Date().getFullYear()} Sénégal Talent Show. Tous droits réservés.</p>
       </div>
     </footer>
   );

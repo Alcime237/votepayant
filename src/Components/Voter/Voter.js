@@ -19,7 +19,8 @@ const Voter = () => {
     <div className="voter-container" data-aos="fade-up">
       <h3>Votez pour vos talents préférés</h3>
       <p className="vote-message">
-        Chaque vote compte ! Offrez à votre candidat la chance d’accéder à la grande finale du Dakar Talent Show.
+        {/* "Dakar Talent Show" → "Sénégal Talent Show" (rebranding demandé, section 3) */}
+        Chaque vote compte ! Offrez à votre candidat la chance d’accéder à la grande finale du Sénégal Talent Show.
       </p>
       <button className="vote-btn" onClick={handleVote}>
         Voter maintenant

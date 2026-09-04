@@ -15,19 +15,23 @@ const HERO_SLIDES = [
   {
     image: iameImg,
     eyebrow: 'À propos',
-    title: 'Dakar Talent Show',
+    // Rebranding : "Dakar Talent Show" → "Sénégal Talent Show"
+    title: 'Sénégal Talent Show',
     subtitle: 'Une émission de divertissement culturel qui célèbre la diversité artistique du continent.',
   },
   {
     image: dtsImg,
     eyebrow: 'Notre mission',
     title: 'Révéler les talents de demain',
-    subtitle: "Une plateforme de découverte, portée par le public, pour le public dakarois.",
+    // "dakarois" (adjectif dérivé de Dakar) remplacé par "sénégalais" pour rester cohérent
+    // avec le repositionnement national de l'émission (plus une émission d'une seule ville)
+    subtitle: "Une plateforme de découverte, portée par le public, pour le public sénégalais.",
   },
 ];
 
 const DISCIPLINES = [
-  { key: 'chant', name: 'Chant', img: chantImg, desc: "Des voix qui font vibrer la scène du Dakar Talent Show." },
+  // "Dakar Talent Show" → "Sénégal Talent Show" dans le texte descriptif de la discipline Chant
+  { key: 'chant', name: 'Chant', img: chantImg, desc: "Des voix qui font vibrer la scène du Sénégal Talent Show." },
   { key: 'danse', name: 'Danse', img: danseImg, desc: "Chorégraphies et énergie pure, du Sabar au Hip-hop." },
   { key: 'rap', name: 'Rap', img: rapImg, desc: "Le flow et la plume des jeunes talents sénégalais." },
 ];
@@ -54,17 +58,20 @@ const AboutPage = () => {
         <div className="aboutConcept">
           <div data-aos="fade-right" className="aboutConcept__text">
             <span className="eyebrow">Le concept</span>
-            <h2>Une plateforme de découverte pour le public dakarois</h2>
+            {/* "dakarois" → "sénégalais" : émission repositionnée à l'échelle nationale */}
+            <h2>Une plateforme de découverte pour le public sénégalais</h2>
             <p className="justify">
-              <strong>DAKAR TALENT SHOW</strong> est une émission de divertissement culturel mettant en
+              {/* "DAKAR TALENT SHOW" → "SÉNÉGAL TALENT SHOW" (rebranding demandé) */}
+              <strong>SÉNÉGAL TALENT SHOW</strong> est une émission de divertissement culturel mettant en
               compétition des jeunes talents de tout âge dans leurs disciplines respectives : la danse,
               le chant et le rap. La compétition s'étend sur une durée d'un mois, pour une diffusion sur
               quatre semaines.
             </p>
             <p className="justify">
+              {/* Citation interne : même remplacement "dakarois" → "sénégalais" */}
               L'objectif majeur de ce programme est de <em>« célébrer la diversité culturelle du
               continent, de favoriser les échanges tout en offrant une plateforme de divertissement et
-              de découverte pour le public dakarois »</em>, avec une qualité de son et de lumière
+              de découverte pour le public sénégalais »</em>, avec une qualité de son et de lumière
               professionnelle, un jury compétent, et des images et vidéos de qualité.
             </p>
             <button className="btn" onClick={() => navigate('/vote')}>

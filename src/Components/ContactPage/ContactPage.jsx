@@ -11,7 +11,8 @@ const SLIDES = [
   {
     image: heroImg,
     eyebrow: 'Contact',
-    title: 'Parlons du Dakar Talent Show',
+    // Rebranding demandé : "Dakar Talent Show" devient "Sénégal Talent Show" partout dans l'app
+    title: 'Parlons du Sénégal Talent Show',
     subtitle: "Une question sur le vote, un partenariat, la presse ? Notre équipe vous répond.",
   },
 ];
@@ -62,14 +63,19 @@ const ContactPage = () => {
         <section className="africaMap" data-aos="fade-up">
           <div className="africaMap__text">
             <span className="eyebrow">Où se déroule l'événement</span>
-            <h2>Depuis Dakar, pour tout le Sénégal</h2>
+            {/* Ancien texte : "Depuis Dakar, pour tout le Sénégal" — remplacé pour ne plus
+                citer Dakar comme ville d'origine, l'émission est repositionnée à l'échelle
+                nationale du Sénégal (consigne : remplacer chaque occurrence de "Dakar"). */}
+            <h2>Un événement national, ouvert à tout le Sénégal</h2>
             <p className="justify">
-              Le Dakar Talent Show est produit et diffusé depuis Dakar, capitale du Sénégal, en Afrique de
+              {/* "capitale du Sénégal" supprimé : n'a plus de sens une fois "Dakar" retiré du texte */}
+              Le Sénégal Talent Show est produit et diffusé au Sénégal, en Afrique de
               l'Ouest. Auditions, demi-finales et grande finale se déroulent sur place, avec un vote du
               public ouvert en ligne à tous, où que vous soyez.
             </p>
             <div className="africaMap__badge">
-              <FaMapMarkerAlt /> Dakar, Sénégal
+              {/* Badge de localisation : "Dakar, Sénégal" devient simplement "Sénégal" */}
+              <FaMapMarkerAlt /> Sénégal
             </div>
           </div>
 

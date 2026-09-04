@@ -4,15 +4,13 @@ import { IoIosCloseCircle } from 'react-icons/io';
 import { TbGridDots } from 'react-icons/tb';
 import { Link, useLocation } from 'react-router-dom';
 import logoImg from '../../Assets/logo.png';
+// Remplace l'ancien bouton "Ticket" (section 6) : ouvre le parcours d'inscription candidat
+import CandidateRegistrationModal from '../CandidateRegistration/CandidateRegistrationModal';
 
 const Navbar = () => {
     const [active, setActive] = useState('navBar');
-    const [showTicketModal, setShowTicketModal] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        paymentMethod: 'wave'
-    });
+    // Remplace showTicketModal/formData (ancien flux Ticket, entièrement supprimé comme demandé)
+    const [showCandidateModal, setShowCandidateModal] = useState(false);
     const location = useLocation();
 
     const showNav = () => {
@@ -23,30 +21,10 @@ const Navbar = () => {
         setActive('navBar');
     };
 
-    const handleTicketClick = (e) => {
+    const handleCandidateClick = (e) => {
         e.preventDefault();
-        setShowTicketModal(true);
+        setShowCandidateModal(true);
         removeNavbar();
-    };
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
-    const handleSubmitTicket = (e) => {
-        e.preventDefault();
-        // Ici vous pouvez ajouter la logique de traitement du paiement
-        alert(`Ticket pour la grande finale acheté par ${formData.name} (${formData.email}) via ${formData.paymentMethod}`);
-        setShowTicketModal(false);
-        setFormData({
-            name: '',
-            email: '',
-            paymentMethod: 'wave'
-        });
     };
 
     return (
@@ -56,13 +34,14 @@ const Navbar = () => {
                     <Link to="/" className="logo flex">
                         <img
                             src={logoImg}
-                            alt="Dakar Talent Show Logo"
+                            /* "Dakar Talent Show" → "Sénégal Talent Show" dans le texte alternatif du logo (accessibilité + SEO) */
+                            alt="Sénégal Talent Show Logo"
                             className="logo-img"
                         />
                     </Link>
                 </div>
 
-                {!showTicketModal ? (
+                {!showCandidateModal ? (
                     <div className={active}>
                         <ul className="navLists flex">
                             <li className="navItem">
@@ -116,8 +95,11 @@ const Navbar = () => {
                             </li>
 
                             <li className="navItem">
-                                <button className="btn" onClick={handleTicketClick}>
-                                    Ticket
+                                {/* "Ticket" supprimé, remplacé par "Candidat" (section 6) : ouvre
+                                    le parcours d'inscription en 3 étapes au lieu de l'ancienne
+                                    modale d'achat de billet (qui ne faisait qu'un alert() simulé). */}
+                                <button className="btn" onClick={handleCandidateClick}>
+                                    Candidat
                                 </button>
                             </li>
                         </ul>
@@ -128,78 +110,16 @@ const Navbar = () => {
                     </div>
                 ) : null}
 
-                {!showTicketModal && (
+                {!showCandidateModal && (
                     <div onClick={showNav} className="toggleNavbar">
                         <TbGridDots className="icon" />
                     </div>
                 )}
             </header>
 
-            {showTicketModal && (
-                <div className="contactOverlay" onClick={() => setShowTicketModal(false)}>
-                    <div className="ticketContent" onClick={(e) => e.stopPropagation()}>
-                        <IoIosCloseCircle className="closeModalIcon" onClick={() => setShowTicketModal(false)} />
-
-                        <h2>Billet pour la Grande Finale</h2>
-                        <p className="ticketInfo">Achetez votre billet pour assister à la grande finale du Dakar Talent Show</p>
-
-                        <form onSubmit={handleSubmitTicket} className="ticketForm">
-                            <div className="formGroup">
-                                <label htmlFor="name">Nom complet</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className="formGroup">
-                                <label htmlFor="email">Adresse email</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className="formGroup">
-                                <label>Méthode de paiement</label>
-                                <div className="paymentMethods">
-                                    <label>
-                                        <input
-                                            type="radio"
-                                            name="paymentMethod"
-                                            value="wave"
-                                            checked={formData.paymentMethod === 'wave'}
-                                            onChange={handleInputChange}
-                                        />
-                                        Wave
-                                    </label>
-                                    <label>
-                                        <input
-                                            type="radio"
-                                            name="paymentMethod"
-                                            value="orange"
-                                            checked={formData.paymentMethod === 'orange'}
-                                            onChange={handleInputChange}
-                                        />
-                                        Orange Money
-                                    </label>
-                                </div>
-                            </div>
-
-                            <button type="submit" className="submitBtn">
-                                Payer maintenant
-                            </button>
-                        </form>
-                    </div>
-                </div>
+            {/* Parcours d'inscription candidat en 3 étapes (voir CandidateRegistrationModal) */}
+            {showCandidateModal && (
+                <CandidateRegistrationModal onClose={() => setShowCandidateModal(false)} />
             )}
         </section>
     );

@@ -1,0 +1,381 @@
+// Modale d'inscription candidat (section 6) — même vocabulaire visuel que les autres
+// overlays de l'app (contactOverlay/ticketContent dans navbar.scss) pour rester cohérent.
+
+.candidateModal__overlay {
+  position: fixed;
+  inset: 0;
+  background: hsla(0, 0%, 0%, 0.72);
+  backdrop-filter: blur(8px);
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: candidateModalFadeIn 0.25s ease-out;
+}
+
+@keyframes candidateModalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.candidateModal__content {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: linear-gradient(165deg, hsl(0, 0%, 8%), hsl(0, 0%, 5%));
+  border: 1px solid hsla(38, 100%, 60%, 0.18);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 2.5rem;
+
+  @media (max-width: 600px) {
+    padding: 1.75rem 1.25rem;
+  }
+}
+
+.candidateModal__closeIcon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: var(--greyText);
+  cursor: pointer;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+
+  &:hover {
+    color: var(--AccentGold);
+    transform: rotate(90deg);
+  }
+}
+
+.candidateModal__title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  background: var(--gradientText);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+// Indicateur de progression 1/3 → 2/3 → 3/3
+.candidateModal__progress {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.candidateModal__progressDot {
+  width: 32px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+  transition: background var(--transition-fast);
+
+  &.is-active {
+    background: var(--gradientColor);
+  }
+}
+
+// --- Effet "jeu de cartes" : conteneur en perspective, la face active pivote pour s'installer ---
+.candidateModal__stage {
+  perspective: 1800px;
+  min-height: 260px;
+}
+
+.candidateModal__face {
+  transform-style: preserve-3d;
+  // both = applique l'état de départ AVANT le début de l'animation (évite un flash de
+  // l'ancien contenu déjà à plat avant que l'animation ne démarre)
+  animation-fill-mode: both;
+  animation-duration: 0.55s;
+  animation-timing-function: var(--ease-premium);
+}
+
+// Sens "Suivant" : la nouvelle face arrive en pivotant depuis la droite
+.candidateModal__face--forward {
+  animation-name: candidateCardFlipForward;
+}
+
+// Sens "Retour" : la nouvelle face arrive en pivotant depuis la gauche (sens inverse)
+.candidateModal__face--backward {
+  animation-name: candidateCardFlipBackward;
+}
+
+@keyframes candidateCardFlipForward {
+  from { transform: rotateY(70deg); opacity: 0; }
+  to { transform: rotateY(0deg); opacity: 1; }
+}
+
+@keyframes candidateCardFlipBackward {
+  from { transform: rotateY(-70deg); opacity: 0; }
+  to { transform: rotateY(0deg); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .candidateModal__face {
+    animation: none;
+  }
+}
+
+.candidateModal__step h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.candidateModal__stepHint {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+// --- Étape 1 : champs texte ---
+.candidateModal__field {
+  margin-bottom: 1.1rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    color: var(--whiteColorDeam);
+    font-size: 0.88rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: var(--inputColor);
+    border: 1px solid hsla(0, 0%, 100%, 0.08);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    color: var(--whiteColor);
+    transition: border-color var(--transition-fast);
+
+    &:focus {
+      border-color: var(--AccentGold);
+      outline: none;
+    }
+  }
+}
+
+// --- Étape 2 : 3 boutons discipline, visuellement distincts ---
+.candidateModal__disciplines {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.9rem;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.candidateModal__disciplineBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.4rem 0.75rem;
+  background: hsla(0, 0%, 100%, 0.03);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color var(--transition-fast), transform var(--transition-fast), background var(--transition-fast);
+
+  &:hover {
+    border-color: hsla(38, 100%, 60%, 0.4);
+    transform: translateY(-3px);
+  }
+
+  &.is-selected {
+    border-color: var(--signal);
+    background: var(--gradientColorSoft);
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+.candidateModal__disciplineIcon {
+  font-size: 1.8rem;
+  color: var(--signal-light);
+}
+
+.candidateModal__disciplineLabel {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.candidateModal__disciplineDesc {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+// --- Étape 3 : 3 créneaux photo ---
+.candidateModal__photos {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.candidateModal__photoSlot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.candidateModal__photoBox {
+  width: 100%;
+  height: 120px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: hsla(0, 0%, 100%, 0.03);
+  transition: border-color var(--transition-fast);
+
+  &:hover {
+    border-color: var(--signal);
+  }
+
+  &.has-error {
+    border-color: var(--live);
+    border-style: solid;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.candidateModal__photoUploadIcon {
+  font-size: 1.6rem;
+  color: var(--muted);
+}
+
+.candidateModal__photoLabel {
+  font-size: 0.85rem;
+  color: var(--whiteColorDeam);
+  font-weight: 500;
+}
+
+.candidateModal__photoError {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: var(--live);
+}
+
+// --- Erreur de soumission globale ---
+.candidateModal__submitError {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: hsla(355, 100%, 67%, 0.1);
+  border: 1px solid hsla(355, 100%, 67%, 0.35);
+  border-radius: var(--radius-sm);
+  color: var(--live);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+// --- Actions (Retour / Suivant / Envoyer) ---
+.candidateModal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.candidateModal__backBtn {
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+
+  &:hover {
+    border-color: var(--signal);
+  }
+}
+
+.candidateModal__nextBtn,
+.candidateModal__submitBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 2rem;
+  background: var(--gradientColor);
+  color: var(--signal-ink);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-glow);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.candidateModal__spinnerIcon {
+  animation: candidateModalSpin 0.9s linear infinite;
+}
+
+@keyframes candidateModalSpin {
+  to { transform: rotate(360deg); }
+}
+
+// --- État de succès final ---
+.candidateModal__success {
+  text-align: center;
+  padding: 1.5rem 0;
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin: 1rem 0 0.75rem;
+    color: var(--ink);
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+  }
+}
+
+.candidateModal__successIcon {
+  font-size: 3rem;
+  color: var(--gain);
+  background: hsla(154, 60%, 52%, 0.12);
+  border-radius: 50%;
+  padding: 0.75rem;
+}

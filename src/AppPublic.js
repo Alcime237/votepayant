@@ -28,8 +28,10 @@ import PartnersSlider from './Components/PartnersSlider/PartnersSlider';
 // import JokerChant from './Components/JokerChant/JokerChant';
 // import JokerRap from './Components/JokerRap/JokerRap';
 
-// Vrai logo de l'app (déjà utilisé dans la Navbar), réutilisé pour l'animer sur le splashscreen
-import logoImg from './Assets/logo.png';
+// Logo officiel Sénégal Talent Show (déjà utilisé dans la Navbar), réutilisé pour
+// l'animer sur le splashscreen — fichier optimisé (~115 Ko) généré à partir du
+// visuel source fourni par le client (LogoSenegalTalentShow.png, ~2 Mo).
+import logoImg from './Assets/logo-senegal-talent-show.png';
 
 import './App.css';
 

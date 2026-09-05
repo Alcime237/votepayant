@@ -14,6 +14,54 @@
   padding: 3rem 1.5rem 5rem;
 }
 
+/* --- Vue d'ensemble ("Format général") : carte d'intro affichée au-dessus des onglets,
+   avec les 3 étapes numérotées en un coup d'œil avant le détail phase par phase. --- */
+.format-general {
+  max-width: 760px;
+  margin: 0 auto 3rem;
+  text-align: center;
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    color: var(--ink);
+    margin: 0 0 1rem;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0 auto 1.75rem;
+    max-width: 620px;
+  }
+}
+
+.format-general__steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.format-general__step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  font-size: 0.86rem;
+  color: var(--ink);
+}
+
+.format-general__index {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--signal);
+}
+
 .phase-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -56,7 +104,7 @@
   align-items: flex-start;
   gap: 1rem;
   max-width: 720px;
-  margin: 0 auto 2.5rem;
+  margin: 2.5rem auto 0;
   padding: 1.25rem 1.5rem;
   background: hsla(38, 100%, 56%, 0.06);
   border: 1px solid hsla(38, 100%, 56%, 0.25);
@@ -77,18 +125,18 @@
   }
 }
 
-.discipline-grid, .criteria-grid {
+/* --- Étape 1 : cartes de discipline du casting --- */
+.discipline-grid {
   display: grid;
   gap: 1.25rem;
   grid-template-columns: 1fr;
 }
 
-.discipline-card, .criteria-card {
+.discipline-card {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  padding: 0 0 1.6rem;
-  overflow: hidden;
+  padding: 1.5rem 1.5rem 1.6rem;
   transition: transform var(--transition-med), border-color var(--transition-med);
 
   &:hover {
@@ -97,29 +145,11 @@
   }
 }
 
-.discipline-card__image {
-  height: 150px;
-  overflow: hidden;
-  margin-bottom: 1.4rem;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.8s var(--ease-premium);
-  }
-}
-
-.discipline-card:hover .discipline-card__image img,
-.criteria-card:hover .discipline-card__image img {
-  transform: scale(1.08);
-}
-
-.discipline-card__head, .criteria-card__head {
+.discipline-card__head {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin: 0 1.5rem 1.1rem;
+  margin: 0 0 1.1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--line);
 
@@ -138,15 +168,10 @@
   color: var(--signal);
 }
 
-.trophy-icon {
-  font-size: 1.1rem;
-  color: var(--muted);
-}
-
 .discipline-card__rules {
   list-style: none;
   padding: 0;
-  margin: 0 1.5rem 1rem;
+  margin: 0 0 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -174,7 +199,6 @@
 .discipline-card__notation {
   display: flex;
   gap: 0.7rem;
-  margin: 0 1.5rem;
   padding-top: 1rem;
   border-top: 1px dashed var(--line);
 
@@ -191,39 +215,382 @@
     gap: 0.25rem;
   }
 
-  span {
+  .notation-label {
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+
+  span:not(.notation-label) {
+    font-size: 0.84rem;
     color: var(--ink);
   }
 }
 
-.criteria-card ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 1.5rem;
+.discipline-card__qualifies {
   display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--signal-light);
 }
 
-.criteria-card li {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  font-size: 0.88rem;
-  color: var(--muted);
-  padding-bottom: 0.55rem;
-  border-bottom: 1px dashed var(--line);
+/* --- Étape 1 : bloc "Fin du casting" (étapes numérotées) --- */
+.steps-block {
+  max-width: 640px;
+  margin: 2.5rem auto 0;
 
-  &:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin: 0 0 1.1rem;
+  }
+
+  &__icon {
+    color: var(--signal);
+    font-size: 1.15rem;
   }
 }
 
+.steps-list {
+  list-style: none;
+  counter-reset: steps;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  li {
+    counter-increment: steps;
+    position: relative;
+    padding: 0.85rem 1rem 0.85rem 3rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    color: var(--ink);
+    font-size: 0.9rem;
+    line-height: 1.55;
+
+    &::before {
+      content: counter(steps);
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background: var(--gradientColor);
+      color: var(--signal-ink);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+/* --- Étape 2 : sous-onglets ville (Thiès & Saly / Dakar) --- */
+.city-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.city-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+/* --- Étape 2 : tableau comparatif 1er passage / 2ème passage / résultat --- */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+}
+
+.phase-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+
+  th, td {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  thead th {
+    background: var(--surface-2);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--line);
+  }
+
+  &__head-icon {
+    color: var(--signal);
+    margin-right: 0.4rem;
+    vertical-align: -2px;
+  }
+
+  &__row-label {
+    background: var(--surface-2);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    width: 1%;
+  }
+
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  &__result-row td, &__result-row th {
+    color: var(--ink);
+  }
+
+  &__result-list li {
+    font-weight: 600;
+    color: var(--signal-light);
+  }
+}
+
+/* --- Étape 3 : composition du plateau de la Grande Finale --- */
+.lineup-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 2.5rem;
+}
+
+.lineup-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.lineup-card__breakdown {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.lineup-card__total {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--gradientColorSoft);
+  border-radius: var(--radius-pill);
+  color: var(--signal-light);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+/* --- Étape 3 : durée de passage + liberté de mise en scène --- */
+.finale-details {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 2.5rem;
+}
+
+.finale-details__col {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin: 0 0 0.6rem;
+  }
+
+  > p {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin: 0 0 1rem;
+  }
+}
+
+.duration-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+
+    svg { color: var(--signal); }
+    strong { color: var(--ink); font-weight: 600; }
+  }
+}
+
+.freedom-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.freedom-tag {
+  padding: 0.4rem 0.85rem;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  color: var(--ink);
+}
+
+/* --- Étape 3 : récompenses --- */
+.rewards-block {
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+
+  h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin: 0 0 1.1rem;
+    text-align: center;
+  }
+}
+
+.rewards-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  li {
+    position: relative;
+    padding: 0.75rem 1rem 0.75rem 2.4rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    color: var(--ink);
+    font-size: 0.9rem;
+
+    &::before {
+      content: '★';
+      position: absolute;
+      left: 0.9rem;
+      color: var(--signal);
+    }
+  }
+}
+
+/* --- Étape 3 : répartition du vote jury / public --- */
+.vote-split {
+  max-width: 640px;
+  margin: 0 auto;
+
+  p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    text-align: center;
+    margin: 1.25rem 0 0;
+  }
+}
+
+.vote-split__bar {
+  display: flex;
+  height: 2.6rem;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.vote-split__jury, .vote-split__public {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--signal-ink);
+}
+
+.vote-split__jury {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+.vote-split__public {
+  background: var(--gradientColor);
+}
+
 @media (min-width: 760px) {
-  .discipline-grid, .criteria-grid {
+  .discipline-grid, .lineup-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .finale-details {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

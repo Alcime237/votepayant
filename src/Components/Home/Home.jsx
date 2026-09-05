@@ -17,36 +17,42 @@ import Voter from '../Voter/Voter';
 // eslint-disable-next-line no-unused-vars -- import volontairement inutilisé tant que la rubrique est désactivée
 import JokerVote from '../JokerVote/JokerVote';
 
-import iameImg from '../../Assets/iame.jpeg';
-import danseImg from '../../Assets/danse.webp';
-import rapImg from '../../Assets/rap.jpg';
-import chantImg from '../../Assets/chant.jpg';
+// Les 4 visuels du hero de l'accueil, fournis par le client (dossier SenegalTalentshow/),
+// compressés en JPEG (voir scripts/optimisation) pour un chargement rapide en plein écran.
+// L'ORDRE ci-dessous est imposé par le client et ne doit pas être modifié.
+import finaleImg from '../../Assets/homeSlideFinale.jpg';
+import castingImg from '../../Assets/homeSlideCasting.jpg';
+import rapImg from '../../Assets/homeSlideRap.jpg';
+import danseImg from '../../Assets/homeSlideDanse.jpg';
 
 const SLIDES = [
     {
-        image: iameImg,
+        // 1. Finale_STS.png — visuel de marque (scène + logo), sert d'accroche générale.
+        image: finaleImg,
         eyebrow: '1ère édition',
-        // "Dakar Talent Show" → "Sénégal Talent Show" (rebranding demandé, section 3)
         title: 'Sénégal Talent Show',
         subtitle: "Chant, Danse, Rap : le Sénégal a un incroyable talent. Découvrez-le, votez pour lui.",
     },
     {
-        image: danseImg,
-        eyebrow: 'Danse',
-        title: 'Des chorégraphies qui embrasent la scène',
-        subtitle: "Vivez l'énergie des meilleurs groupes de danse du pays et faites basculer le classement.",
+        // 2. PremierslidePageAccueil.png — candidats au casting, micro en main.
+        image: castingImg,
+        eyebrow: 'Casting',
+        title: 'Ils osent monter sur scène',
+        subtitle: 'Des talents venus de tout le Sénégal se présentent devant le jury pour décrocher leur place.',
     },
     {
+        // 3. Slide2Paged'accueil.png — duo d'artistes, univers Rap.
         image: rapImg,
         eyebrow: 'Rap',
         title: 'Le flow qui va marquer l\'année',
         subtitle: 'Suivez les battles en direct et votez pour le futur champion.',
     },
     {
-        image: chantImg,
-        eyebrow: 'Chant',
-        title: 'Des voix prêtes pour la grande scène',
-        subtitle: 'Un jury de professionnels, un public conquis — à vous de décider qui ira en finale.',
+        // 4. slideDanseAccueil.jpeg — groupe de danseurs sur scène.
+        image: danseImg,
+        eyebrow: 'Danse',
+        title: 'Des chorégraphies qui embrasent la scène',
+        subtitle: "Vivez l'énergie des meilleurs groupes de danse du pays et faites basculer le classement.",
     },
 ];
 

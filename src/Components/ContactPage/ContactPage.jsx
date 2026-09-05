@@ -32,31 +32,33 @@ const ContactPage = () => {
             <FaPhone className="contact-card__icon" />
             <h3>Téléphone</h3>
             <p className="justify">Disponible du lundi au samedi, pour toute question sur la compétition ou le vote.</p>
-            <a href="tel:+221785386225" className="contact-card__value">+221 78 538 62 25</a>
+            <a href="tel:+221338601362" className="contact-card__value">+221 33 860 13 62</a>
           </div>
 
+          {/* Même numéro officiel que la carte "Téléphone" ci-dessus, confirmé joignable
+              sur WhatsApp — pas de numéro WhatsApp distinct pour l'instant. */}
           <div className="contact-card" data-aos="fade-up" data-aos-delay="100">
             <FaWhatsapp className="contact-card__icon whatsapp" />
             <h3>WhatsApp</h3>
             <p className="justify">Le canal le plus rapide pour joindre l'organisation en direct.</p>
-            <a href="https://wa.me/221785386225" target="_blank" rel="noopener noreferrer" className="contact-card__value">Écrire sur WhatsApp</a>
+            <a href="https://wa.me/221338601362" target="_blank" rel="noopener noreferrer" className="contact-card__value">Écrire sur WhatsApp</a>
           </div>
 
           <div className="contact-card" data-aos="fade-up" data-aos-delay="200">
             <FaEnvelope className="contact-card__icon" />
             <h3>Email</h3>
             <p className="justify">Presse, partenariats, candidatures : écrivez-nous, nous revenons vers vous rapidement.</p>
-            <a href="mailto:dakartalentshow@gmail.com" className="contact-card__value">dakartalentshow@gmail.com</a>
+            <a href="mailto:senegaltalentshow@gmail.com" className="contact-card__value">senegaltalentshow@gmail.com</a>
           </div>
         </div>
 
         <div className="social-strip" data-aos="fade-up">
           <span className="social-strip__label">Suivez l'émission</span>
           <div className="social-strip__links">
-            <a href="https://www.facebook.com/share/16d5VhcsCg/" target="_blank" rel="noopener noreferrer"><FaFacebookF /> Facebook</a>
-            <a href="https://www.instagram.com/dakar_talent_show/" target="_blank" rel="noopener noreferrer"><FaInstagram /> Instagram</a>
-            <a href="https://www.tiktok.com/@dakar_talent_show221?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer"><FaTiktok /> TikTok</a>
-            <a href="https://youtube.com/@dakartalentshow?si=kb4IcI94K8TKmety" target="_blank" rel="noopener noreferrer"><FaYoutube /> YouTube</a>
+            <a href="https://www.facebook.com/share/18BSdqfQ5y/" target="_blank" rel="noopener noreferrer"><FaFacebookF /> Facebook</a>
+            <a href="https://www.instagram.com/senegal_talent_show?igsh=cXoyemhtYjlhdml2" target="_blank" rel="noopener noreferrer"><FaInstagram /> Instagram</a>
+            <a href="https://www.tiktok.com/@senegal_talent_show221?_r=1&_t=ZS-98dF6ukv2Wq" target="_blank" rel="noopener noreferrer"><FaTiktok /> TikTok</a>
+            <a href="https://www.youtube.com/@SenegalTalentShow" target="_blank" rel="noopener noreferrer"><FaYoutube /> YouTube</a>
           </div>
         </div>
 

@@ -3,7 +3,8 @@ import './navbar.scss';
 import { IoIosCloseCircle } from 'react-icons/io';
 import { TbGridDots } from 'react-icons/tb';
 import { Link, useLocation } from 'react-router-dom';
-import logoImg from '../../Assets/logo.png';
+// Logo officiel Sénégal Talent Show (nouveau visuel client, remplace l'ancien logo.png)
+import logoImg from '../../Assets/logo-senegal-talent-show.png';
 // Remplace l'ancien bouton "Ticket" (section 6) : ouvre le parcours d'inscription candidat
 import CandidateRegistrationModal from '../CandidateRegistration/CandidateRegistrationModal';
 

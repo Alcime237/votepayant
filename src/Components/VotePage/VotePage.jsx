@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import chantImg from '../../Assets/chant.jpg';
 import rapImg from '../../Assets/rap.jpg';
 import danseImg from '../../Assets/danse.webp';
-import heroImg from '../../Assets/dts.jpg';
+// dts.jpg (ancien logo "Dakar Talent Show" imprimé dans l'image) retiré de ce hero —
+// remplacé par le visuel de marque officiel "Sénégal Talent Show".
+import heroImg from '../../Assets/homeSlideFinale.jpg';
 import { LuClipboardCheck, LuListChecks, LuUserCheck, LuSmartphone } from 'react-icons/lu';
 import './votePage.scss';
 import Aos from 'aos';

@@ -9,7 +9,9 @@ import chantImg from '../../Assets/chant.jpg';
 import danseImg from '../../Assets/danse.webp';
 import rapImg from '../../Assets/rap.jpg';
 import iameImg from '../../Assets/iame.jpeg';
-import dtsImg from '../../Assets/dts.jpg';
+// dts.jpg (ancien logo "Dakar Talent Show" imprimé dans l'image) retiré de ce slide —
+// remplacé par une photo réelle de candidats au casting, cohérente avec le rebranding.
+import auditionsImg from '../../Assets/auditionsCandidats.jpeg';
 
 const HERO_SLIDES = [
   {
@@ -20,7 +22,7 @@ const HERO_SLIDES = [
     subtitle: 'Une émission de divertissement culturel qui célèbre la diversité artistique du continent.',
   },
   {
-    image: dtsImg,
+    image: auditionsImg,
     eyebrow: 'Notre mission',
     title: 'Révéler les talents de demain',
     // "dakarois" (adjectif dérivé de Dakar) remplacé par "sénégalais" pour rester cohérent

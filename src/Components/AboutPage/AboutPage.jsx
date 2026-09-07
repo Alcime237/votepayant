@@ -5,17 +5,17 @@ import 'aos/dist/aos.css';
 import { useNavigate } from 'react-router-dom';
 import { LuMic, LuMusic4, LuSparkles, LuUsers, LuCalendarDays, LuTv } from 'react-icons/lu';
 import HeroSlider from '../HeroSlider/HeroSlider';
-import chantImg from '../../Assets/chant.jpg';
-import danseImg from '../../Assets/danse.webp';
+import chantImg from '../../Assets/chantLive.jpg';
+import danseImg from '../../Assets/danseGroup.jpg';
 import rapImg from '../../Assets/rap.jpg';
-import iameImg from '../../Assets/iame.jpeg';
+import heroSceneImg from '../../Assets/auditionsScene.jpg';
 // dts.jpg (ancien logo "Dakar Talent Show" imprimé dans l'image) retiré de ce slide —
 // remplacé par une photo réelle de candidats au casting, cohérente avec le rebranding.
 import auditionsImg from '../../Assets/auditionsCandidats.jpeg';
 
 const HERO_SLIDES = [
   {
-    image: iameImg,
+    image: heroSceneImg,
     eyebrow: 'À propos',
     // Rebranding : "Dakar Talent Show" → "Sénégal Talent Show"
     title: 'Sénégal Talent Show',
@@ -39,10 +39,10 @@ const DISCIPLINES = [
 ];
 
 const HIGHLIGHTS = [
-  { icon: LuCalendarDays, label: '1 mois', desc: 'de compétition' },
-  { icon: LuTv, label: '4 semaines', desc: 'de diffusion' },
+  { icon: LuCalendarDays, label: '2 mois', desc: 'de compétition' },
+  { icon: LuTv, label: 'Diffusion', desc: 'sur toutes les phases du programme' },
   { icon: LuUsers, label: 'Un jury', desc: 'compétent et exigeant' },
-  { icon: LuSparkles, label: 'Qualité pro', desc: 'son, lumière, image' },
+  { icon: LuSparkles, label: 'Qualité pro', desc: 'son, lumière, image, vidéo' },
 ];
 
 const AboutPage = () => {
@@ -63,19 +63,24 @@ const AboutPage = () => {
             {/* "dakarois" → "sénégalais" : émission repositionnée à l'échelle nationale */}
             <h2>Une plateforme de découverte pour le public sénégalais</h2>
             <p className="justify">
-              {/* "DAKAR TALENT SHOW" → "SÉNÉGAL TALENT SHOW" (rebranding demandé) */}
-              <strong>SÉNÉGAL TALENT SHOW</strong> est une émission de divertissement culturel mettant en
-              compétition des jeunes talents de tout âge dans leurs disciplines respectives : la danse,
-              le chant et le rap. La compétition s'étend sur une durée d'un mois, pour une diffusion sur
-              quatre semaines.
+              <strong>SÉNÉGAL TALENT SHOW</strong>, une idée du promoteur Wafo Jeff Thibault, est une
+              émission de divertissement culturel mettant en compétition des jeunes talents de tout âge
+              dans leurs disciplines respectives : la danse, le chant, le rap et bien d'autres
+              disciplines. La compétition s'étend sur une durée de deux mois, avec une diffusion
+              couvrant les différentes phases du programme.
             </p>
             <p className="justify">
-              {/* Citation interne : même remplacement "dakarois" → "sénégalais" */}
               L'objectif majeur de ce programme est de <em>« célébrer la diversité culturelle du
               continent, de favoriser les échanges tout en offrant une plateforme de divertissement et
-              de découverte pour le public sénégalais »</em>, avec une qualité de son et de lumière
-              professionnelle, un jury compétent, et des images et vidéos de qualité.
+              de découverte pour le public sénégalais »</em>.
             </p>
+            <p className="justify">
+              Pensé comme une véritable vitrine des talents, le <strong>SÉNÉGAL TALENT SHOW</strong> repose
+              sur une production de qualité, avec un dispositif professionnel en matière de son, lumière,
+              image et vidéo, ainsi qu'un jury compétent pour accompagner et évaluer les candidats tout au
+              long de la compétition.
+            </p>
+            <p className="aboutConcept__credit">Concept imaginé et porté par Wafo Jeff Thibault.</p>
             <button className="btn" onClick={() => navigate('/vote')}>
               Découvrir les candidats
             </button>

@@ -12,6 +12,7 @@ import HeroSlider from '../HeroSlider/HeroSlider';
 // bleus — visuel neutre et premium, sans redite avec les autres images déjà utilisées
 // ailleurs dans l'app (accueil, à propos).
 import deroulementHeroImg from '../../Assets/deroulementHero.jpeg';
+import deroulementLineupImg from '../../Assets/deroulementLineup.jpg';
 
 // Bandeau visuel en tête de page.
 const HERO_SLIDES = [
@@ -20,6 +21,12 @@ const HERO_SLIDES = [
     eyebrow: 'Règlement de la compétition',
     title: 'Déroulement de la compétition',
     subtitle: 'Du casting à la Grande Finale Nationale : le format complet du Sénégal Talent Show, étape par étape.',
+  },
+  {
+    image: deroulementLineupImg,
+    eyebrow: 'En direct du plateau',
+    title: 'Trois disciplines, un seul jury',
+    subtitle: 'Chant, Rap, Danse : chaque candidat se présente devant le jury et le public à chaque étape.',
   },
 ];
 

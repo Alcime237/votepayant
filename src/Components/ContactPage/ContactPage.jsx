@@ -5,7 +5,7 @@ import 'aos/dist/aos.css';
 import HeroSlider from '../HeroSlider/HeroSlider';
 import AfricaSenegalMap from './AfricaSenegalMap';
 import { FaPhone, FaEnvelope, FaFacebookF, FaWhatsapp, FaInstagram, FaTiktok, FaYoutube, FaMapMarkerAlt } from 'react-icons/fa';
-import heroImg from '../../Assets/recompense.jpg';
+import heroImg from '../../Assets/homeSlideFinale.jpg';
 
 const SLIDES = [
   {

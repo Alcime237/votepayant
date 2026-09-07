@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import './main.scss'
-import img1 from '../../Assets/iame.jpeg'
+import img1 from '../../Assets/auditionsScene.jpg'
 // dts.jpg (ancien logo "Dakar Talent Show" imprimé dans l'image) retiré de cette carte —
 // remplacé par une photo de battle, plus parlante pour l'étape "Demi-finales".
 import img2 from '../../Assets/demiFinaleBattle.jpeg'
-import img3 from '../../Assets/recompense.jpg'
+import img3 from '../../Assets/homeSlideFinale.jpg'
 import { LuClipboardCheck } from 'react-icons/lu'
 import { useNavigate } from 'react-router-dom';
 import Aos from 'aos'

@@ -37,6 +37,14 @@
       margin-top: 1rem;
     }
   }
+
+  &__credit {
+    color: var(--textColor);
+    font-size: 0.92rem;
+    font-style: italic;
+    opacity: 0.8;
+    margin-top: -0.3rem;
+  }
 }
 
 .aboutHighlights {

@@ -29,14 +29,14 @@ const SLIDES = [
     {
         // 1. Finale_STS.png — visuel de marque (scène + logo), sert d'accroche générale.
         image: finaleImg,
-        eyebrow: '1ère édition',
+        eyebrow: 'PLATEFORME DE VOTE',
         title: 'Sénégal Talent Show',
-        subtitle: "Chant, Danse, Rap : le Sénégal a un incroyable talent. Découvrez-le, votez pour lui.",
+        subtitle: "Rap · Chant · Danse",
     },
     {
         // 2. PremierslidePageAccueil.png — candidats au casting, micro en main.
         image: castingImg,
-        eyebrow: 'Casting',
+        eyebrow: 'Chant',
         title: 'Ils osent monter sur scène',
         subtitle: 'Des talents venus de tout le Sénégal se présentent devant le jury pour décrocher leur place.',
     },

@@ -1,0 +1,168 @@
+// Rubrique "Moments forts" (page À propos) — même mécanique de défilement continu que
+// PartnersSlider (voir partnersSlider.scss), adaptée à des photos plus grandes, plus la
+// visionneuse plein écran ouverte au clic.
+.highlightsGallery {
+  padding: 1rem 0 4rem;
+
+  &__viewport {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+  }
+
+  &__track {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    width: max-content;
+    animation: highlightsMarquee 36s linear infinite;
+  }
+
+  &__viewport:hover &__track {
+    animation-play-state: paused;
+  }
+
+  &__tile {
+    flex: 0 0 auto;
+    width: 260px;
+    height: 180px;
+    padding: 0;
+    border: 1px solid var(--cardBorder);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    background: none;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-med);
+    }
+
+    &:hover img {
+      transform: scale(1.08);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--AccentGold);
+      outline-offset: 2px;
+    }
+  }
+}
+
+@keyframes highlightsMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .highlightsGallery__track {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .highlightsGallery__tile {
+    width: 200px;
+    height: 140px;
+  }
+}
+
+// --- Visionneuse plein écran --------------------------------------------------------
+// Même vocabulaire visuel que candidateModal__overlay (fond sombre + flou, même z-index).
+.highlightsLightbox {
+  position: fixed;
+  inset: 0;
+  background: hsla(0, 0%, 0%, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  animation: highlightsLightboxFadeIn 0.2s ease-out;
+
+  &__close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: hsla(0, 0%, 100%, 0.08);
+    border: 1px solid var(--cardBorder);
+    color: var(--whiteColor);
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+
+    &:hover {
+      background: hsla(0, 0%, 100%, 0.18);
+    }
+  }
+
+  &__arrow {
+    flex: 0 0 auto;
+    background: hsla(0, 0%, 100%, 0.08);
+    border: 1px solid var(--cardBorder);
+    color: var(--whiteColor);
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+
+    &:hover {
+      background: hsla(0, 0%, 100%, 0.18);
+    }
+  }
+
+  &__content {
+    margin: 0;
+    max-width: min(90vw, 900px);
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+
+    img {
+      max-width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+    }
+
+    figcaption {
+      color: var(--whiteColor);
+      opacity: 0.85;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 640px) {
+    &__arrow {
+      width: 2.25rem;
+      height: 2.25rem;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+@keyframes highlightsLightboxFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import chantImg from '../../Assets/chant.jpg';
+// Mêmes visuels que la rubrique "Les disciplines" de la page À propos, pour la cohérence.
+import chantImg from '../../Assets/chantLive.jpg';
 import rapImg from '../../Assets/rap.jpg';
-import danseImg from '../../Assets/danse.webp';
+import danseImg from '../../Assets/danseGroup.jpg';
 // dts.jpg (ancien logo "Dakar Talent Show" imprimé dans l'image) retiré de ce hero —
 // remplacé par une photo live de la scène (candidats + public).
 import heroImg from '../../Assets/auditionsScene.jpg';

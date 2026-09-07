@@ -5,6 +5,7 @@ import 'aos/dist/aos.css';
 import { useNavigate } from 'react-router-dom';
 import { LuMic, LuMusic4, LuSparkles, LuUsers, LuCalendarDays, LuTv } from 'react-icons/lu';
 import HeroSlider from '../HeroSlider/HeroSlider';
+import HighlightsGallery from '../HighlightsGallery/HighlightsGallery';
 import chantImg from '../../Assets/chantLive.jpg';
 import danseImg from '../../Assets/danseGroup.jpg';
 import rapImg from '../../Assets/rap.jpg';
@@ -122,6 +123,8 @@ const AboutPage = () => {
           ))}
         </div>
       </section>
+
+      <HighlightsGallery />
 
       <section className="aboutCta container">
         <div className="aboutCta__inner" data-aos="fade-up">

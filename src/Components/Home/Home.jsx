@@ -34,18 +34,19 @@ const SLIDES = [
         subtitle: "Rap · Chant · Danse",
     },
     {
-        // 2. PremierslidePageAccueil.png — candidats au casting, micro en main.
-        image: castingImg,
-        eyebrow: 'Chant',
-        title: 'Ils osent monter sur scène',
-        subtitle: 'Des talents venus de tout le Sénégal se présentent devant le jury pour décrocher leur place.',
-    },
-    {
-        // 3. Slide2Paged'accueil.png — duo d'artistes, univers Rap.
+        // 2. Slide2Paged'accueil.png — duo d'artistes, univers Rap. Passe avant le slide
+        // Chant (ordre imposé par le client).
         image: rapImg,
         eyebrow: 'Rap',
         title: 'Le flow qui va marquer l\'année',
         subtitle: 'Suivez les battles en direct et votez pour le futur champion.',
+    },
+    {
+        // 3. PremierslidePageAccueil.png — candidats au casting, micro en main.
+        image: castingImg,
+        eyebrow: 'Chant',
+        title: 'Ils osent monter sur scène',
+        subtitle: 'Des talents venus de tout le Sénégal se présentent devant le jury pour décrocher leur place.',
     },
     {
         // 4. slideDanseAccueil.jpeg — groupe de danseurs sur scène.

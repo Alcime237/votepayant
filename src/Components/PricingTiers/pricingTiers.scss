@@ -1,70 +1,105 @@
-// Règle de vote unique (200 FCFA = 5 points) — remplace l'ancienne grille à 3 paliers
-// (standard/soutien/premium) qui n'existe plus dans le produit (section 5 du brief).
+// Règle de vote unique (200 FCFA = 5 points) — mise en scène "showcase" premium : équation
+// en badge central + 3 garanties en cartes, plutôt qu'une simple liste verticale (section 5
+// du brief : plus de paliers, une seule règle qui mérite d'être mise en avant visuellement).
 .pricingTiers {
   padding: 3rem 0 1rem;
 
-  .ruleCard {
-    max-width: 640px;
+  .ruleShowcase {
+    max-width: 980px;
     margin: 0 auto;
     text-align: center;
-    padding: 3rem 2rem;
-    border-radius: var(--radius-lg);
-    // Même traitement visuel "carte mise en avant" que l'ancien palier "highlight" —
-    // cohérent avec le reste de la charte pour une règle qui mérite d'être visible.
-    background: linear-gradient(180deg, hsla(38, 100%, 55%, 0.1), hsla(0, 0%, 100%, 0.02));
+  }
+
+  .ruleShowcase__equation {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+    margin: 0 auto 2.5rem;
+    padding: 1.5rem 2.5rem;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(180deg, hsla(38, 100%, 55%, 0.12), hsla(0, 0%, 100%, 0.02));
     border: 1px solid var(--AccentGold);
     box-shadow: 0 24px 60px hsla(22, 100%, 50%, 0.22);
   }
 
-  .ruleCard__equation {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-
-  .ruleCard__amount,
-  .ruleCard__points {
+  .ruleShowcase__amount,
+  .ruleShowcase__points {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-size: clamp(1.9rem, 4.5vw, 2.6rem);
     font-weight: 800;
     color: var(--ink);
+    white-space: nowrap;
+
+    small {
+      font-size: 0.42em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-left: 0.3rem;
+      opacity: 0.8;
+    }
   }
 
-  .ruleCard__points {
+  .ruleShowcase__points {
     // Le résultat (les points) ressort en couleur signal : c'est l'information qui compte
     color: var(--signal);
   }
 
-  .ruleCard__equals {
+  .ruleShowcase__equals {
     font-family: var(--font-display);
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 800;
     color: var(--muted);
   }
 
-  .ruleCard__guarantees {
+  .ruleShowcase__guarantees {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+
+  .ruleShowcase__card {
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
-    text-align: left;
-    max-width: 440px;
-    margin: 0 auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.6rem 1.4rem;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0.045), hsla(0, 0%, 100%, 0.015));
+    border: 1px solid var(--cardBorder);
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
 
-    li {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      font-size: 0.92rem;
+    &:hover {
+      transform: translateY(-4px);
+      border-color: var(--AccentGold);
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.55;
       color: var(--textColor);
     }
   }
 
-  .ruleCard__guaranteeIcon {
-    flex-shrink: 0;
+  .ruleShowcase__cardIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--gradientColorSoft);
     color: var(--AccentGold);
-    font-size: 1.15rem;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 760px) {
+    .ruleShowcase__guarantees {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 }

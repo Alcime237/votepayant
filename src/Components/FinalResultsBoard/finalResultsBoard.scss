@@ -1,0 +1,232 @@
+// Tableau des résultats finaux par catégorie — volontairement HORS du .container (80% de
+// large écran ailleurs sur cette page) : c'est un tableau de bord "plein écran", pas une
+// section de contenu éditorial classique.
+.finalResultsBoard {
+  width: 100%;
+  padding: 4rem clamp(1.25rem, 5vw, 4rem) 4.5rem;
+  background: linear-gradient(180deg, var(--surface), var(--ground));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+
+  &__intro {
+    margin-bottom: 3rem;
+
+    p {
+      max-width: 720px;
+
+      strong {
+        color: var(--ink);
+      }
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    max-width: 1800px;
+    margin: 0 auto;
+  }
+
+  &__empty {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  &__category {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  &__categoryHead {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid var(--line);
+
+    h4 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+  }
+
+  &__categoryIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--gradientColorSoft);
+    color: var(--AccentGold);
+    font-size: 1.3rem;
+  }
+
+  &__qualifierNote {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    grid-template-areas:
+      "rank who"
+      "rank bar"
+      "rank stats";
+    row-gap: 0.4rem;
+    column-gap: 0.85rem;
+    align-items: center;
+    padding: 0.85rem 0.9rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    text-decoration: none;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+
+    &:hover {
+      background: hsla(0, 0%, 100%, 0.03);
+    }
+
+    &.is-qualified {
+      border-color: hsla(38, 100%, 60%, 0.35);
+      background: linear-gradient(180deg, hsla(38, 100%, 55%, 0.08), transparent);
+    }
+  }
+
+  &__rank {
+    grid-area: rank;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--muted);
+    align-self: start;
+  }
+
+  .is-qualified &__rank {
+    color: var(--AccentGold);
+  }
+
+  &__who {
+    grid-area: who;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-width: 0;
+    flex-wrap: wrap;
+
+    img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+    }
+  }
+
+  &__name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radius-pill);
+    background: hsla(38, 100%, 55%, 0.16);
+    color: var(--AccentGold);
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  &__barWrap {
+    grid-area: bar;
+    display: block;
+    width: 100%;
+    height: 6px;
+    border-radius: 4px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  &__bar {
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+    background: var(--signal);
+    transition: width 0.6s var(--ease-premium);
+
+    &.tier-orange { background: hsl(28, 95%, 58%); }
+    &.tier-rouge { background: var(--live); }
+    &.tier-gris { background: var(--muted); }
+  }
+
+  &__stats {
+    grid-area: stats;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-variant-numeric: tabular-nums;
+
+    b {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+
+    span {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+  }
+}
+
+// À partir de la tablette large : les 3 catégories côte à côte, comme demandé (le tableau
+// occupe alors toute la largeur disponible de l'écran, colonnes réparties également).
+@media (min-width: 960px) {
+  .finalResultsBoard__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .finalResultsBoard__who img {
+    width: 26px;
+    height: 26px;
+  }
+}

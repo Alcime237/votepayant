@@ -35,22 +35,23 @@ const PricingTiers = () => {
         <div className="titleUnderline" data-aos="fade-up"></div>
       </div>
 
-      {/* Carte unique mettant en avant la règle — remplace l'ancienne grille à 3 paliers */}
-      <div className="ruleCard" data-aos="fade-up">
-        <div className="ruleCard__equation">
-          <span className="ruleCard__amount">{UNIT_PRICE_FCFA} FCFA</span>
-          <span className="ruleCard__equals">=</span>
-          <span className="ruleCard__points">{POINTS_PER_UNIT} points</span>
+      {/* Équation en badge centré, guaranties en cartes — remplace l'ancienne liste verticale
+          pour un rendu plus premium, cohérent avec les autres grilles de cartes de l'app. */}
+      <div className="ruleShowcase" data-aos="fade-up">
+        <div className="ruleShowcase__equation">
+          <span className="ruleShowcase__amount">{UNIT_PRICE_FCFA} <small>FCFA</small></span>
+          <span className="ruleShowcase__equals">=</span>
+          <span className="ruleShowcase__points">{POINTS_PER_UNIT} <small>points</small></span>
         </div>
 
-        <ul className="ruleCard__guarantees">
-          {GUARANTEES.map(({ icon: Icon, text }) => (
-            <li key={text}>
-              <Icon className="ruleCard__guaranteeIcon" />
-              <span>{text}</span>
-            </li>
+        <div className="ruleShowcase__guarantees">
+          {GUARANTEES.map(({ icon: Icon, text }, i) => (
+            <div className="ruleShowcase__card" data-aos="fade-up" data-aos-delay={i * 100} key={text}>
+              <span className="ruleShowcase__cardIcon"><Icon /></span>
+              <p>{text}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );

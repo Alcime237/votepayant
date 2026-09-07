@@ -12,9 +12,9 @@ import './votePage.scss';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { getCampaignStatus } from '../../services/campaignService';
-import RankingChart from '../RankingChart/RankingChart';
 import PricingTiers from '../PricingTiers/PricingTiers';
 import HeroSlider from '../HeroSlider/HeroSlider';
+import FinalResultsBoard from '../FinalResultsBoard/FinalResultsBoard';
 
 const HERO_SLIDES = [
   {
@@ -200,9 +200,9 @@ const VotePage = () => {
         </div>
 
         <PricingTiers />
-
-        <RankingChart />
       </section>
+
+      <FinalResultsBoard />
     </div>
   );
 };

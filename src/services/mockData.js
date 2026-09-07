@@ -97,3 +97,29 @@ export function buildMockCampaignStatus() {
     phase: 'AUDITION',
   };
 }
+
+// Résultats finaux de démonstration (page Vote, tableau "Résultats" par catégorie) — même
+// forme que CategoryResultResponse/CandidateResultEntry côté backend (voir ResultsQueryService),
+// avec un nombre de qualifiés fictif (2) pour illustrer le rendu du badge "Qualifié·e".
+const DEMO_QUALIFIERS_PER_CATEGORY = 2;
+
+export const MOCK_RESULTS = ['RAP', 'CHANT', 'DANSE'].map((category) => {
+  const roster = DEMO_ROSTER[category];
+  const totalPoints = roster.reduce((sum, [, points]) => sum + points, 0);
+  const candidates = buildCandidates(category);
+
+  return {
+    category,
+    qualifiersPerCategory: DEMO_QUALIFIERS_PER_CATEGORY,
+    totalPoints,
+    results: roster.map(([fullName, points], i) => ({
+      candidateId: candidates[i].id,
+      fullName,
+      photoUrl: candidates[i].photoUrl,
+      points,
+      percentage: totalPoints === 0 ? 0 : (points * 100) / totalPoints,
+      rank: i + 1,
+      qualified: i < DEMO_QUALIFIERS_PER_CATEGORY,
+    })),
+  };
+});

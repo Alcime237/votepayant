@@ -104,11 +104,24 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      // Position par défaut : légèrement remontée pour ne pas couper les visages
+      // (les 3 photos sources ont les visages dans le tiers supérieur du cadre).
+      object-position: center 20%;
       transition: transform 1.4s var(--ease-premium);
     }
 
     &:hover img {
       transform: scale(1.1);
+    }
+
+    // Ajustements fins par discipline, réglés sur le cadrage réel de chaque photo
+    // (visages toujours entièrement visibles), sans jamais changer la taille de la carte.
+    &[data-discipline='chant'] img {
+      object-position: center 10%;
+    }
+
+    &[data-discipline='rap'] img {
+      object-position: center 40%;
     }
   }
 

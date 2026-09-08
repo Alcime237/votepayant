@@ -100,7 +100,7 @@ const AboutPage = () => {
 
         <div className="aboutDisciplines">
           {DISCIPLINES.map(({ key, name, img, desc }, i) => (
-            <div className="aboutDisciplines__card" key={key} data-aos="fade-up" data-aos-delay={i * 120}>
+            <div className="aboutDisciplines__card" key={key} data-discipline={key} data-aos="fade-up" data-aos-delay={i * 120}>
               <img src={img} alt={name} />
               <div className="aboutDisciplines__overlay">
                 {key === 'chant' && <LuMic className="disciplineIcon" />}

@@ -24,7 +24,7 @@ const ContactPage = () => {
 
   return (
     <div className="contact-page">
-      <HeroSlider slides={SLIDES} height="52vh" />
+      <HeroSlider slides={SLIDES} height="56vh" />
 
       <div className="container contact-body">
         <div className="contact-grid">

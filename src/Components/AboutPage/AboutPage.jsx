@@ -9,26 +9,16 @@ import HighlightsGallery from '../HighlightsGallery/HighlightsGallery';
 import chantImg from '../../Assets/chantLive.jpg';
 import danseImg from '../../Assets/danseGroup.jpg';
 import rapImg from '../../Assets/rap.jpg';
-import heroSceneImg from '../../Assets/auditionsScene.jpg';
-// dts.jpg (ancien logo "Dakar Talent Show" imprimé dans l'image) retiré de ce slide —
-// remplacé par une photo réelle de candidats au casting, cohérente avec le rebranding.
-import auditionsImg from '../../Assets/auditionsCandidats.jpeg';
+// Slide unique imposé pour la page À propos (image-1-30.JPG fournie par le client).
+import aboutHeroImg from '../../Assets/aboutHero.jpg';
 
 const HERO_SLIDES = [
   {
-    image: heroSceneImg,
+    image: aboutHeroImg,
     eyebrow: 'À propos',
     // Rebranding : "Dakar Talent Show" → "Sénégal Talent Show"
     title: 'Sénégal Talent Show',
     subtitle: 'Une émission de divertissement culturel qui célèbre la diversité artistique du continent.',
-  },
-  {
-    image: auditionsImg,
-    eyebrow: 'Notre mission',
-    title: 'Révéler les talents de demain',
-    // "dakarois" (adjectif dérivé de Dakar) remplacé par "sénégalais" pour rester cohérent
-    // avec le repositionnement national de l'émission (plus une émission d'une seule ville)
-    subtitle: "Une plateforme de découverte, portée par le public, pour le public sénégalais.",
   },
 ];
 

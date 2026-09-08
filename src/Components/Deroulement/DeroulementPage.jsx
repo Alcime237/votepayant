@@ -8,25 +8,16 @@ import {
   LuMapPin, LuListChecks, LuAward, LuClock3, LuStar,
 } from 'react-icons/lu';
 import HeroSlider from '../HeroSlider/HeroSlider';
-// Hero choisi avec le client (voir échange de validation) : plateau vide, projecteurs
-// bleus — visuel neutre et premium, sans redite avec les autres images déjà utilisées
-// ailleurs dans l'app (accueil, à propos).
-import deroulementHeroImg from '../../Assets/deroulementHero.jpeg';
-import deroulementLineupImg from '../../Assets/deroulementLineup.jpg';
+// Slide unique imposé pour la page Déroulement (slidepagedéroulement.jpg fournie par le client).
+import deroulementSlideImg from '../../Assets/deroulementSlide.jpg';
 
 // Bandeau visuel en tête de page.
 const HERO_SLIDES = [
   {
-    image: deroulementHeroImg,
+    image: deroulementSlideImg,
     eyebrow: 'Règlement de la compétition',
     title: 'Déroulement de la compétition',
     subtitle: 'Du casting à la Grande Finale Nationale : le format complet du Sénégal Talent Show, étape par étape.',
-  },
-  {
-    image: deroulementLineupImg,
-    eyebrow: 'En direct du plateau',
-    title: 'Trois disciplines, un seul jury',
-    subtitle: 'Chant, Rap, Danse : chaque candidat se présente devant le jury et le public à chaque étape.',
   },
 ];
 
@@ -205,7 +196,7 @@ const DeroulementPage = () => {
 
   return (
     <div className="deroulement-page">
-      <HeroSlider slides={HERO_SLIDES} height="50vh" />
+      <HeroSlider slides={HERO_SLIDES} height="56vh" />
 
       <div className="container deroulement-body">
         {/* Vue d'ensemble ("Format général" du document source) : les 3 grandes étapes

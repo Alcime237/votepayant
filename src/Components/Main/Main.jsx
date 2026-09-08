@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import './main.scss'
-import img1 from '../../Assets/auditionsScene.jpg'
-// dts.jpg (ancien logo "Dakar Talent Show" imprimé dans l'image) retiré de cette carte —
-// remplacé par une photo de battle, plus parlante pour l'étape "Demi-finales".
-import img2 from '../../Assets/demiFinaleBattle.jpeg'
-import img3 from '../../Assets/homeSlideFinale.jpg'
+// Les 3 cartes (Casting / Demi-finales / Grande finale) partagent le même visuel imposé
+// par le client (Castingfinaledemifinale.jpg) plutôt que 3 photos distinctes.
+import parcoursImg from '../../Assets/parcoursStage.jpg'
 import { LuClipboardCheck } from 'react-icons/lu'
 import { useNavigate } from 'react-router-dom';
 import Aos from 'aos'
@@ -37,7 +35,7 @@ const Main = () => {
                 <div className="singleDestination" data-aos="fade-up" data-aos-delay="0">
                     <span className="stepNumber">01</span>
                     <div className="imageDiv">
-                        <img src={img1} alt="Casting" />
+                        <img src={parcoursImg} alt="Casting" />
                     </div>
                     <div className="cardInfo">
                         <h4 className="destTitle">Casting</h4>
@@ -55,7 +53,7 @@ const Main = () => {
                 <div className="singleDestination" data-aos="fade-up" data-aos-delay="150">
                     <span className="stepNumber">02</span>
                     <div className="imageDiv">
-                        <img src={img2} alt="Demi-finales" />
+                        <img src={parcoursImg} alt="Demi-finales" />
                     </div>
                     <div className="cardInfo">
                         <h4 className="destTitle">Demi-finales</h4>
@@ -73,7 +71,7 @@ const Main = () => {
                 <div className="singleDestination" data-aos="fade-up" data-aos-delay="300">
                     <span className="stepNumber">03</span>
                     <div className="imageDiv">
-                        <img src={img3} alt="Grande finale" />
+                        <img src={parcoursImg} alt="Grande finale" />
                     </div>
                     <div className="cardInfo">
                         <h4 className="destTitle">Grande finale</h4>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// Mêmes visuels que la rubrique "Les disciplines" de la page À propos, pour la cohérence.
-import chantImg from '../../Assets/chantLive.jpg';
-import rapImg from '../../Assets/rap.jpg';
-import danseImg from '../../Assets/danseGroup.jpg';
+// Visuels dédiés à la rubrique "Sélectionnez une catégorie" (distincts de la page À propos).
+import chantImg from '../../Assets/chantVote.jpg';
+import rapImg from '../../Assets/rapVote.jpg';
+import danseImg from '../../Assets/danseVote.jpg';
 // dts.jpg (ancien logo "Dakar Talent Show" imprimé dans l'image) retiré de ce hero —
 // remplacé par une photo live de la scène (candidats + public).
 import heroImg from '../../Assets/auditionsScene.jpg';
@@ -124,7 +124,7 @@ const VotePage = () => {
 
   return (
     <div className="vote-page">
-      <HeroSlider slides={HERO_SLIDES} height="46vh" />
+      <HeroSlider slides={HERO_SLIDES} height="56vh" />
 
       <section className="demi-finale container section">
         <div className="secTitle sectionTitle">

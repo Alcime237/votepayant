@@ -139,7 +139,7 @@ const FinalResultsBoard = () => {
         <h3 data-aos="fade-up">Résultats par catégorie</h3>
         <p data-aos="fade-up">
           La répartition des votes reçus dans chaque discipline, en pourcentage du total de sa
-          catégorie{phase && <> — étape actuelle : <strong>{PHASE_LABEL[phase] || phase}</strong></>}.
+          catégorie{phase && <>  étape actuelle : <strong>{PHASE_LABEL[phase] || phase}</strong></>}.
           Les places qualificatives affichées suivent les règles officielles du déroulement de
           cette étape.
         </p>

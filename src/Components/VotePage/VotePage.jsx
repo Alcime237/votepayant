@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // Visuels dédiés à la rubrique "Sélectionnez une catégorie" (distincts de la page À propos).
 import chantImg from '../../Assets/chantVote.jpg';
@@ -11,7 +11,7 @@ import { LuClipboardCheck, LuListChecks, LuUserCheck, LuSmartphone } from 'react
 import './votePage.scss';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import { getCampaignStatus } from '../../services/campaignService';
+import useCampaignStatus from '../../hooks/useCampaignStatus';
 import PricingTiers from '../PricingTiers/PricingTiers';
 import HeroSlider from '../HeroSlider/HeroSlider';
 import FinalResultsBoard from '../FinalResultsBoard/FinalResultsBoard';
@@ -34,53 +34,19 @@ const STEPS = [
 ];
 
 const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-  const [votingActive, setVotingActive] = useState(false);
-  const [endTime, setEndTime] = useState(null);
+  // Décompte calé sur l'horloge du serveur, rafraîchi chaque seconde (voir useCampaignStatus)
+  const { loaded, votingActive, remainingMs } = useCampaignStatus({ tick: true });
 
-  useEffect(() => {
-    const fetchVoteConfig = async () => {
-      try {
-        const status = await getCampaignStatus();
-        setVotingActive(status.active);
-        if (status.endDate) {
-          setEndTime(new Date(status.endDate).getTime());
-        }
-      } catch (error) {
-        console.error("Erreur:", error);
-      }
-    };
-    fetchVoteConfig();
-  }, []);
+  // Rien tant que le statut n'est pas connu : sinon "Les votes sont fermés" clignotait à tort
+  if (!loaded) return null;
 
-  useEffect(() => {
-    if (!endTime || !votingActive) return;
-
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = endTime - now;
-
-      if (distance < 0) {
-        setVotingActive(false);
-        clearInterval(timer);
-        return;
-      }
-
-      setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000)
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [endTime, votingActive]);
+  const totalSeconds = Math.max(0, Math.floor(remainingMs / 1000));
+  const timeLeft = {
+    days: Math.floor(totalSeconds / 86400),
+    hours: Math.floor((totalSeconds % 86400) / 3600),
+    minutes: Math.floor((totalSeconds % 3600) / 60),
+    seconds: totalSeconds % 60,
+  };
 
   if (!votingActive) {
     return (

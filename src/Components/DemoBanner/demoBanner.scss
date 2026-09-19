@@ -1,0 +1,29 @@
+.demoBanner {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  z-index: 2500; // au-dessus du contenu, sous les fenêtres modales (3000+)
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  max-width: min(680px, calc(100vw - 2rem));
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  border: 1px solid var(--signal);
+  box-shadow: var(--shadow-card, 0 12px 32px hsla(226, 60%, 3%, 0.5));
+  color: var(--ink);
+  font-size: 0.85rem;
+  line-height: 1.4;
+
+  svg {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    color: var(--signal-light);
+  }
+
+  strong {
+    color: var(--signal-light);
+  }
+}

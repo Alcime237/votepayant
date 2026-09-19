@@ -41,7 +41,11 @@ const RankingChart = ({ category = null, title = 'Classement en direct', showExp
   const [campaignId, setCampaignId] = useState(null);
   // Classement brut tel que reçu du serveur (jamais filtré/modifié directement, voir displayedRanking)
   const [ranking, setRanking] = useState([]);
+  // Erreur bloquante : ni instantané ni flux n'ont pu être chargés, il n'y a rien à afficher
   const [error, setError] = useState(null);
+  // Flux temps réel coupé : EventSource se reconnecte tout seul, le graphique reste affiché
+  // (dernières valeurs connues) avec une simple mention "Reconnexion..." plutôt que de disparaître.
+  const [streamLost, setStreamLost] = useState(false);
 
   // Récupère la campagne active une seule fois au montage
   useEffect(() => {
@@ -62,14 +66,27 @@ const RankingChart = ({ category = null, title = 'Classement en direct', showExp
   useEffect(() => {
     if (!campaignId) return undefined;
 
+    let receivedData = false;
+
     getRanking(campaignId)
-      .then(setRanking)
-      .catch(() => setError('Impossible de charger le classement.'));
+      .then((data) => {
+        receivedData = true;
+        setRanking(data);
+      })
+      .catch(() => {
+        // Le flux SSE peut encore alimenter le graphique : l'erreur ne devient bloquante que s'il échoue aussi
+        if (!receivedData) setError('Impossible de charger le classement.');
+      });
 
     const unsubscribe = subscribeToRanking(
       campaignId,
-      setRanking,
-      () => setError('Connexion au classement en direct interrompue.')
+      (data) => {
+        receivedData = true;
+        setRanking(data);
+        setError(null);
+        setStreamLost(false);
+      },
+      () => setStreamLost(true)
     );
 
     return unsubscribe;
@@ -110,6 +127,7 @@ const RankingChart = ({ category = null, title = 'Classement en direct', showExp
       <h3 className="ranking-chart-title">
         <span className="live-dot" />
         {title}
+        {streamLost && <span className="ranking-chart-reconnecting" role="status">Reconnexion…</span>}
       </h3>
 
       {showExplanation && (
@@ -123,7 +141,7 @@ const RankingChart = ({ category = null, title = 'Classement en direct', showExp
       )}
 
       {displayedRanking.length === 0 ? (
-        <p className="ranking-chart-empty">Aucun vote pour l'instant.</p>
+        <p className="ranking-chart-empty">Aucun candidat en compétition pour l'instant.</p>
       ) : (
         <div className="board">
           {displayedRanking.map((entry, i) => {
@@ -160,6 +178,10 @@ const RankingChart = ({ category = null, title = 'Classement en direct', showExp
             );
           })}
         </div>
+      )}
+
+      {displayedRanking.length > 0 && displayedRanking.every((entry) => entry.points === 0) && (
+        <p className="ranking-chart-empty">Aucun vote pour l'instant — soyez le premier à soutenir un candidat !</p>
       )}
     </div>
   );

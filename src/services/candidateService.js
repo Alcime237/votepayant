@@ -50,6 +50,9 @@ export async function registerCandidate(formData) {
     // correct (avec sa "boundary" aléatoire). Le fixer nous-mêmes à la main casserait l'upload
     // car il manquerait cette boundary que seul le navigateur sait générer.
     headers: { 'Content-Type': undefined },
+    // 3 photos jusqu'à 5 Mo chacune : sur une connexion mobile lente, l'envoi dépasse largement
+    // le délai de 15 s appliqué aux autres appels.
+    timeout: 90000,
   });
   return data;
 }

@@ -14,6 +14,8 @@ import ChantDemiFinale from './Components/ChantDemiFinale/ChantDemiFinale';
 import RapDemiFinale from './Components/RapDemiFinale/RapDemiFinale';
 import DanseDemiFinale from './Components/DanseDemiFinale/DanseDemiFinale';
 import ContactPage from './Components/ContactPage/ContactPage';
+import NotFoundPage from './Components/NotFoundPage/NotFoundPage';
+import DemoBanner from './Components/DemoBanner/DemoBanner';
 // PartnersSlider est monté une seule fois ici (layout global), juste avant le Footer,
 // pour apparaître sur TOUTES les pages de l'app et pas seulement sur l'accueil.
 import PartnersSlider from './Components/PartnersSlider/PartnersSlider';
@@ -48,7 +50,7 @@ const ScrollManager = () => {
         return;
       }
     }
-    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, [location.pathname, location.hash]);
 
   return null;
@@ -122,11 +124,14 @@ const AppPublic = () => {
           {/* <Route path="/voter-joker/danse" element={<JokerDanse />} /> */}
           {/* <Route path="/voter-joker/chant" element={<JokerChant />} /> */}
           {/* <Route path="/voter-joker/rap" element={<JokerRap />} /> */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
       {/* Bandeau partenaires affiché sur toutes les pages, juste avant le pied de page */}
       <PartnersSlider />
       <Footer />
+      {/* Prévient le visiteur quand le serveur est injoignable et que les données sont fictives */}
+      <DemoBanner />
     </div>
   );
 };

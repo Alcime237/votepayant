@@ -1,110 +1,54 @@
-# votepayant — Dakar Talent Show
+# votepayant — Sénégal Talent Show
 
-Front-end de vote payant. Le design est conservé tel quel ; seule la couche d'accès aux
-données a été reconstruite (Phase 3) pour parler au backend `../backend`.
+Frontend React (Create React App) de l'application de vote payant du **Sénégal Talent Show** :
+pages publiques, vote par discipline (Chant, Rap, Danse), classement en direct, résultats par
+catégorie et inscription des candidats. Il parle à l'API Spring Boot du dossier `backend/` du
+dépôt complet (`SenegalTalentshow`).
 
-## Configuration
+## Démarrage
 
 ```bash
 cp .env.example .env   # REACT_APP_API_URL (par défaut http://localhost:8080)
 npm install
-npm start
+npm start              # http://localhost:3000
 ```
 
-## Où se trouve quoi
+L'origine du frontend (`http://localhost:3000` en local) doit figurer dans `CORS_ALLOWED_ORIGINS`
+côté backend.
 
-- `src/services/` : toute la couche API, centralisée (plus aucun `fetch`/`axios` en dur vers
-  `localhost:8080` dans les composants) — `apiClient`, `candidateService`, `campaignService`,
-  `voteOrderService`, `touchpayWidget`, `rankingService`.
-- `src/Components/RankingChart/` : graphique de classement en direct (Phase 5), abonné au
-  flux SSE du backend.
+| Commande | Rôle |
+|---|---|
+| `npm start` | serveur de développement |
+| `npm test` | tests (Jest + Testing Library) — `CI=true npx react-scripts test --watchAll=false` pour un run unique |
+| `npm run build` | build de production dans `build/` |
 
-## État du paiement (dépend de la Phase 2 backend)
+## Organisation du code
 
-Le flux réel est câblé : création de commande → ouverture du widget MyTouchPoint
-(`touchpayWidget.js`, reproduit tel quel depuis l'exemple `SATURN FITNESS...htm` fourni) →
-polling du statut. **Tant que le webhook MyTouchPoint n'est pas implémenté côté backend
-(Phase 2, en attente de la documentation technique), le statut reste PENDING indéfiniment** —
-le polling se termine par un timeout attendu, pas une confirmation de paiement. Voir
-`../backend/README.md` et `../DEMANDE-MYTOUCHPOINT.md`.
+- `src/services/` — **toute** la couche API : `apiClient` (axios unique, timeout, messages d'erreur
+  lisibles), `candidateService`, `campaignService`, `voteOrderService`, `rankingService` (SSE),
+  `resultsService`, `partnerService`, `touchpayWidget`.
+- `src/hooks/` — `useCampaignStatus` (statut du vote + compte à rebours calé sur l'horloge du
+  serveur), `useVotePayment` (parcours de paiement : création de commande → widget → suivi du
+  statut), `useDemoMode`.
+- `src/Components/DisciplineVotePage/` — page de vote d'une discipline. `ChantDemiFinale`,
+  `RapDemiFinale` et `DanseDemiFinale` n'en sont que de fines configurations (titre, écran de
+  chargement, variante d'affichage).
+- `src/Components/VoteModal/` — fenêtre de vote en 2 étapes (quantité → paiement), partagée.
+- `src/Components/RankingChart/`, `FinalResultsBoard/` — classement en direct (SSE) et résultats
+  définitifs par catégorie.
+- `src/constants/voteRules.js` — règle de vote affichée : **200 FCFA = 5 points**. Le montant et
+  les points réellement appliqués sont toujours recalculés côté serveur.
+- Les rubriques « Joker » (`Joker*`) sont désactivées : leurs routes sont commentées dans
+  `AppPublic.js`.
 
-## Gaps connus hors périmètre des phases validées
+## Comportements à connaître
 
-- La page `/partenaires` appelle un endpoint `/partenaire` que le nouveau backend n'expose pas
-  encore (jamais construit dans les phases 1-7) — elle affichera une liste vide tant que ce
-  module n'est pas ajouté.
-- Le champ `style` affiché sur les cartes de danse (ancien modèle) n'a pas d'équivalent dans
-  l'entité `Candidate` actuelle (attributs génériques uniquement) — retiré de l'affichage.
-
----
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Mode démonstration** : si le serveur est injoignable, l'app affiche des candidats et des points
+  fictifs (`services/mockData.js`) avec un bandeau d'avertissement visible ; elle retente le
+  serveur toutes les 30 s et repasse en mode réel dès qu'il répond.
+- **Paiement** : seul le webhook serveur-à-serveur du backend confirme un vote. Le front crée la
+  commande, ouvre le widget MyTouchPoint (`touchpayWidget.js`) puis interroge le statut de la
+  commande. L'intégration de bout en bout dépend de la documentation technique MyTouchPoint
+  (voir `DEMANDE-MYTOUCHPOINT.md` à la racine du dépôt complet).
+- Le numéro de téléphone accepte les formats usuels (`77 123 45 67`, `+221 77…`) et est normalisé
+  en 9 chiffres avant envoi.

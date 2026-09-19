@@ -395,6 +395,73 @@
   box-shadow: var(--shadow-glow);
 }
 
+// --- Retours du parcours de paiement (VoteModal) : remplacent les alert() bloquants ---
+
+.payment-feedback {
+  margin: 0 0 1.1rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  border: 1px solid var(--line);
+  background: hsla(0, 0%, 100%, 0.04);
+  color: var(--ink);
+
+  &--info {
+    border-color: hsla(38, 100%, 60%, 0.4);
+    background: hsla(38, 100%, 60%, 0.08);
+  }
+
+  &--warn {
+    border-color: var(--signal-light);
+    background: hsla(30, 90%, 50%, 0.1);
+  }
+
+  &--error {
+    border-color: var(--live);
+    background: hsla(355, 100%, 67%, 0.1);
+  }
+}
+
+.payment-field-error {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--live);
+}
+
+.payment-success {
+  text-align: center;
+  padding: 0.5rem 0 0;
+
+  h3 {
+    margin-bottom: 0.6rem;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+    color: var(--muted);
+    line-height: 1.5;
+
+    strong {
+      color: var(--ink);
+    }
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 1rem;
+    border-radius: 50%;
+    font-size: 1.6rem;
+    color: var(--ground);
+    background: var(--gain);
+    box-shadow: 0 8px 24px hsla(154, 60%, 52%, 0.35);
+  }
+}
+
 @media (max-width: 480px) {
   .payment-modal-content {
     padding: 1.25rem;

@@ -15,13 +15,12 @@ const CATEGORY_LABEL = {
   JOKER_RAP: 'Joker · Rap',
 };
 
+// Les routes de vote Joker sont désactivées (voir AppPublic.js) : un candidat Joker retombe donc
+// sur la page /vote plutôt que sur une route inexistante.
 const VOTE_ROUTE = {
   CHANT: '/chant',
   DANSE: '/danse',
   RAP: '/rap',
-  JOKER_CHANT: '/voter-joker/chant',
-  JOKER_DANSE: '/voter-joker/danse',
-  JOKER_RAP: '/voter-joker/rap',
 };
 
 const CandidatePage = () => {
@@ -46,9 +45,22 @@ const CandidatePage = () => {
 
         const ranking = await getRanking(status.campaignId);
         if (cancelled) return;
-        const index = ranking.findIndex((r) => r.candidateId === id);
+
+        // Rang et part des voix calculés DANS la discipline du candidat (section 8.3), comme le
+        // "Verdict final" : le classement reçu mélange les 3 disciplines, un rappeur classé 3e
+        // toutes catégories confondues est peut-être 1er du Rap.
+        const sameCategory = ranking
+          .filter((entry) => entry.category === data.category)
+          .sort((a, b) => b.points - a.points);
+        const totalPoints = sameCategory.reduce((sum, entry) => sum + entry.points, 0);
+        const index = sameCategory.findIndex((entry) => entry.candidateId === id);
         if (index >= 0) {
-          setStanding({ rank: index + 1, ...ranking[index] });
+          const entry = sameCategory[index];
+          setStanding({
+            rank: index + 1,
+            points: entry.points,
+            percentage: totalPoints === 0 ? 0 : (entry.points * 100) / totalPoints,
+          });
         }
       } catch (err) {
         if (!cancelled) setError("Ce candidat est introuvable ou n'est plus actif.");

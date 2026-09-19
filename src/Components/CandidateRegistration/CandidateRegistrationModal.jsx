@@ -31,6 +31,9 @@ const PHOTO_SLOTS = [
 // les valider aussi côté client évite d'attendre un aller-retour réseau pour un fichier trop
 // lourd, et le message reste cohérent des deux côtés.
 const MAX_PHOTO_SIZE_BYTES = 5 * 1024 * 1024;
+// Longueurs maximales alignées sur la validation serveur (CandidateService)
+const MAX_NAME_LENGTH = 70;
+const MAX_NATIONALITY_LENGTH = 100;
 const ALLOWED_PHOTO_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 // Vérifie un fichier photo et renvoie un message d'erreur clair, ou null si tout va bien.
@@ -85,6 +88,20 @@ const CandidateRegistrationModal = ({ onClose }) => {
 
   // Validité de chaque étape — pilote l'activation du bouton "Suivant"/"Envoyer"
   const isStep1Valid = firstName.trim().length >= 2 && lastName.trim().length >= 2 && nationality.trim().length >= 2;
+
+  // Échap ferme la fenêtre (sauf pendant l'envoi), le fond de page ne défile plus derrière
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape' && !submitting) onClose();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [submitting, onClose]);
   const isStep2Valid = discipline !== null;
   const isStep3Valid = PHOTO_SLOTS.every((slot) => photos[slot.key] && !photoErrors[slot.key]);
 
@@ -162,9 +179,17 @@ const CandidateRegistrationModal = ({ onClose }) => {
 
   return (
     <div className="candidateModal__overlay" onClick={() => !submitting && onClose()}>
-      <div className="candidateModal__content" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="candidateModal__content"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Inscription candidat"
+        onClick={(e) => e.stopPropagation()}
+      >
         <IoIosCloseCircle
           className="candidateModal__closeIcon"
+          role="button"
+          aria-label="Fermer"
           onClick={() => !submitting && onClose()}
         />
 
@@ -207,6 +232,8 @@ const CandidateRegistrationModal = ({ onClose }) => {
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         placeholder="Awa"
+                        maxLength={MAX_NAME_LENGTH}
+                        autoComplete="given-name"
                       />
                     </div>
                     <div className="candidateModal__field">
@@ -217,6 +244,8 @@ const CandidateRegistrationModal = ({ onClose }) => {
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         placeholder="Diop"
+                        maxLength={MAX_NAME_LENGTH}
+                        autoComplete="family-name"
                       />
                     </div>
                     <div className="candidateModal__field">
@@ -227,6 +256,7 @@ const CandidateRegistrationModal = ({ onClose }) => {
                         value={nationality}
                         onChange={(e) => setNationality(e.target.value)}
                         placeholder="Sénégalaise"
+                        maxLength={MAX_NATIONALITY_LENGTH}
                       />
                     </div>
                   </div>
@@ -291,7 +321,7 @@ const CandidateRegistrationModal = ({ onClose }) => {
               </div>
             </div>
 
-            {submitError && <p className="candidateModal__submitError">{submitError}</p>}
+            {submitError && <p className="candidateModal__submitError" role="alert">{submitError}</p>}
 
             <div className="candidateModal__actions">
               {step > 1 && (

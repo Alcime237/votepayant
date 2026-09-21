@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createVoteOrder, pollVoteOrderUntilSettled } from '../services/voteOrderService';
-import { openTouchPayWidget } from '../services/touchpayWidget';
+import { loadTouchPaySdk, openTouchPayWidget } from '../services/touchpayWidget';
 import { isDemoMode, isUnreachableError } from '../services/demoMode';
 
 /**
@@ -23,6 +23,10 @@ export default function useVotePayment() {
 
   useEffect(() => {
     activeRef.current = true;
+    // Préchargement du SDK de paiement dès l'ouverture de la fenêtre : il est ainsi prêt (CryptoJS
+    // compris) quand le visiteur clique sur "Payer". Un échec ici n'est pas bloquant — le
+    // chargement est retenté au moment du paiement, qui affichera l'erreur le cas échéant.
+    loadTouchPaySdk().catch(() => {});
     return () => {
       // Fenêtre fermée : on arrête le suivi. Un paiement déjà validé sur le téléphone sera
       // quand même compté par le webhook, indépendamment de cette fenêtre.
@@ -101,6 +105,7 @@ export default function useVotePayment() {
     try {
       await openTouchPayWidget(order.paymentWidgetParams);
     } catch (error) {
+      console.error('Widget MyTouchPoint : ouverture impossible', error);
       update({
         status: 'error',
         message: "Le module de paiement n'a pas pu s'ouvrir (connexion, bloqueur de publicités ?). "

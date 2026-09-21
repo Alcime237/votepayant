@@ -45,6 +45,10 @@ const PartnersSlider = () => {
   // voir le commentaire sur @keyframes partnersMarquee dans le fichier .scss associé.
   const marqueeItems = [...partners, ...partners];
 
+  // Le lien vient de la base : seuls http(s) sont acceptés (un "javascript:" ne doit jamais
+  // devenir un href cliquable).
+  const safeUrl = (url) => (/^https?:\/\//i.test(url || '') ? url : null);
+
   return (
     <section className="partnersSlider" id="partenaires">
       <div className="secTitle sectionTitle">
@@ -57,24 +61,27 @@ const PartnersSlider = () => {
       {/* Bandeau autoplay en boucle infinie (défilement CSS pur, mis en pause au survol) */}
       <div className="partnersSlider__viewport" data-aos="fade-up">
         <div className="partnersSlider__track">
-          {marqueeItems.map((p, i) => (
-            <a
-              key={`${p.id}-${i}`}
-              href={p.websiteUrl || undefined}
-              target={p.websiteUrl ? '_blank' : undefined}
-              rel={p.websiteUrl ? 'noopener noreferrer' : undefined}
-              className="partnersSlider__tile"
-              // Une tuile placeholder n'a pas de vraie destination : on neutralise le clic
-              onClick={p.websiteUrl ? undefined : (e) => e.preventDefault()}
-            >
-              {p.logoUrl ? (
-                <img src={p.logoUrl} alt={p.name} />
-              ) : (
-                <div className="partnersSlider__placeholder">{PLACEHOLDER_INITIAL(p.name)}</div>
-              )}
-              <span className="partnersSlider__name">{p.name}</span>
-            </a>
-          ))}
+          {marqueeItems.map((p, i) => {
+            const href = safeUrl(p.websiteUrl);
+            return (
+              <a
+                key={`${p.id}-${i}`}
+                href={href || undefined}
+                target={href ? '_blank' : undefined}
+                rel={href ? 'noopener noreferrer' : undefined}
+                className="partnersSlider__tile"
+                // Une tuile placeholder n'a pas de vraie destination : on neutralise le clic
+                onClick={href ? undefined : (e) => e.preventDefault()}
+              >
+                {p.logoUrl ? (
+                  <img src={p.logoUrl} alt={p.name} />
+                ) : (
+                  <div className="partnersSlider__placeholder">{PLACEHOLDER_INITIAL(p.name)}</div>
+                )}
+                <span className="partnersSlider__name">{p.name}</span>
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>

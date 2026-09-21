@@ -147,6 +147,7 @@
   background: var(--signal);
   transition: width 0.5s var(--ease-premium);
 
+  &.tier-vert { background: var(--tier-vert); }
   &.tier-orange { background: hsl(28, 95%, 58%); }
   &.tier-rouge { background: var(--live); }
   &.tier-gris { background: var(--muted); }

@@ -4,11 +4,11 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import VoteModal from './VoteModal';
 import { createVoteOrder, pollVoteOrderUntilSettled } from '../../services/voteOrderService';
-import { openTouchPayWidget } from '../../services/touchpayWidget';
+import { loadTouchPaySdk, openTouchPayWidget } from '../../services/touchpayWidget';
 
 // Mocks à fabrique : le mock automatique chargerait le vrai module, donc axios (ESM, non transformé par Jest)
 jest.mock('../../services/voteOrderService', () => ({ createVoteOrder: jest.fn(), pollVoteOrderUntilSettled: jest.fn() }));
-jest.mock('../../services/touchpayWidget', () => ({ openTouchPayWidget: jest.fn() }));
+jest.mock('../../services/touchpayWidget', () => ({ openTouchPayWidget: jest.fn(), loadTouchPaySdk: jest.fn() }));
 
 const candidate = { id: 'cand-1', fullName: 'Awa Ndiaye' };
 const order = { id: 'order-1', totalPoints: 25, paymentWidgetParams: { amount: '1000' } };
@@ -28,6 +28,8 @@ describe('VoteModal', () => {
     jest.resetAllMocks();
     createVoteOrder.mockResolvedValue(order);
     openTouchPayWidget.mockResolvedValue(undefined);
+    // Préchargement du SDK au montage de la fenêtre (voir useVotePayment)
+    loadTouchPaySdk.mockResolvedValue(undefined);
   });
 
   it('calcule le total et les points selon la règle 200 FCFA = 5 points', async () => {

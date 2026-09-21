@@ -34,12 +34,31 @@ const CandidatePage = () => {
   useEffect(() => {
     let cancelled = false;
 
+    // Navigation d'une fiche à l'autre : on repart d'un état vierge (sinon le rang du candidat
+    // précédent restait affiché le temps du chargement)
+    setCandidate(null);
+    setStanding(null);
+    setError(null);
+    setLoading(true);
+
     const load = async () => {
+      let candidateCategory;
       try {
         const data = await getCandidateById(id);
         if (cancelled) return;
+        // Repli démo : introuvable dans les données de démonstration (renvoie null)
+        if (!data) throw new Error('candidat introuvable');
+        candidateCategory = data.category;
         setCandidate(data);
+      } catch (err) {
+        if (!cancelled) setError("Ce candidat est introuvable ou n'est plus actif.");
+        if (!cancelled) setLoading(false);
+        return;
+      }
 
+      // Le classement est un bonus : sa panne (Redis, campagne inconnue...) ne doit pas faire
+      // passer pour introuvable un candidat dont la fiche s'est chargée normalement.
+      try {
         const status = await getCampaignStatus();
         if (cancelled || !status.campaignId) return;
 
@@ -50,7 +69,7 @@ const CandidatePage = () => {
         // "Verdict final" : le classement reçu mélange les 3 disciplines, un rappeur classé 3e
         // toutes catégories confondues est peut-être 1er du Rap.
         const sameCategory = ranking
-          .filter((entry) => entry.category === data.category)
+          .filter((entry) => entry.category === candidateCategory)
           .sort((a, b) => b.points - a.points);
         const totalPoints = sameCategory.reduce((sum, entry) => sum + entry.points, 0);
         const index = sameCategory.findIndex((entry) => entry.candidateId === id);
@@ -63,7 +82,7 @@ const CandidatePage = () => {
           });
         }
       } catch (err) {
-        if (!cancelled) setError("Ce candidat est introuvable ou n'est plus actif.");
+        // Fiche affichée sans bandeau de classement
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -90,7 +109,11 @@ const CandidatePage = () => {
 
   return (
     <div className="candidate-page">
-      <div className="candidate-hero" style={{ backgroundImage: `url(${candidate.photoUrl})` }}>
+      <div
+        className="candidate-hero"
+        // Sans photo : pas de "url(null)" (qui déclenchait une requête vers /null)
+        style={candidate.photoUrl ? { backgroundImage: `url(${JSON.stringify(candidate.photoUrl)})` } : undefined}
+      >
         <div className="candidate-hero__scrim" />
         <div className="container candidate-hero__content">
           <button className="back-link" onClick={() => navigate(-1)}>

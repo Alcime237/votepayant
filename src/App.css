@@ -23,6 +23,8 @@
     --signal-light: hsl(30, 90%, 50%);
     --signal-ink: hsl(30, 45%, 97%);
     --live: hsl(355, 100%, 67%);
+    /* Barre de classement à 50 % et plus des points (règle métier : rouge < 10 %, orange < 50 %, vert) */
+    --tier-vert: hsl(145, 63%, 42%);
     --gain: hsl(154, 60%, 52%);
 
     /* Alias historiques — laissés en place pour que les composants existants
